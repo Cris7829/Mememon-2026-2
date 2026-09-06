@@ -10,9 +10,18 @@ abstract class Armament(n:String, a:Int, w:Int, o:String) extends Usable_Armamen
  protected var weight : Int = w
  protected var owner : String = o
 
+ //getters
+ def get_attack_points: Int = attack_points
+ def get_weight: Int = weight
+ def get_owner: String = owner
+ def get_name: String = name
+
 //Base mold for magic weapons such as Wand and Cane
 class Magic_Weapon(n:String, a:Int, w:Int, o:String, m_a:Int ) extends Armament(n, a, w, o):
   protected var magic_attack_points: Int = m_a
+
+  //getter
+  def get_magic_attack_points: Int = magic_attack_points
 
 
 
