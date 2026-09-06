@@ -1,8 +1,10 @@
 package cl.uchile.dcc
 package Entities
 
+trait Usable_Armament
+
 //Base mold for all the Armaments
-abstract class Armament(n:String, a:Int, w:Int, o:String):
+abstract class Armament(n:String, a:Int, w:Int, o:String) extends Usable_Armament:
  protected val name: String = n
  protected var attack_points: Int = a
  protected var weight : Int = w

@@ -1,8 +1,10 @@
 package cl.uchile.dcc
 package Entities
 
+trait Usable_Potion
+
 //Base mold
-abstract class Potion (n:String):
+abstract class Potion (n:String) extends Usable_Potion:
   protected val name: String=n
 
 
