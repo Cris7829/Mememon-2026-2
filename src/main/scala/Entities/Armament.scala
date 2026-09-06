@@ -10,7 +10,8 @@ abstract class Armament(n:String, a:Int, w:Int, o:String) extends Usable_Armamen
  protected var weight : Int = w
  protected var owner : String = o
 
- //getters
+  
+//getter 
  def get_attack_points: Int = attack_points
  def get_weight: Int = weight
  def get_owner: String = owner
@@ -20,7 +21,7 @@ abstract class Armament(n:String, a:Int, w:Int, o:String) extends Usable_Armamen
 class Magic_Weapon(n:String, a:Int, w:Int, o:String, m_a:Int ) extends Armament(n, a, w, o):
   protected var magic_attack_points: Int = m_a
 
-  //getter
+//getter
   def get_magic_attack_points: Int = magic_attack_points
 
 
