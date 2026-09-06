@@ -4,7 +4,7 @@ package Entities
 import scala.collection.mutable.ListBuffer
 
 //unity class base for enemies and characters
-abstract class Unity (n:String, h:Int, d:Int, w:Int) extends Usable_Armament,Usable_Potion:
+abstract class Unity (n:String, h:Int, d:Int, w:Int):
   protected val name: String = n
   protected var health: Int = h
   protected var defense: Int = d
