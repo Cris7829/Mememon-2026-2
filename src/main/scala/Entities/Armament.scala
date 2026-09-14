@@ -2,6 +2,7 @@ package cl.uchile.dcc
 package Entities
 
 trait Usable_Armament
+ def 
 
 //Base mold for all the Armaments
 abstract class Armament(n:String, a:Int, w:Int, o:String) extends Usable_Armament:
