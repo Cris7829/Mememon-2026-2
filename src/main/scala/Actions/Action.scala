@@ -1,7 +1,10 @@
 package cl.uchile.dcc
 package Actions
 
+import cl.uchile.dcc.Entities.{Usable_Armament, Usable_Potion}
 
+
+import scala.collection.mutable.ListBuffer
 
 trait Action
 
@@ -16,9 +19,12 @@ abstract class Utility_Action extends Action:
 
 class Use_Potion extends Utility_Action :
   val name: String = "Use Potion"
+  var usable_list :  ListBuffer[Usable_Potion] = ListBuffer()
+
 
 class Equip_weapon extends Utility_Action :
   val name: String = "Equip weapon"
+  var usable_list :  ListBuffer[Usable_Armament] = ListBuffer()
 
 
 
@@ -28,6 +34,7 @@ class Equip_weapon extends Utility_Action :
 
 abstract class Non_Utility_Action extends Action:
    val name: String
+
 
 
 
