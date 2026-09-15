@@ -1,7 +1,7 @@
 package cl.uchile.dcc
 package Actions
 
-import cl.uchile.dcc.Entities.{Usable_Armament, Usable_Potion}
+import Entities.{Usable_Armament, Usable_Potion}
 
 
 import scala.collection.mutable.ListBuffer
