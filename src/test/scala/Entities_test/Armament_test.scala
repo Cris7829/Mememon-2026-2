@@ -9,18 +9,18 @@ import Entities.*
 
 class Armament_test extends FunSuite:
   var sword: Sword = Sword("Royal Sword", 50, 10, "Steve")
-  var wand: Wand = Wand("Varita de Fuego", 30, 2, "Sin dueño", 80)
-  var cane: Cane = Cane("Báculo Anciano", 20, 5, "Mago", 60)
-  var dagger: Dagger = Dagger("Daga Sombría", 25, 1, "Asesino")
-  var bow: Bow = Bow("Arco Largo", 40, 4, "Cazador")
+  var wand: Wand = Wand("Fire Wand", 30, 2, "Without Owner", 80)
+  var cane: Cane = Cane("Cas", 20, 5, "Mage", 60)
+  var dagger: Dagger = Dagger("Dark Dagger", 25, 1, "The Killer")
+  var bow: Bow = Bow("Arco Largo", 40, 4, "Cris")
 
   override def beforeEach(context: BeforeEach): scala.Unit =
     sword = Sword("Royal Sword", 50, 10, "Steve")
 
-    wand = Wand("Varita de Fuego", 30, 2, "Sin dueño", 80)
-    cane = Cane("Báculo Anciano", 20, 5, "Mago", 60)
-    dagger = Dagger("Daga Sombría", 25, 1, "Asesino")
-    bow = Bow("Arco Largo", 40, 4, "Cazador")
+    wand = Wand("Fire Wand", 30, 2, "Without Owner", 80)
+    cane = Cane("Cas", 20, 5, "Mage", 60)
+    dagger = Dagger("Dark Dagger", 25, 1, "The Killer")
+    bow = Bow("Arco Largo", 40, 4, "Cris")
 
 
   test("The non-magic armament are created correctly"):
@@ -28,6 +28,13 @@ class Armament_test extends FunSuite:
     assertEquals(sword.get_attack_points, 50)
     assertEquals(sword.weight, 10)
     assertEquals(sword.get_owner, "Steve")
+
+  test("The magic armament are created correctly"):
+    assertEquals(wand.name, "Fire Wand")
+    assertEquals(wand.get_attack_points, 30)
+    assertEquals(wand.weight, 2)
+    assertEquals(wand.get_owner, "Without Owner")
+    assertEquals(wand.get_magic_attack_points, 80)  
 
 
 
