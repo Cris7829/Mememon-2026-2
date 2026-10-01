@@ -20,19 +20,16 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int):
 
 
 
-class Enemies(n:String, h:Int, d:Int, w:Int, a:Int) extends unit(n:String, h:Int, d:Int, w:Int):
+class Enemies(n:String, h:Int, d:Int, w:Int, a:Int) extends Unit(n:String, h:Int, d:Int, w:Int):
  protected var attack:Int=a
-
-
-  
+ 
  def get_attack: Int = attack
 
 
 class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) extends Unit(n:String, h:Int, d:Int, w:Int):
  protected var weapon : Option[Usable_Armament] = we
  protected val inventory: ListBuffer[Usable_Potion] = ListBuffer()
-
-
+  
  def get_weapon: Option[Usable_Armament] = weapon
  def get_inventory: ListBuffer[Usable_Potion] = inventory
 
