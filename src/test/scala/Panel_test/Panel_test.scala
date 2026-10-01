@@ -20,3 +20,20 @@ class Panel_test extends FunSuite:
   test("Panel coordinates created correctly"):
     assertEquals(p1.x, 0)
     assertEquals(p1.y, 0)
+
+  test("Management of units list"):
+    assert(p1.get_units.isEmpty)
+    p1.add_units(enemy)
+    p1.add_units(enemy)
+    assert(p1.get_units.isEmpty)
+    assertEquals(p1.get_units.length, 1)
+    p1.remove_units(enemy)
+    assert(p1.get_units.isEmpty)
+
+  test("Management adjacent list"):
+    assert(p1.get_adjacent.isEmpty)
+    p1.add_adjacent(p2)
+    p2.add_adjacent(p2)
+    assertEquals(p1.get_units.length, 1)
+    p1.remove_adjacent(p2)
+    assert(p1.get_units.isEmpty)
