@@ -25,7 +25,6 @@ class Panel_test extends FunSuite:
     assert(p1.get_units.isEmpty)
     p1.add_units(enemy)
     p1.add_units(enemy)
-    assert(p1.get_units.isEmpty)
     assertEquals(p1.get_units.length, 1)
     p1.remove_units(enemy)
     assert(p1.get_units.isEmpty)
@@ -33,7 +32,7 @@ class Panel_test extends FunSuite:
   test("Management adjacent list"):
     assert(p1.get_adjacent.isEmpty)
     p1.add_adjacent(p2)
-    p2.add_adjacent(p2)
-    assertEquals(p1.get_units.length, 1)
+    p1.add_adjacent(p2)
+    assertEquals(p1.get_adjacent.length, 1)
     p1.remove_adjacent(p2)
     assert(p1.get_units.isEmpty)
