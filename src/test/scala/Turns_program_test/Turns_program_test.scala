@@ -24,3 +24,7 @@ class Turns_program_test extends munit.FunSuite:
     s.remove_t_units(knight)
     assert(s.get_t_units.isEmpty)
 
+  test(" The Maximum action bar is the maximum weight"):
+    s.add_t_units(knight)
+    s.add_t_units(archer)
+    assertEquals(s.calculate_max_action_bar, 10)
