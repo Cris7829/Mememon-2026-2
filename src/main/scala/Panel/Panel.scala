@@ -1,5 +1,5 @@
 package cl.uchile.dcc
-package Map
+package Panel
 
 import Entities.Unity
 import scala.collection.mutable.ListBuffer

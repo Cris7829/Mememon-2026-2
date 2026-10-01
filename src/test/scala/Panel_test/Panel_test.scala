@@ -3,7 +3,7 @@ package Panel_test
 
 import Entities.*
 import munit.FunSuite
-import Map.*
+import Panel.*
 
 
 class Panel_test extends FunSuite:
