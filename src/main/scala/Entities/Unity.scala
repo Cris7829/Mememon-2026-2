@@ -140,7 +140,7 @@ class Knight (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) extends
 
 
 
-/** A class representing a Archer, a player's playable character.
+/** A class representing an Archer, a player's playable character.
  *
  * @param n The name of the Archer.
  * @param h The health points of the Archer.
@@ -167,7 +167,7 @@ class Archer (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) extends
 
 /** A class representing a general magic type unit that can be used by a player.
  * .
- *It follows the base core attributes of the Character class an adds a varaible for the mana bar, usable to cast
+ *It follows the base core attributes of the Character class an adds a variable for the mana bar, usable to cast
  * spells or use magic armaments
  *
  * @param n The name of the Magic Character.
@@ -251,9 +251,7 @@ class White_Mage (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament], m:I
    */
   def this(n: String, h: Int, d: Int, w: Int, m:Int) =
     this(n, h, d, w, Option.empty[Usable_Armament],m)
+  
 
-
-
-
-
+    
 
