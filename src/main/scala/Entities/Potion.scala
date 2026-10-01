@@ -3,14 +3,9 @@ package Entities
 
 trait Usable_Potion
 
-//Base mold
+
 abstract class Potion (n:String) extends Usable_Potion:
-  protected val name: String=n
-  
-//getter
-  def get_name: String = name
-
-
+  val name: String=n
 
 //Types of potions using Potion mold
 class Healing (n:String) extends Potion(n)
