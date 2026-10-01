@@ -1,8 +1,10 @@
 package cl.uchile.dcc
 package Entities
+/** A trait that represents al the usable objects that a player's Unit can use, such as potions and armaments*/
+trait Utilizable
 
 /** A  trait representing any potion that can be used by a Unit */
-trait Usable_Potion
+trait Usable_Potion extends Utilizable
 
 /** An abstract base class representing a general potion in the game.
  *

@@ -1,8 +1,9 @@
 package cl.uchile.dcc
 package Entities
 
+
 /** A  trait representing any armament that can be equipped and utilized by a Unit. */
-trait Usable_Armament
+trait Usable_Armament extends Utilizable
 
 /** An abstract base class representing a general physical armament in the game.
  *
