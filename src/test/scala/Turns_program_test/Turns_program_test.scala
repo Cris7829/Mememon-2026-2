@@ -36,6 +36,6 @@ class Turns_program_test extends munit.FunSuite:
     s.reset_action_bars(knight)
     assertEquals(s.get_action_bar(knight), 0)
 
-  test()
+
 
 
