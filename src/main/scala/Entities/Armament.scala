@@ -3,8 +3,8 @@ package Entities
 
 
 /** A  trait representing any armament that can be equipped and utilized by a Unit. */
-trait Usable_Armament extends Utilizable
-
+trait Usable_Armament extends Utilizable:
+ def weight: Int
 /** An abstract base class representing a general physical armament in the game.
  *
  * This class defines the core attributes shared by all armaments, such as
