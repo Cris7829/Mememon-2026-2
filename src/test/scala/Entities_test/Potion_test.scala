@@ -2,7 +2,7 @@ package cl.uchile.dcc
 package Entities_test
 
 import munit.FunSuite
-import Entities.*
+import Usable.*
 
 
 

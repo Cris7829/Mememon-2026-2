@@ -4,6 +4,7 @@ package Actions_test
 import munit.FunSuite
 import Actions.*
 import Entities.*
+import Usable.*
 
 class Actions_test extends FunSuite:
   var poti : Usable_Potion = Mana("Ares")
