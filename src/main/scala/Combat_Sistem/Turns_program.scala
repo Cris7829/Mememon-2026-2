@@ -124,12 +124,11 @@ class Turns_program:
    * @param k The amount added.
    * */
    def add_action_bar(k:Double): scala.Unit=
-    if k>=0 then
-     if sorted_Seq!=Seq() then
+    if k>=0 && sorted_Seq.isEmpty then
        for x <- t_units do
          during_program_map(x)= during_program_map(x) + k
 
-     if check_action_bar then
+       if check_action_bar then
        create_seq_turns()
 
   /** It gives True if at least one Unity has reached his max action bar amount, otherwise returns false.
@@ -149,7 +148,7 @@ class Turns_program:
    *
    * @return The surplus amount in positive for the Unity given.
    * */
-   private def surplus(x:Unity):Double= action_bars(x)-during_program_map(x)
+   private def surplus(x:Unity):Double= during_program_map(x)-action_bars(x)
 
   /** It creates te sequence in order of decreased surplus of the unities that have completed
    * their action bar and saves it in the sorted_Seq variable.
