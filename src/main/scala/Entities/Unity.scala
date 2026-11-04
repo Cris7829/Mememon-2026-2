@@ -1,6 +1,7 @@
 package cl.uchile.dcc
 package Entities
 
+import Usable.*
 import scala.collection.mutable.ListBuffer
 
 

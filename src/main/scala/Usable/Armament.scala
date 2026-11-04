@@ -1,0 +1,58 @@
+package cl.uchile.dcc
+package Usable
+
+/** An abstract base class representing a general physical armament in the game.
+ *
+ * This class defines the core attributes shared by all armaments, such as
+ * damage, weight, name and owner
+ *
+ * @param n The name of the armament.
+ * @param a The initial attack points of the armament.
+ * @param w The weight of the armament.
+ * @param o The initial owner that has armament in its inventory.
+ *
+ * @constructor Creates a new general armament with the specified basic attributes.
+ */
+abstract class Armament(n:String, a:Int, w:Int, o:String) extends Usable_Armament:
+
+  /** The immutable name of the armament. */
+  val name: String = n
+
+  /** The attack points of the armament */
+  private var attack_points: Int = a
+
+  /** The immutable weight of the armament. */
+  val weight : Int = w
+
+  /** The name of the owner of the armament. */
+  private var owner : String = o
+
+  /** Retrieves the current attack points of the armament.
+   *
+   * @return The current attack points.
+   */
+  def get_attack_points: Int = attack_points
+
+  /** Retrieves the current owner of the armament.
+   *
+   * @return The name of the owner.
+   */
+  def get_owner: String = owner
+
+  /** Updates the attack points of the armament.
+   *
+   * This method ensures that the attack points cannot drop below zero. If a negative
+   * value is passed, the method does nothing.
+   *
+   * @param x The new attack.
+   */
+  def set_attack_points(x: Int): scala.Unit =
+    if x >= 0 then
+      attack_points = x
+
+  /** Assigns a new owner to the armament.
+   *
+   * @param x The name of the new owner.
+   */
+  def set_owner(x: String): scala.Unit=
+    owner = x
