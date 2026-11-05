@@ -9,5 +9,5 @@ import scala.collection.mutable.ListBuffer
  *
  * @constructor Creates a new Heal action with its name.
  */
-class Heal extends Non_Utility_Action:
+class Heal extends Spells:
   override val name: String = "Heal"

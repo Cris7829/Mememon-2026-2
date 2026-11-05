@@ -12,5 +12,5 @@ import scala.collection.mutable.ListBuffer
  *
  * @constructor Creates a new Meteor action with its name.
  */
-class Meteor extends Non_Utility_Action:
+class Meteor extends Spells:
   override val name: String = "Meteor"

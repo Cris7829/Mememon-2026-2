@@ -9,5 +9,5 @@ import scala.collection.mutable.ListBuffer
  *
  * @constructor Creates a new Purification action with its name.
  */
-class Purification extends Non_Utility_Action:
+class Purification extends Spells:
   override val name: String = "Purification"

@@ -8,5 +8,5 @@ import scala.collection.mutable.ListBuffer
  *
  * @constructor Creates a new Thunder action with its name.
  */
-class Thunder extends Non_Utility_Action:
+class Thunder extends Spells:
   override val name: String = "Thunder"
