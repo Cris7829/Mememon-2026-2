@@ -10,7 +10,7 @@ class Turns_program_test extends FunSuite:
   var program: Turns_program = Turns_program()
 
   var hero: Character = new Character("Hero", 100, 10, 20, None)
-  var armedHero: Character = new Character("Armed", 100, 10, 20, Some(Sword("Royal Sword", 50, 10, "Armed")))
+  var armedHero: Character = new Character("Armed", 100, 10, 20, Some(Sword("Royal Sword", 50, 10, None)))
   var goblin: Enemy = Enemy("Goblin", 50, 5, 30, 10)
   var fastEnemy: Enemy = Enemy("Bat", 20, 1, 10, 5)
 
@@ -21,17 +21,17 @@ class Turns_program_test extends FunSuite:
   var blackMage: Black_Mage = Black_Mage("Dark", 70, 3, 14, 100)
   var whiteMage: White_Mage = White_Mage("Light", 75, 4, 16, 90)
 
-  var armedKnight: Knight = Knight("Lancelot", 150, 20, 40, Some(Sword("Excalibur", 60, 10, "Lancelot")))
-  var armedThieve: Thieve = Thieve("Shadow", 80, 5, 12, Some(Dagger("Dark Dagger", 25, 1, "Shadow")))
-  var armedArcher: Archer = Archer("Legolas", 90, 8, 20, Some(Bow("Arco Largo", 40, 4, "Legolas")))
-  var armedBlackMage: Black_Mage = Black_Mage("Merlin", 70, 3, 14, Some(Wand("Fire Wand", 30, 2, "Merlin", 80)), 100)
-  var armedWhiteMage: White_Mage = White_Mage("Gandalf", 75, 4, 16, Some(Cane("Cas", 20, 5, "Gandalf", 60)), 90)
+  var armedKnight: Knight = Knight("Lancelot", 150, 20, 40, Some(Sword("Excalibur", 60, 10, None)))
+  var armedThieve: Thieve = Thieve("Shadow", 80, 5, 12, Some(Dagger("Dark Dagger", 25, 1, None)))
+  var armedArcher: Archer = Archer("Legolas", 90, 8, 20, Some(Bow("Arco Largo", 40, 4, None)))
+  var armedBlackMage: Black_Mage = Black_Mage("Merlin", 70, 3, 14, Some(Wand("Fire Wand", 30, 2, None, 80)), 100)
+  var armedWhiteMage: White_Mage = White_Mage("Gandalf", 75, 4, 16, Some(Cane("Cas", 20, 5, None, 60)), 90)
 
   override def beforeEach(context: BeforeEach): scala.Unit =
     program = Turns_program()
 
     hero = new Character("Hero", 100, 10, 20, None)
-    armedHero = new Character("Armed", 100, 10, 20, Some(Sword("Royal Sword", 50, 10, "Armed")))
+    armedHero = new Character("Armed", 100, 10, 20, Some(Sword("Royal Sword", 50, 10, None)))
     goblin = Enemy("Goblin", 50, 5, 30, 10)
     fastEnemy = Enemy("Bat", 20, 1, 10, 5)
 
@@ -42,11 +42,11 @@ class Turns_program_test extends FunSuite:
     blackMage = Black_Mage("Dark", 70, 3, 14, 100)
     whiteMage = White_Mage("Light", 75, 4, 16, 90)
 
-    armedKnight = Knight("Lancelot", 150, 20, 40, Some(Sword("Excalibur", 60, 10, "Lancelot")))
-    armedThieve = Thieve("Shadow", 80, 5, 12, Some(Dagger("Dark Dagger", 25, 1, "Shadow")))
-    armedArcher = Archer("Legolas", 90, 8, 20, Some(Bow("Arco Largo", 40, 4, "Legolas")))
-    armedBlackMage = Black_Mage("Merlin", 70, 3, 14, Some(Wand("Fire Wand", 30, 2, "Merlin", 80)), 100)
-    armedWhiteMage = White_Mage("Gandalf", 75, 4, 16, Some(Cane("Cas", 20, 5, "Gandalf", 60)), 90)
+    armedKnight = Knight("Lancelot", 150, 20, 40, Some(Sword("Excalibur", 60, 10, None)))
+    armedThieve = Thieve("Shadow", 80, 5, 12, Some(Dagger("Dark Dagger", 25, 1, None)))
+    armedArcher = Archer("Legolas", 90, 8, 20, Some(Bow("Arco Largo", 40, 4, None)))
+    armedBlackMage = Black_Mage("Merlin", 70, 3, 14, Some(Wand("Fire Wand", 30, 2, None, 80)), 100)
+    armedWhiteMage = White_Mage("Gandalf", 75, 4, 16, Some(Cane("Cas", 20, 5, None, 60)), 90)
 
 
 
