@@ -1,6 +1,8 @@
 package cl.uchile.dcc
 package Usable
 
+import Entities.*
+
 /** A magical wand designed for mages or magical Units.
  *
  * @param n The name of the wand.
@@ -11,4 +13,4 @@ package Usable
  *
  * @constructor Creates a new Bow instance.
  */
-class Wand (n:String, a:Int, w:Int, o:String, m_a:Int ) extends Magic_Weapon(n, a, w, o ,m_a)
+class Wand (n:String, a:Int, w:Int, o:Option[Character], m_a:Int ) extends Magic_Weapon(n, a, w, o ,m_a)

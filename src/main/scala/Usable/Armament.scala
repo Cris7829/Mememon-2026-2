@@ -1,6 +1,8 @@
 package cl.uchile.dcc
 package Usable
 
+import Entities.*
+
 /** An abstract base class representing a general physical armament in the game.
  *
  * This class defines the core attributes shared by all armaments, such as
@@ -13,7 +15,7 @@ package Usable
  *
  * @constructor Creates a new general armament with the specified basic attributes.
  */
-abstract class Armament(n:String, a:Int, w:Int, o:String) extends Usable_Armament:
+abstract class Armament(n:String, a:Int, w:Int, o:Option[Character]) extends Usable_Armament:
 
   /** The immutable name of the armament. */
   val name: String = n
@@ -25,7 +27,7 @@ abstract class Armament(n:String, a:Int, w:Int, o:String) extends Usable_Armamen
   val weight : Int = w
 
   /** The name of the owner of the armament. */
-  private var owner : String = o
+  private var owner : Option[Character] = o
 
   /** Retrieves the current attack points of the armament.
    *
@@ -33,11 +35,11 @@ abstract class Armament(n:String, a:Int, w:Int, o:String) extends Usable_Armamen
    */
   def get_attack_points: Int = attack_points
 
-  /** Retrieves the current owner of the armament.
+  /** Retrieves the current name of the owner's armament.
    *
    * @return The name of the owner.
    */
-  def get_owner: String = owner
+  def get_owner: String = owner.get.name
 
   /** Updates the attack points of the armament.
    *
@@ -50,9 +52,4 @@ abstract class Armament(n:String, a:Int, w:Int, o:String) extends Usable_Armamen
     if x >= 0 then
       attack_points = x
 
-  /** Assigns a new owner to the armament.
-   *
-   * @param x The name of the new owner.
-   */
-  def set_owner(x: String): scala.Unit=
-    owner = x
+

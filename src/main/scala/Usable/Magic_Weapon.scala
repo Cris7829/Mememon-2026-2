@@ -1,6 +1,8 @@
 package cl.uchile.dcc
 package Usable
 
+import Entities.*
+
 /** An abstract base class representing a general magic weapons.
  *
  * This class defines the core attributes shared by all magical armament, it's use the base armament abstract class
@@ -14,7 +16,7 @@ package Usable
  *
  * @constructor Creates a new general armament with the specified basic attributes.
  */
-abstract class Magic_Weapon(n: String, a: Int, w: Int, o: String, m_a: Int) extends Armament(n, a, w, o):
+abstract class Magic_Weapon(n: String, a: Int, w: Int, o:Option[Character], m_a: Int) extends Armament(n, a, w, o):
 
   /** The magical attack point of the magic weapon. */
   private var magic_attack_points: Int = m_a

@@ -1,6 +1,6 @@
 package cl.uchile.dcc
 package Usable
-
+import Entities.*
 /** A lightweight, non-magical dagger.
  *
  * @param n The name of the dagger.
@@ -10,4 +10,4 @@ package Usable
  *
  * @constructor Creates a new Dagger instance.
  */
-class Dagger(n:String, a:Int, w:Int, o:String) extends Armament(n ,a ,w ,o)
+class Dagger(n:String, a:Int, w:Int, o:Option[Character]) extends Armament(n ,a ,w ,o)

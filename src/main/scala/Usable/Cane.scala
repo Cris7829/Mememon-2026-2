@@ -1,6 +1,8 @@
 package cl.uchile.dcc
 package Usable
 
+import Entities.*
+
 /** A magical Cane designed for a magical use.
  *
  * @param n The name of the Cane.
@@ -11,4 +13,4 @@ package Usable
  *
  * @constructor Creates a new Bow instance.
  */
-class Cane (n:String, a:Int, w:Int, o:String, m_a:Int ) extends Magic_Weapon(n, a, w, o ,m_a)
+class Cane (n:String, a:Int, w:Int, o:Option[Character], m_a:Int ) extends Magic_Weapon(n, a, w, o ,m_a)

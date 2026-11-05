@@ -1,6 +1,6 @@
 package cl.uchile.dcc
 package Usable
-
+import Entities.*
 /** A ranged, non-magical bow.
  *
  * @param n The name of the bow.
@@ -10,4 +10,4 @@ package Usable
  *
  * @constructor Creates a new Bow instance.
  */
-class Bow(n:String, a:Int, w:Int, o:String) extends Armament(n ,a ,w ,o)
+class Bow(n:String, a:Int, w:Int, o:Option[Character]) extends Armament(n ,a ,w ,o)
