@@ -44,6 +44,23 @@ class GameController :
    */
   private var base_turns_program: Turns_program = Turns_program()
 
+  /** Getter for the players list that are in the GameController.*/
+  def get_players_list(): ListBuffer[Player] = players_list
+  /** Getter for the enemies list that are in the GameController.*/
+  def get_enemies_list(): ListBuffer[Enemy] = enemies_list
+  /** Getter for the turn programs that are in the GameController.*/
+  def get_turns_program(): Turns_program = turns_program
+  /** Getter for the players list made for the game reset, that is in the GameController.*/
+  def get_base_players_list(): ListBuffer[Player] = base_players_list
+  /** Getter for the enemies list made for the game reset, that is in the GameController.*/
+  def get_base_enemies_list(): ListBuffer[Enemy] = base_enemies_list
+  /** Getter for the turn program made for the game reset, that is in the GameController.*/
+  def get_base_turns_program(): Turns_program = base_turns_program
+
+
+
+
+
 
   /** It reset the game into a state where, all the units are in their base form
    * every unit that were added before the reset are after the reset.
@@ -75,7 +92,7 @@ class GameController :
    *
    * @return Some(Unity) if there is, none if there is not.
    */
-  def get_who_turn: Option[Unity] = 
+  def get_who_turn: Option[Unity] =
      if turns_program.get_turn.isDefined then
         Some(turns_program.get_turn.get)
      else None
