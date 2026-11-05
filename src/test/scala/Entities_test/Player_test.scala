@@ -119,7 +119,7 @@ class Player_test extends FunSuite:
 
 
 
-  test("A player with no units is defeated after was_Defeated"):
+  test("A player with no alive units is defeated after was_Defeated"):
     player.was_Defeated()
     assert(player.get_is_Defeated)
 
@@ -129,5 +129,49 @@ class Player_test extends FunSuite:
     player.get_List_Units += archer
     player.was_Defeated()
     assert(player.get_is_Defeated)
+
+
+  test("add_units adds a character to the list"):
+    player.add_units(knight)
+    assertEquals(player.get_List_Units.size, 1)
+    assert(player.get_List_Units.contains(knight))
+
+  test("add_units adds several different characters"):
+    player.add_units(knight)
+    player.add_units(archer)
+    player.add_units(blackMage)
+    assertEquals(player.get_List_Units.size, 3)
+    assert(player.get_List_Units.contains(knight))
+    assert(player.get_List_Units.contains(archer))
+    assert(player.get_List_Units.contains(blackMage))
+
+  test("add_units does nothing if the character is already in the list"):
+    player.add_units(knight)
+    player.add_units(knight)
+    assertEquals(player.get_List_Units.size, 1)
+
+  test("add_units doesn't accepts characters with 0 health"):
+    player.add_units(deadKnight)
+    assertEquals(player.get_List_Units.size, 0)
+    assert(!player.get_List_Units.contains(deadKnight))
+
+  test("Two different characters with the same stats are both added"):
+    val knight2 = Knight("Arthur", 150, 20, 40)
+    player.add_units(knight)
+    player.add_units(knight2)
+    assertEquals(player.get_List_Units.size, 2)
+
+
+  test("A player with units added through add_units is defeated only when all of them have 0 health"):
+    player.add_units(deadKnight)
+    player.add_units(archer)
+    player.was_Defeated()
+    assert(!player.get_is_Defeated)
+
+    val other = Players("Gary")
+    other.add_units(deadKnight)
+    other.add_units(deadThieve)
+    other.was_Defeated()
+    assert(other.get_is_Defeated)
 
 

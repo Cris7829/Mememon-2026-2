@@ -52,5 +52,11 @@ class Players(n :String) extends Player:
          return 
     isDefeated = true
 
+  /** It adds a Characte to the list, if its already there, does nothing.*/
+  def add_units(x:Character):scala.Unit =
+    if !List_Units.contains(x) && x.get_health>0 then
+      List_Units += x 
+    
+
 
 
