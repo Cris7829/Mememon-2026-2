@@ -37,6 +37,11 @@ class Turns_program:
    /** A variable of a sequence in order, with the remaining Unities that have to do their turn.*/
    private var sorted_Seq: Seq[(Unity, Double)] = Seq()
 
+  
+  
+  
+  
+  
    /** Getter for the Unity that has the current turn.*/
    def get_turn: Option[Unity] = turn
 
