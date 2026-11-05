@@ -20,7 +20,37 @@ class Players(n :String) extends Player:
   val name: String = n
 
   /** A variable with the list of characters*/
-  protected val List_Units: ListBuffer[Unity] = ListBuffer()
+  private val List_Units: ListBuffer[Character] = ListBuffer()
 
   /** A boolean with false if the player hasn't been defeated or true if it has.*/
-  protected var isDefeated: Boolean = false
+  private var isDefeated: Boolean = false
+
+
+  /** A getter for the units that the player has.
+   *
+   * @return List with Unity.
+   * */
+  def get_List_Units: ListBuffer[Character] = List_Units
+
+
+
+  /** A getter for the isDefeated variable.
+   *
+   * @return boolean, false if the player hasn't been defeated yet, otherwise true.
+   * */
+  def get_is_Defeated: Boolean = isDefeated
+
+
+  /** Check if all the units of a player have 0 points of health, and chances the isDefeated variable to true.
+   *
+   * If there is at least one Unity of the list that has health points, the method does nothing.
+   *
+   * */
+  def was_Defeated(): scala.Unit =
+    for x <- List_Units do
+      if x.get_health != 0 then
+         return 
+    isDefeated = true
+
+
+
