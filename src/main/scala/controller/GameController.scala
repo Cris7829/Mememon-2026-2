@@ -75,9 +75,9 @@ class GameController :
    *
    * @return Some(Unity) if there is, none if there is not.
    */
-  def get_who_turn: Option[Unity] = turns_program.get_turn
+  def get_who_turn: Option[Unity] = 
      if turns_program.get_turn.isDefined then
-        Some(turns_program.get_turn)
+        Some(turns_program.get_turn.get)
      else None
 
 
