@@ -68,3 +68,32 @@ class GameController :
     if turns_program.get_sorted_Seq.nonEmpty then
       Some(turns_program.get_sorted_Seq.head._1)
     else None
+    
+  /** It adds a player to the game and its characters to the owners map and the turn program.
+   *
+   * @param x the player
+   */
+  def add_players(x: Players): scala.Unit =
+      if !players_list.contains(x) then
+        players_list += x
+        for c <- x.get_List_Units do
+          add_units_to_player(x, c)
+
+  /** It adds a character to a player that is in the game, and to the turn program.
+   *
+   * @param x the player , y the character
+   */
+  def add_units_to_player(x: Players, y: Character): scala.Unit =
+      if players_list.contains(x) && !owners.contains(y) then
+        owners(y) = x
+        x.add_units(y)
+        turns_program.add_unit_to_program(y)
+
+  /** It adds an enemy to the game and to the turn program, if it's already there, does nothing.
+   *
+   * @param  x the enemy
+   */
+  def add_enemies(x: Enemy): scala.Unit =
+      if !enemies_list.contains(x) then
+        enemies_list += x
+        turns_program.add_unit_to_program(x)  
