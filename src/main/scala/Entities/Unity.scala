@@ -2,11 +2,41 @@ package cl.uchile.dcc
 package Entities
 
 import Usable.*
-import scala.collection.mutable.ListBuffer
 
+import Action_Sistem.{Source, Target}
+
+import scala.collection.mutable.ListBuffer
+import Actions.*
 
 /** A  trait representing any Unity that is in the game such as characters and enemies */
-trait Unity
+trait Unity extends Source:
+
+  val name: String
+
+
+  val actions_possible: ListBuffer[Action]
+
+  def find_action(id: String): Option[Action]
+
+
+  def doAction(action: Action, target: Target): Boolean
+
+
+  def Do(a: Attack, t: Target): Boolean
+
+  def Do(a: Move, t: Target): Boolean
+
+  def Do(a: Equip_Weapon, t: Target): Boolean
+
+  def Do(a: Use_Potion, t: Target): Boolean
+
+  def Do(a: Thunder, t: Target): Boolean
+
+  def Do(a: Meteor, t: Target): Boolean
+
+  def Do(a: Heal, t: Target): Boolean
+
+  def Do(a: Purification, t: Target): Boolean
 
   
 

@@ -1,5 +1,8 @@
 package cl.uchile.dcc
 package Entities
+import scala.collection.mutable.ListBuffer
+import Actions.*
+import Action_Sistem.*
 
 /** An abstract base class representing a general Unit.
  *
@@ -36,3 +39,36 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
 
   /** Retrieves the weight points of the Unit.*/
   def get_weight: Int = weight
+
+  
+  
+  val actions_possible: ListBuffer[Action] = ListBuffer()
+
+  def find_action(id: String): Option[Action] = None
+
+
+  
+  def doAction(action: Action, target: Target): Boolean = false
+
+  
+  
+
+  def Do(a: Attack, t: Target): Boolean = false
+
+  def Do(a: Move, t: Target): Boolean  = false
+
+  def Do(a: Equip_Weapon, t: Target): Boolean = false
+
+  def Do(a: Use_Potion, t: Target): Boolean = false
+
+  def Do(a: Thunder, t: Target): Boolean = false
+
+  def Do(a: Meteor, t: Target): Boolean = false
+
+  def Do(a: Heal, t: Target): Boolean = false
+
+  def Do(a: Purification, t: Target): Boolean = false
+  
+  
+  
+  

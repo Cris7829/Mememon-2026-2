@@ -5,11 +5,13 @@ import Entities.*
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
+import Panel.*
 
-/**
+
+/** The GameController is a class that it keeps track of the state of the game.
  *
- *
- *
+ * It works directly with Players, Units , Actions and Turn_program. Uses this last one
+ * to calculate and to use actions.
  */
 class GameController :
 
@@ -25,8 +27,25 @@ class GameController :
   /** A  variable that will, given a Character, its player.*/
   private var owners:mutable.Map[Character, Players] = mutable.Map()
 
+  
+  
+  
+  private val panels:ListBuffer[Panel]= ListBuffer()
 
 
+  def get_panels: List[Panel] = panels.toList
+
+  def add_panel(p: Panel): scala.Unit =
+    if !panels.contains(p) then panels += p
+
+  def get_panel_at(x: Int, y: Int): Option[Panel] =
+    panels.find(p => p.x == x && p.y == y)
+
+  
+  
+  
+  
+  
   /** Getter for the players list that are in the GameController.*/
   def get_players_list(): ListBuffer[Players] = players_list
   /** Getter for the enemies list that are in the GameController.*/
@@ -68,7 +87,7 @@ class GameController :
     if turns_program.get_sorted_Seq.nonEmpty then
       Some(turns_program.get_sorted_Seq.head._1)
     else None
-    
+
   /** It adds a player to the game and its characters to the owners map and the turn program.
    *
    * @param x the player
@@ -96,4 +115,4 @@ class GameController :
   def add_enemies(x: Enemy): scala.Unit =
       if !enemies_list.contains(x) then
         enemies_list += x
-        turns_program.add_unit_to_program(x)  
+        turns_program.add_unit_to_program(x)
