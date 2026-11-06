@@ -60,6 +60,7 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
     true
 
 
+
   override def receive(a: Move, u: Unity): Boolean = false
 
   override def receive(a: Equip_Weapon, c: Character): Boolean = false
