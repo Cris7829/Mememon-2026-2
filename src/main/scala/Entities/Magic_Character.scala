@@ -19,6 +19,11 @@ import Usable.Usable_Armament
  */
 class Magic_Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament], m:Int) extends Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]):
   private var mana: Int = m
+  
+  val max_mana: Int = m
+
+
+  private var magic_multiplier: Double = 1.0
 
   /** Retrieves the current mana points of the Magic Character.
    *
@@ -36,3 +41,18 @@ class Magic_Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament],
   def set_mana(x:Int): scala.Unit =
     if x>=0 then
       mana=x
+  
+
+  
+  def get_magic_multiplier: Double = magic_multiplier
+
+ 
+  def set_magic_multiplier(x: Double): scala.Unit =
+    if x >= 1.0 then magic_multiplier = x
+
+  
+  override def Do(a: Use_Potion, t: Target): Boolean =
+    if get_inventory.contains(t) then t.receive(a, this)
+    else false    
+      
+      

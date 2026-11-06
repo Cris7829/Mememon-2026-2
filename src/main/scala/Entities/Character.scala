@@ -30,6 +30,8 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
   def get_weapon: Option[Usable_Armament] = weapon
   /** Retrieves the inventory.*/
   def get_inventory: ListBuffer[Utilizable] = inventory
+
+  actions_possible ++= List(Equip_Weapon(), Use_Potion())
   
   val max_health: Int = h
   
@@ -42,9 +44,11 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
 
   override def Do(a: Attack, t: Target): Boolean =
     weapon.isDefined && t.receive(a, this)
-  
+    
 
-  override def Do(a: Use_Potion, t: Target): Boolean = t.receive(a, this)
+  override def Do(a: Use_Potion, t: Target): Boolean =
+      if get_inventory.contains(t) then t.receive(a, this)
+      else false
 
 
 
@@ -72,7 +76,7 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
 
 
 
-  actions_possible += Equip_Weapon()
+ 
 
 
   override def receive(a: Thunder, m: Black_Mage): Boolean = false
