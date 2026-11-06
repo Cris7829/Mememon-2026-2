@@ -10,4 +10,9 @@ import Entities.*
  *
  * @constructor Creates a new Dagger instance.
  */
-class Dagger(n:String, a:Int, w:Int, o:Option[Character]) extends Armament(n ,a ,w ,o)
+class Dagger(n:String, a:Int, w:Int, o:Option[Character]) extends Armament(n ,a ,w ,o):
+
+   override def can_be_equipped_by(c: Knight): Boolean = true
+   override def can_be_equipped_by(c: Thieve): Boolean = true
+   override def can_be_equipped_by(c: Black_Mage): Boolean = true
+

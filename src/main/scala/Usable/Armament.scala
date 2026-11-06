@@ -52,6 +52,24 @@ abstract class Armament(n:String, a:Int, w:Int, o:Option[Character]) extends Usa
     if x >= 0 then
       attack_points = x
 
-  def get_magic_attack_points: Int = 0    
+  def get_magic_attack_points: Int = 0
+
+
+
+
+  def can_be_equipped_by(c: Knight): Boolean = false
+
+  def can_be_equipped_by(c: Archer): Boolean = false
+
+  def can_be_equipped_by(c: Thieve): Boolean = false
+
+  def can_be_equipped_by(c: Black_Mage): Boolean = false
+
+  def can_be_equipped_by(c: White_Mage): Boolean = false
+
+
+
+
+  def set_owner(c: Character): scala.Unit = owner = Some(c)
 
 

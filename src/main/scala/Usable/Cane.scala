@@ -13,4 +13,8 @@ import Entities.*
  *
  * @constructor Creates a new Bow instance.
  */
-class Cane (n:String, a:Int, w:Int, o:Option[Character], m_a:Int ) extends Magic_Weapon(n, a, w, o ,m_a)
+class Cane (n:String, a:Int, w:Int, o:Option[Character], m_a:Int ) extends Magic_Weapon(n, a, w, o ,m_a):
+
+
+   override def can_be_equipped_by(c: Black_Mage): Boolean = true
+   override def can_be_equipped_by(c: White_Mage): Boolean = true

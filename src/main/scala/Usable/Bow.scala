@@ -10,4 +10,9 @@ import Entities.*
  *
  * @constructor Creates a new Bow instance.
  */
-class Bow(n:String, a:Int, w:Int, o:Option[Character]) extends Armament(n ,a ,w ,o)
+class Bow(n:String, a:Int, w:Int, o:Option[Character]) extends Armament(n ,a ,w ,o):
+
+
+  override def can_be_equipped_by(c: Knight): Boolean = true
+  override def can_be_equipped_by(c: Archer): Boolean = true
+  override def can_be_equipped_by(c: White_Mage): Boolean = true
