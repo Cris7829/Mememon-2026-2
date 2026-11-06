@@ -1,6 +1,6 @@
 package cl.uchile.dcc
 package Panel
-
+import Exceptions.*
 import Entities.{Black_Mage, Character, Enemy, Unity, White_Mage}
 import Actions.*
 
@@ -78,7 +78,8 @@ class Panel(a:Int , b:Int) extends Target:
         adjacent -= x
 
   def receive(a:Meteor,m:Black_Mage): Boolean =
-    if !get_units.exists(_.get_health > 0) then false
+    if !get_units.exists(_.get_health > 0) then
+      throw InvalidTargetException(s"Panel ($x, $y) has no alive units to receive Meteor")
     else
       m.set_mana(m.get_mana - 50)
       for x <- get_units if x.get_health > 0 do 

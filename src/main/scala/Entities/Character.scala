@@ -1,6 +1,6 @@
 package cl.uchile.dcc
 package Entities
-
+import Exceptions.*
 import Usable.{Usable_Armament, Utilizable}
 
 
@@ -71,7 +71,7 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
 
   
   override def receive(a: Attack, attacker: Enemy): Boolean =
-    if get_health <= 0 then false
+    if get_health <= 0 then throw DefeatedUnitException(s"$name is defeated and cannot receive actions")
     else
       val attack: Int = attacker.get_attack - get_defense
       if attack >= 0 then
@@ -99,8 +99,7 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
 
 
   override def receive(a: Heal, m: White_Mage): Boolean =
-    if get_health <= 0 then
-      false
+    if get_health <= 0 then throw DefeatedUnitException(s"$name is defeated and cannot receive actions")
     else
       m.set_mana(m.get_mana - 15)
       set_health(get_health + max_health * 2/10 + (m.get_weapon.get.get_magic_attack_points * m.get_magic_multiplier).toInt / 4)
