@@ -4,6 +4,8 @@ import scala.collection.mutable.ListBuffer
 import Actions.*
 import Action_Sistem.*
 
+import Exceptions.*
+
 /** An abstract base class representing a general Unit.
  *
  * This class defines the core attributes shared by all units such as character being used by a player
@@ -58,10 +60,12 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
 
 
   def doAction(action: Action, target: Target): Boolean =
-    if get_health<=0 || find_action(action.name).isEmpty then
-       false
+    if get_health <= 0 then
+      throw DefeatedUnitException(s"$name is defeated and cannot do any action")
+    else if find_action(action.name).isEmpty then
+      throw InvalidTargetException(s"$name cannot do the action ${action.name}")
     else
-      action.Causes(this,target)
+      action.Causes(this, target)
 
 
 
@@ -100,6 +104,8 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
   def receive(a: Equip_Weapon, c: Character): Boolean = false
 
   def receive(a: Use_Potion, c: Character): Boolean = false
+
+  def receive(a: Use_Potion, m: Magic_Character): Boolean = false
 
 
   def receive(a: Thunder, m: Black_Mage): Boolean = false
