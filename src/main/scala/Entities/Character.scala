@@ -90,7 +90,7 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
   override def receive(a: Heal, m: White_Mage): Boolean =
     if get_health <= 0 then return false
     m.set_mana(m.get_mana - 15)
-    set_health(get_health + max_health * 20 / 100 + m.get_weapon.get.get_attack_points / 4)
+    set_health(get_health + max_health * 2/10 + m.get_weapon.get.get_attack_points / 4)
     true
     
 
