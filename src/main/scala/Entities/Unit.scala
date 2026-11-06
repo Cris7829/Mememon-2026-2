@@ -68,6 +68,26 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
   def Do(a: Heal, t: Target): Boolean = false
 
   def Do(a: Purification, t: Target): Boolean = false
+
+
+  
+  
+  
+  def receive(a: Attack, damage: Int): Boolean = false
+
+  def receive(a: Move, u: Unit): Boolean = false
+
+  def receive(a: Equip_Weapon, c: Character): Boolean = false
+
+  def receive(a: Use_Potion, c: Character): Boolean = false
+
+  def receive(a: Thunder, power: Int): Boolean = false
+
+  def receive(a: Meteor, power: Int): Boolean = false
+
+  def receive(a: Heal): Boolean = false
+
+  def receive(a: Purification): Boolean = false
   
   
   
