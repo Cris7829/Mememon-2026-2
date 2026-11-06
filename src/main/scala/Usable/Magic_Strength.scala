@@ -11,7 +11,6 @@ import Entities.*
  */
 class Magic_Strength (n:String) extends Potion(n):
 
-  class Magic_Strength(n: String) extends Potion(n):
     override def apply_to(m: Magic_Character): Boolean =
       m.set_magic_multiplier(1.5)
       true

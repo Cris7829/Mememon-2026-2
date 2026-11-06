@@ -57,6 +57,11 @@ class Turns_program:
    /** Getter for the map with the max amount of action bar for each Unity.*/
    def get_action_bars:  mutable.Map[Unity, Double] = action_bars
 
+
+   def update_action_bar(x: Character): scala.Unit =
+    if action_bars.contains(x) then action_bars(x) = max_action_bar(x)
+
+
   /** It adds a Character Unity to the turn program adding it to the list, and both maps.
    *
    * To the Character to the action_bar map, it uses the max_action_bar method
@@ -142,11 +147,8 @@ class Turns_program:
    *
    * @return The boolean.
    * */
-   def check_action_bar : Boolean=
-     for x <- t_units do
-       if during_program_map(x)>=action_bars(x) then
-         return true
-     false
+   def check_action_bar: Boolean =
+     t_units.exists(x => during_program_map(x) >= action_bars(x))
 
 
   /** It calculates the surplus to compare which Unity will have its turn.

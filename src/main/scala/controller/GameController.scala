@@ -116,8 +116,8 @@ class GameController :
         turns_program.add_unit_to_program(x)
 
 
+  def do_action(u: Unity, action: Action, target: Target): Boolean =
+    u.doAction(action,target)
   
   def get_actions(u: Unity): List[Action] = u.actions_possible.toList
   
-  def do_action(u: Unity, action: Action, target: Target): Boolean =
-    u.doAction(action, target)

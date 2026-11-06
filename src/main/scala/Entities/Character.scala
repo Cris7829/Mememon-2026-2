@@ -32,19 +32,30 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
   def get_inventory: ListBuffer[Utilizable] = inventory
 
   actions_possible ++= List(Equip_Weapon(), Use_Potion())
-  
+
+  /** Value that represents the max health of a Character, associated with the initial health points.*/
   val max_health: Int = h
-  
+
+  /** Setter for the defense of the Character, if d, it's below or equal to cero, the method does nothing,
+   * otherwise it changes the defense points of a Character.
+   *
+   * @param d
+   * .*/
   def set_defense(d:Int):scala.Unit =
     if d>0 then defense=d
-      
-  
-  def set_weapon(x:Option[Usable_Armament]):scala.Unit= 
+
+  /** Setter for the equip weapon of a Character.
+   *
+   * It only works if its given an option that is defined with a Usable Armament in it.
+   *
+   * @param x The Usable Armament into a Option format
+    * . */
+  def set_weapon(x:Option[Usable_Armament]):scala.Unit=
     if x.isDefined then  weapon = x
 
   override def Do(a: Attack, t: Target): Boolean =
     weapon.isDefined && t.receive(a, this)
-    
+
 
   override def Do(a: Use_Potion, t: Target): Boolean =
       if get_inventory.contains(t) then t.receive(a, this)
@@ -76,7 +87,7 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
 
 
 
- 
+
 
 
   override def receive(a: Thunder, m: Black_Mage): Boolean = false
@@ -88,11 +99,11 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
 
 
   override def receive(a: Heal, m: White_Mage): Boolean =
-    if get_health <= 0 then 
+    if get_health <= 0 then
       false
     else
       m.set_mana(m.get_mana - 15)
-      set_health(get_health + max_health * 2/10 + m.get_weapon.get.get_attack_points * m.get_magic_multiplier.toInt /4)
+      set_health(get_health + max_health * 2/10 + (m.get_weapon.get.get_magic_attack_points * m.get_magic_multiplier).toInt / 4)
       m.set_magic_multiplier(1.0)
       true
     
