@@ -19,5 +19,8 @@ class Meteor extends Spells:
   override val name: String = "Meteor"
 
 
+  val cost: Int = 50 
+
+
 
   def Causes(s: Source, t: Target): Boolean = s.Do(this, t)

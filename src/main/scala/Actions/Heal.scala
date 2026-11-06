@@ -15,6 +15,6 @@ import scala.collection.mutable.ListBuffer
 class Heal extends Spells:
   override val name: String = "Heal"
 
-
+  val cost: Int = 15
 
   def Causes(s: Source, t: Target): Boolean = s.Do(this, t)

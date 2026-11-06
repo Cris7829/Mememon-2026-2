@@ -39,10 +39,10 @@ trait Unity extends Source with Target:
   def Do(a: Purification, t: Target): Boolean
 
 
-  
-  def receive(a: Attack, damage: Int): Boolean 
+  def receive(a: Attack, attacker: Character): Boolean
+  def receive(a: Attack, attacker: Enemy): Boolean 
 
-  def receive(a: Move, u: Unit): Boolean 
+  def receive(a: Move, u: Unity): Boolean 
 
   def receive(a: Equip_Weapon, c: Character): Boolean 
 
@@ -52,9 +52,9 @@ trait Unity extends Source with Target:
 
   def receive(a: Meteor, power: Int): Boolean 
 
-  def receive(a: Heal): Boolean 
+  def receive(a: Heal, power: Int): Boolean 
 
-  def receive(a: Purification): Boolean 
+  def receive(a: Purification, power: Int): Boolean  
 
   
 

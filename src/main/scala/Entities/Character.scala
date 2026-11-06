@@ -6,6 +6,8 @@ import Usable.{Usable_Armament, Utilizable}
 
 import scala.collection.mutable.ListBuffer
 
+import Action_Sistem.*
+import Actions.*
 
 /** A class representing a general Unit that can be used by a player.
  * .
@@ -28,3 +30,43 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
   def get_weapon: Option[Usable_Armament] = weapon
   /** Retrieves the inventory.*/
   def get_inventory: ListBuffer[Utilizable] = inventory
+
+  
+  
+  override def Do(a: Attack, t: Target): Boolean =
+    weapon.isDefined && t.receive(a,this)
+
+  
+  override def Do(a: Equip_Weapon, t: Target): Boolean = t.receive(a, this)
+
+  override def Do(a: Use_Potion, t: Target): Boolean = t.receive(a, this)
+
+  
+
+  
+  override def receive(a: Attack, attacker: Character): Boolean = 
+    val attack: Int = attacker.get_weapon.get.get_attack_points
+    set_health(get_health-attack)
+    true
+  
+
+
+  override def receive(a: Attack, attacker: Enemy): Boolean = 
+    set_health(get_health-attacker.get_attack)
+    true
+
+  
+
+  override def receive(a: Move, u: Unity): Boolean = false
+
+  override def receive(a: Equip_Weapon, c: Character): Boolean = false
+
+  override def receive(a: Use_Potion, c: Character): Boolean = false
+
+  override def receive(a: Thunder, power: Int): Boolean = false
+
+  override def receive(a: Meteor, power: Int): Boolean = false
+
+  override def receive(a: Heal, power: Int): Boolean = false
+
+  override def receive(a: Purification, power: Int): Boolean = false

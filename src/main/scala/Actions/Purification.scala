@@ -15,5 +15,6 @@ import scala.collection.mutable.ListBuffer
 class Purification extends Spells:
   override val name: String = "Purification"
 
-
+  val cost: Int = 25
+  
   def Causes(s: Source, t: Target): Boolean = s.Do(this, t)

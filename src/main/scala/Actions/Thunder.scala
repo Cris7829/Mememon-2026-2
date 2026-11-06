@@ -14,6 +14,6 @@ import scala.collection.mutable.ListBuffer
 class Thunder extends Spells:
   override val name: String = "Thunder"
 
-
-
+  val cost: Int = 20
+  
   def Causes(s: Source, t: Target): Boolean = s.Do(this, t)
