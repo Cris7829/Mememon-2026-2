@@ -40,18 +40,22 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
   /** Retrieves the weight points of the Unit.*/
   def get_weight: Int = weight
 
-  
-  
+
+
   val actions_possible: ListBuffer[Action] = ListBuffer()
 
   def find_action(id: String): Option[Action] = None
 
 
-  
-  def doAction(action: Action, target: Target): Boolean = false
 
-  
-  
+  def doAction(action: Action, target: Target): Boolean =
+    if get_health<=0 || !actions_possible.contains(action)then
+       false
+    else
+      action.Causes(this,target)
+
+
+
 
   def Do(a: Attack, t: Target): Boolean = false
 
@@ -70,9 +74,9 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
   def Do(a: Purification, t: Target): Boolean = false
 
 
-  
-  
-  
+
+
+
   def receive(a: Attack, damage: Int): Boolean = false
 
   def receive(a: Move, u: Unit): Boolean = false
@@ -88,7 +92,7 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
   def receive(a: Heal): Boolean = false
 
   def receive(a: Purification): Boolean = false
-  
-  
-  
-  
+
+
+
+
