@@ -129,6 +129,9 @@ class Panel(a:Int , b:Int) extends Target:
   def receive(a: Equip_Weapon, c: White_Mage): Boolean = false
 
 
+  def receive(a: Use_Potion, m: Magic_Character): Boolean = false
+
+
 
 
 

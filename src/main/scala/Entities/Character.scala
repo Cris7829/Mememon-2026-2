@@ -31,6 +31,12 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
   /** Retrieves the inventory.*/
   def get_inventory: ListBuffer[Utilizable] = inventory
   
+  val max_health: Int = h
+  
+  def set_defense(d:Int):scala.Unit =
+    if d>0 then defense=d
+      
+  
   def set_weapon(x:Option[Usable_Armament]):scala.Unit= 
     if x.isDefined then  weapon = x
 

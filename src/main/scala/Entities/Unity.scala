@@ -70,6 +70,7 @@ trait Unity extends Source with Target:
 
   def receive(a: Equip_Weapon, c: White_Mage): Boolean
 
+  def receive(a: Use_Potion, m: Magic_Character): Boolean
   
 
     

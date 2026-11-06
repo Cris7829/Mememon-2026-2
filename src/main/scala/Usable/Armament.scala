@@ -123,4 +123,6 @@ abstract class Armament(n:String, a:Int, w:Int, o:Option[Character]) extends Usa
       set_owner(c)
       true
 
+  def receive(a: Use_Potion, m: Magic_Character): Boolean = false    
+
 

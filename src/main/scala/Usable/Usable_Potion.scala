@@ -2,7 +2,7 @@ package cl.uchile.dcc
 package Usable
 
 import Actions.{Attack, Equip_Weapon, Heal, Meteor, Move, Purification, Thunder, Use_Potion}
-import Entities.{Black_Mage, Character, Enemy, Unity, White_Mage}
+import Entities.*
 
 
 /** A  trait representing any potion that can be used by a Unit */
@@ -26,4 +26,13 @@ trait Usable_Potion extends Utilizable:
   def receive(a: Heal, m: White_Mage): Boolean
 
   def receive(a: Purification, m: White_Mage): Boolean
+
+
+  
+  
+  def receive(a: Use_Potion, m: Magic_Character): Boolean
+
+ 
+  def apply_to(c: Character): Boolean
+  def apply_to(m: Magic_Character): Boolean
 

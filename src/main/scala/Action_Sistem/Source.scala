@@ -19,7 +19,6 @@ trait Source:
   
   def doAction(action: Action, target: Target):Boolean
 
-
   
   
   def Do(a: Attack, t: Target): Boolean 

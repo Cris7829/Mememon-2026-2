@@ -47,3 +47,22 @@ abstract class Potion (n:String) extends Usable_Potion:
   def receive(a: Equip_Weapon, c: Black_Mage): Boolean = false
 
   def receive(a: Equip_Weapon, c: White_Mage): Boolean = false
+
+
+  def apply_to(c: Character): Boolean = false
+
+  def apply_to(m: Magic_Character): Boolean = false
+  
+  
+
+  def receive(a: Use_Potion, c: Character): Boolean = consume_on(c, apply_to(c))
+
+  def receive(a: Use_Potion, m: Magic_Character): Boolean = consume_on(m, apply_to(m))
+
+ 
+  
+  private def consume_on(c: Character, applied: Boolean): Boolean =
+    if !applied then false
+    else
+      c.get_inventory -= this
+      true
