@@ -2,6 +2,9 @@ package cl.uchile.dcc
 package Actions
 
 import Usable.{Usable_Armament, Usable_Potion}
+
+import Action_Sistem.{Source, Target}
+
 import scala.collection.mutable.ListBuffer
 
 
@@ -34,3 +37,7 @@ class Use_Potion extends Utility_Action :
   def use_usable_list(x:Usable_Potion): scala.Unit =
     if usable_list.contains(x) then
       usable_list -= x
+
+
+
+  def Causes(s: Source, t: Target): Boolean = s.Do(this, t)

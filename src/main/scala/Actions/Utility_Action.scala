@@ -2,6 +2,9 @@ package cl.uchile.dcc
 package Actions
 
 import Usable.{Usable_Armament, Usable_Potion}
+
+import Action_Sistem.{Source, Target}
+
 import scala.collection.mutable.ListBuffer
 
 
@@ -12,3 +15,5 @@ import scala.collection.mutable.ListBuffer
 abstract class Utility_Action extends Action:
   /** A non-mutable variable with the name of the Utility_action. */
   val name: String
+
+  def Causes(s: Source, t: Target): Boolean

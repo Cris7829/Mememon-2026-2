@@ -2,6 +2,9 @@ package cl.uchile.dcc
 package Actions
 
 import Usable.{Usable_Armament, Usable_Potion}
+
+import Action_Sistem.{Source, Target}
+
 import scala.collection.mutable.ListBuffer
 
 
@@ -14,3 +17,7 @@ import scala.collection.mutable.ListBuffer
  */
 class Meteor extends Spells:
   override val name: String = "Meteor"
+
+
+
+  def Causes(s: Source, t: Target): Boolean = s.Do(this, t)
