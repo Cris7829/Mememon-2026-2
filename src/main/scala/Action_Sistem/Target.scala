@@ -5,6 +5,8 @@ import Actions.*
 import Entities.*
 
 trait Target:
+        
+        def get_health: Int
 
         def receive(a: Attack, attacker: Character): Boolean
 

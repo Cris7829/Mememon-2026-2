@@ -31,31 +31,34 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
   /** Retrieves the inventory.*/
   def get_inventory: ListBuffer[Utilizable] = inventory
 
-  
-  
-  override def Do(a: Attack, t: Target): Boolean =
-    weapon.isDefined && t.receive(a,this)
 
-  
+
+  override def Do(a: Attack, t: Target): Boolean =
+    weapon.isDefined && t.receive(a,this) && t.get_health>0
+
+
   override def Do(a: Equip_Weapon, t: Target): Boolean = t.receive(a, this)
 
   override def Do(a: Use_Potion, t: Target): Boolean = t.receive(a, this)
 
-  
-
-  
-  override def receive(a: Attack, attacker: Character): Boolean = 
-    val attack: Int = attacker.get_weapon.get.get_attack_points
-    set_health(get_health-attack)
-    true
-  
 
 
-  override def receive(a: Attack, attacker: Enemy): Boolean = 
-    set_health(get_health-attacker.get_attack)
+
+  override def receive(a: Attack, attacker: Character): Boolean =
+    val attack: Int = attacker.get_weapon.get.get_attack_points - get_defense
+    if attack>=0 then
+      set_health(get_health-attack)
     true
 
-  
+
+
+
+  override def receive(a: Attack, attacker: Enemy): Boolean =
+    val attack: Int = attacker.get_attack-get_defense
+    if attack >= 0 then
+      set_health(get_health - attack)
+    true
+
 
   override def receive(a: Move, u: Unity): Boolean = false
 

@@ -23,5 +23,6 @@ class Enemy(n:String, h:Int, d:Int, w:Int, a:Int) extends Unit(n:String, h:Int, 
   /** Retrieves the attack points of the Enemy.*/
   def get_attack: Int = base_attack
 
+  
   override def Do(a: Attack, t: Target): Boolean =
-     t.receive(a, this)
+     t.receive(a, this) && t.get_health>0
