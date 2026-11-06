@@ -1,6 +1,7 @@
 package cl.uchile.dcc
 package Entities
-
+import Actions.*
+import Action_Sistem.*
 import Usable.Usable_Armament
 
 /** A class representing a general magic type unit that can be used by a player.
@@ -35,3 +36,11 @@ class Magic_Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament],
   def set_mana(x:Int): scala.Unit =
     if x>=0 then
       mana=x
+
+  override def Do(a: Thunder, t: Target): Boolean = false
+
+  override def Do(a: Meteor, t: Target): Boolean = false
+
+  override def Do(a: Heal, t: Target): Boolean = false
+
+  override def Do(a: Purification, t: Target): Boolean = false
