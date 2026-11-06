@@ -18,10 +18,12 @@ trait Target:
 
         def receive(a: Use_Potion, c: Character): Boolean
 
-        def receive(a: Thunder, power: Int): Boolean
+        
+        
+        def receive(a: Thunder, m: Black_Mage): Boolean
 
-        def receive(a: Meteor, power: Int): Boolean
+        def receive(a: Meteor, m: Black_Mage): Boolean
 
-        def receive(a: Heal, power: Int): Boolean
+        def receive(a: Heal, m: White_Mage): Boolean
 
-        def receive(a: Purification, power: Int): Boolean
+        def receive(a: Purification, m: White_Mage): Boolean

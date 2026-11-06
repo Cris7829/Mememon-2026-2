@@ -2,11 +2,12 @@ package cl.uchile.dcc
 package Entities
 
 import Usable.*
-
 import Action_Sistem.{Source, Target}
 
 import scala.collection.mutable.ListBuffer
 import Actions.*
+
+import Panel.Panel
 
 /** A  trait representing any Unity that is in the game such as characters and enemies */
 trait Unity extends Source with Target:
@@ -21,6 +22,7 @@ trait Unity extends Source with Target:
 
   def doAction(action: Action, target: Target): Boolean
 
+  def set_health(x:Int): scala.Unit
 
   def Do(a: Attack, t: Target): Boolean
 
@@ -40,21 +42,21 @@ trait Unity extends Source with Target:
 
 
   def receive(a: Attack, attacker: Character): Boolean
-  def receive(a: Attack, attacker: Enemy): Boolean 
+  def receive(a: Attack, attacker: Enemy): Boolean
 
-  def receive(a: Move, u: Unity): Boolean 
+  def receive(a: Move, u: Unity): Boolean
 
-  def receive(a: Equip_Weapon, c: Character): Boolean 
+  def receive(a: Equip_Weapon, c: Character): Boolean
 
-  def receive(a: Use_Potion, c: Character): Boolean 
+  def receive(a: Use_Potion, c: Character): Boolean
 
-  def receive(a: Thunder, power: Int): Boolean 
+  def receive(a: Thunder, m: Black_Mage): Boolean
 
-  def receive(a: Meteor, power: Int): Boolean 
+  def receive(a: Meteor, m: Black_Mage): Boolean
 
-  def receive(a: Heal, power: Int): Boolean 
+  def receive(a: Heal, m: White_Mage): Boolean
 
-  def receive(a: Purification, power: Int): Boolean  
+  def receive(a: Purification, m: White_Mage): Boolean
 
   
 

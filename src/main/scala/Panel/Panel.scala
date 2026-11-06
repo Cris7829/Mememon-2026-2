@@ -1,7 +1,11 @@
 package cl.uchile.dcc
 package Panel
 
-import Entities.Unity
+import Entities.{Black_Mage, Character, Enemy, Unity, White_Mage}
+import Actions.*
+
+import Action_Sistem.Target
+
 import scala.collection.mutable.ListBuffer
 
 /** A class representing each coordinate of the map.
@@ -11,7 +15,7 @@ import scala.collection.mutable.ListBuffer
  *
  * @constructor Creates a new Panel with hte coordinates given and empty list of units and empty list of adjacent panels
  */
-class Panel(a:Int , b:Int) :
+class Panel(a:Int , b:Int) extends Target:
   /** Variable that represents the x-axis coordinate of the Panel */
   val x :Int=a
 
@@ -72,3 +76,40 @@ class Panel(a:Int , b:Int) :
   def remove_adjacent(x: Panel): scala.Unit =
       if adjacent.contains(x) then
         adjacent -= x
+        
+  def receive(a:Meteor,m:Black_Mage): Boolean =
+    m.set_mana(m.get_mana - 20)
+    for x<-get_units do 
+      if x.get_health-m.get_weapon.get.get_attack_points>=0 then
+       x.set_health(x.get_health-m.get_weapon.get.get_attack_points)
+      else 
+       x.set_health(0)
+    true
+
+  def get_health: Int = 0
+
+  def receive(a: Attack, attacker: Character): Boolean = false
+
+  def receive(a: Attack, attacker: Enemy): Boolean =false
+
+  def receive(a: Move, u: Unity): Boolean = false
+
+  def receive(a: Equip_Weapon, c: Character): Boolean =false
+
+  def receive(a: Use_Potion, c: Character): Boolean =false
+
+
+  def receive(a: Thunder, m: Black_Mage): Boolean = false
+  
+
+  def receive(a: Heal, m: White_Mage): Boolean = false
+
+  def receive(a: Purification, m: White_Mage): Boolean =false 
+    
+      
+      
+    
+    
+
+   
+   

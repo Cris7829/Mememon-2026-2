@@ -8,7 +8,7 @@ import scala.collection.mutable.ListBuffer
 
 import Action_Sistem.*
 import Actions.*
-
+import Panel.*
 /** A class representing a general Unit that can be used by a player.
  * .
  *It follows the base core attributes of the Unit abstract class an adds a slot to equip an armament and
@@ -60,17 +60,32 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
     true
 
 
-
   override def receive(a: Move, u: Unity): Boolean = false
 
   override def receive(a: Equip_Weapon, c: Character): Boolean = false
 
   override def receive(a: Use_Potion, c: Character): Boolean = false
 
-  override def receive(a: Thunder, power: Int): Boolean = false
 
-  override def receive(a: Meteor, power: Int): Boolean = false
+  override def receive(a: Thunder, m: Black_Mage): Boolean =
 
-  override def receive(a: Heal, power: Int): Boolean = false
+    m.set_mana(m.get_mana-20)
+    if m.get_weapon.get.get_attack_points>get_health then
+     set_health(get_health - m.get_weapon.get.get_attack_points)
+    else set_health(0)
+    true
 
-  override def receive(a: Purification, power: Int): Boolean = false
+
+  override def receive(a: Meteor, m: Black_Mage): Boolean = false
+
+
+  override def receive(a: Heal, m: White_Mage): Boolean =
+    m.set_mana(m.get_mana - 15)
+    set_health((get_health.toDouble*1.2).toInt+m.get_weapon.get.get_attack_points/4)
+    true
+
+  override def receive(a: Purification, m: White_Mage): Boolean =
+
+    m.set_mana(m.get_mana - 25)
+    set_health((get_health.toDouble * 0.85).toInt + m.get_weapon.get.get_attack_points / 2)
+    true

@@ -3,6 +3,8 @@ package Entities
 
 import Usable.Usable_Armament
 
+import Actions.*
+import Action_Sistem.*
 
 /** A class representing a White Mage, a type of Magic Character.
  * .
@@ -27,3 +29,16 @@ class White_Mage (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament], m:I
    */
   def this(n: String, h: Int, d: Int, w: Int, m:Int) =
     this(n, h, d, w, Option.empty[Usable_Armament],m)
+
+
+  override def Do(a: Heal, t: Target): Boolean =
+    if get_mana >= 15 && get_weapon.isDefined && t.get_health>=0 then
+      t.receive(a,this)
+    else
+      false
+
+  override def Do(a: Purification, t: Target): Boolean =
+    if get_mana >= 25 && get_weapon.isDefined then
+      t.receive(a,this)
+    else
+      false

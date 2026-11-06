@@ -95,13 +95,14 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
 
   def receive(a: Use_Potion, c: Character): Boolean = false
 
-  def receive(a: Thunder, power: Int): Boolean = false
+  
+  def receive(a: Thunder, m: Black_Mage): Boolean = false
 
-  def receive(a: Meteor, power: Int): Boolean = false
+  def receive(a: Meteor, m: Black_Mage): Boolean = false
 
-  def receive(a: Heal, power: Int): Boolean = false
+  def receive(a: Heal, m: White_Mage): Boolean = false
 
-  def receive(a: Purification, power: Int): Boolean = false
+  def receive(a: Purification, m: White_Mage): Boolean = false
 
   
   

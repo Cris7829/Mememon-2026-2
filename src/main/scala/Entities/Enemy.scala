@@ -2,7 +2,7 @@ package cl.uchile.dcc
 package Entities
 
 import Action_Sistem.Target
-import Actions.Attack
+import Actions.{Attack, Equip_Weapon}
 
 /** A class representing a general Unit that can do damage to the player's Unit.
  * .
