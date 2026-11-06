@@ -2,7 +2,8 @@ package cl.uchile.dcc
 package Entities
 
 import Usable.*
-
+import Action_Sistem.*
+import Actions.*
 
 /** A class representing a Knight, a player's playable character.
  *
@@ -24,3 +25,8 @@ class Knight (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) extends
    */
   def this(n:String, h:Int, d:Int, w:Int) =
     this(n, h, d, w ,Option.empty[Usable_Armament])
+
+
+  override def Do(a: Equip_Weapon, t: Target): Boolean =
+    if get_inventory.contains(t) then t.receive(a, this)
+    else false  

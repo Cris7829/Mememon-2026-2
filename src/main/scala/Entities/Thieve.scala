@@ -3,6 +3,9 @@ package Entities
 
 import Usable.*
 
+import Action_Sistem.Target
+import Actions.Equip_Weapon
+
 /** A class representing a Thieve, a player's playable character.
  *
  * @param n The name of the Thieve.
@@ -24,3 +27,7 @@ class Thieve(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) extends 
    */
   def this(n:String, h:Int, d:Int, w:Int) =
     this(n, h, d, w ,Option.empty[Usable_Armament])
+
+  override def Do(a: Equip_Weapon, t: Target): Boolean =
+      if get_inventory.contains(t) then t.receive(a, this)
+      else false

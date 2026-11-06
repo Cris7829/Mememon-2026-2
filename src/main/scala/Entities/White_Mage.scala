@@ -43,4 +43,8 @@ class White_Mage (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament], m:I
     else
       false
 
-  actions_possible ++= List(Heal(), Purification())    
+  actions_possible ++= List(Heal(), Purification())
+
+  override def Do(a: Equip_Weapon, t: Target): Boolean =
+    if get_inventory.contains(t) then t.receive(a, this)
+    else false

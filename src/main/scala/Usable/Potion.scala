@@ -2,7 +2,7 @@ package cl.uchile.dcc
 package Usable
 
 import Actions.{Attack, Equip_Weapon, Heal, Meteor, Move, Purification, Thunder, Use_Potion}
-import Entities.{Black_Mage, Character, Enemy, Unity, White_Mage}
+import Entities.*
 
 /** An abstract base class representing a general potion in the game.
  *
@@ -36,3 +36,14 @@ abstract class Potion (n:String) extends Usable_Potion:
   def receive(a: Heal, m: White_Mage): Boolean =false
 
   def receive(a: Purification, m: White_Mage): Boolean =false
+
+
+  def receive(a: Equip_Weapon, c: Knight): Boolean = false
+
+  def receive(a: Equip_Weapon, c: Archer): Boolean = false
+
+  def receive(a: Equip_Weapon, c: Thieve): Boolean = false
+
+  def receive(a: Equip_Weapon, c: Black_Mage): Boolean = false
+
+  def receive(a: Equip_Weapon, c: White_Mage): Boolean = false

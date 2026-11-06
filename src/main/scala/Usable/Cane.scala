@@ -2,6 +2,9 @@ package cl.uchile.dcc
 package Usable
 
 import Entities.*
+import Actions.Equip_Weapon
+
+import Entities.*
 
 /** A magical Cane designed for a magical use.
  *
@@ -18,3 +21,4 @@ class Cane (n:String, a:Int, w:Int, o:Option[Character], m_a:Int ) extends Magic
 
    override def can_be_equipped_by(c: Black_Mage): Boolean = true
    override def can_be_equipped_by(c: White_Mage): Boolean = true
+

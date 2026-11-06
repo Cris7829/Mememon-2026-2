@@ -30,14 +30,13 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
   def get_weapon: Option[Usable_Armament] = weapon
   /** Retrieves the inventory.*/
   def get_inventory: ListBuffer[Utilizable] = inventory
-
-
+  
+  def set_weapon(x:Option[Usable_Armament]):scala.Unit= 
+    if x.isDefined then  weapon = x
 
   override def Do(a: Attack, t: Target): Boolean =
-    weapon.isDefined && t.receive(a,this) 
-
-
-  override def Do(a: Equip_Weapon, t: Target): Boolean = t.receive(a, this)
+    weapon.isDefined && t.receive(a, this)
+  
 
   override def Do(a: Use_Potion, t: Target): Boolean = t.receive(a, this)
 
@@ -67,7 +66,7 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
 
 
 
-
+  actions_possible += Equip_Weapon()
 
 
   override def receive(a: Thunder, m: Black_Mage): Boolean = false

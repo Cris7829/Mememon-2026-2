@@ -111,6 +111,17 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
   def receive(a: Purification, m: White_Mage): Boolean = false
 
 
+  def receive(a: Equip_Weapon, c: Knight): Boolean = false
+
+  def receive(a: Equip_Weapon, c: Archer): Boolean = false
+
+  def receive(a: Equip_Weapon, c: Thieve): Boolean = false
+
+  def receive(a: Equip_Weapon, c: Black_Mage): Boolean = false
+
+  def receive(a: Equip_Weapon, c: White_Mage): Boolean = false
+
+
 
 
 

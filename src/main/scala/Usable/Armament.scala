@@ -82,8 +82,7 @@ abstract class Armament(n:String, a:Int, w:Int, o:Option[Character]) extends Usa
   def receive(a: Attack, attacker: Enemy): Boolean = false
 
   def receive(a: Move, u: Unity): Boolean = false
-
-  def receive(a: Equip_Weapon, c: Character): Boolean = false
+  
 
   def receive(a: Use_Potion, c: Character): Boolean = false
 
@@ -95,5 +94,33 @@ abstract class Armament(n:String, a:Int, w:Int, o:Option[Character]) extends Usa
   def receive(a: Heal, m: White_Mage): Boolean=false
 
   def receive(a: Purification, m: White_Mage): Boolean=false
+
+
+  
+  
+  
+  
+  
+  def receive(a: Equip_Weapon, c: Character): Boolean = false
+
+  def receive(a: Equip_Weapon, c: Knight): Boolean = equip_on(c, can_be_equipped_by(c))
+
+  def receive(a: Equip_Weapon, c: Archer): Boolean = equip_on(c, can_be_equipped_by(c))
+
+  def receive(a: Equip_Weapon, c: Thieve): Boolean = equip_on(c, can_be_equipped_by(c))
+
+  def receive(a: Equip_Weapon, c: Black_Mage): Boolean = equip_on(c, can_be_equipped_by(c))
+
+  def receive(a: Equip_Weapon, c: White_Mage): Boolean = equip_on(c, can_be_equipped_by(c))
+
+  
+  private def equip_on(c: Character, allowed: Boolean): Boolean =
+    if !allowed then false
+    else
+      c.get_weapon.foreach(w => c.get_inventory += w)
+      c.get_inventory -= this
+      c.set_weapon(Some(this))
+      set_owner(c)
+      true
 
 

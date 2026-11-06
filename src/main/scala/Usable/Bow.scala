@@ -1,6 +1,8 @@
 package cl.uchile.dcc
 package Usable
 import Entities.*
+
+import Actions.*
 /** A ranged, non-magical bow.
  *
  * @param n The name of the bow.
