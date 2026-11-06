@@ -81,8 +81,10 @@ class Panel(a:Int , b:Int) extends Target:
     if get_units.isEmpty then false
     else
       m.set_mana(m.get_mana - 50)
-      for x <- get_units if x.get_health > 0 do
-        x.set_health(x.get_health - m.get_weapon.get.get_attack_points)
+      for x <- get_units if x.get_health > 0 do 
+        x.set_health(x.get_health - m.get_weapon.get.get_attack_points*m.get_magic_multiplier.toInt)
+        m.set_magic_multiplier(1.0)  
+      
       true
 
 

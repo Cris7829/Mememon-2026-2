@@ -38,15 +38,20 @@ class Enemy(n:String, h:Int, d:Int, w:Int, a:Int) extends Unit(n:String, h:Int, 
   override def receive(a: Thunder, m: Black_Mage): Boolean =
 
     m.set_mana(m.get_mana - 20)
-    if m.get_weapon.get.get_attack_points < get_health then
-      set_health(get_health - m.get_weapon.get.get_attack_points)
+    if m.get_weapon.get.get_attack_points * m.get_magic_multiplier.toInt < get_health then 
+      set_health(get_health - m.get_weapon.get.get_attack_points * m.get_magic_multiplier.toInt)
+      m.set_magic_multiplier(1.0)
     else set_health(0)
     true
   
   
   override def receive(a: Purification, m: White_Mage): Boolean =
-
+    
     m.set_mana(m.get_mana - 25)
-    set_health((get_health.toDouble * 0.85).toInt - m.get_weapon.get.get_attack_points / 2)
+    val during:Int = (get_health.toDouble * 0.85).toInt - m.get_weapon.get.get_attack_points* m.get_magic_multiplier.toInt/ 2
+    if during > 0 then
+     set_health(during)
+     m.set_magic_multiplier(1.0)
+    else set_health(0) 
     true   
      
