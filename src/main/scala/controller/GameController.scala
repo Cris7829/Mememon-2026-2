@@ -6,6 +6,8 @@ import Entities.*
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import Panel.*
+import Actions.Action
+import Action_Sistem.Target
 
 
 /** The GameController is a class that it keeps track of the state of the game.
@@ -107,12 +109,15 @@ class GameController :
         owners(y) = x
         x.add_units(y)
         turns_program.add_unit_to_program(y)
-
-  /** It adds an enemy to the game and to the turn program, if it's already there, does nothing.
-   *
-   * @param  x the enemy
-   */
+  
   def add_enemies(x: Enemy): scala.Unit =
       if !enemies_list.contains(x) then
         enemies_list += x
         turns_program.add_unit_to_program(x)
+
+
+  
+  def get_actions(u: Unity): List[Action] = u.actions_possible.toList
+  
+  def do_action(u: Unity, action: Action, target: Target): Boolean =
+    u.doAction(action, target)

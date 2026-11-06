@@ -32,13 +32,14 @@ class Black_Mage (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament], m:I
     this(n, h, d, w, Option.empty[Usable_Armament],m)
 
   override def Do(a: Thunder, t:Target): Boolean =
-    if get_mana>= 20 && get_weapon.isDefined then
+    if get_mana>= 20 && get_weapon.exists(_.get_attack_points > 0) then
       t.receive(a,this)
     else
      false
 
-  def Do(a: Meteor,p:Panel): Boolean =
-    if get_mana >= 50 && get_weapon.isDefined then
-      p.receive(a,this)
+  override def Do(a: Meteor,t:Target): Boolean =
+    if get_mana >= 50 && get_weapon.exists(_.get_attack_points > 0) then
+      t.receive(a,this)
     else
       false
+  actions_possible ++= List(Thunder(), Meteor())

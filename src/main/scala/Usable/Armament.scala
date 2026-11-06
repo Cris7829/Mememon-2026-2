@@ -52,4 +52,6 @@ abstract class Armament(n:String, a:Int, w:Int, o:Option[Character]) extends Usa
     if x >= 0 then
       attack_points = x
 
+  def get_magic_attack_points: Int = 0    
+
 

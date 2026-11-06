@@ -22,7 +22,7 @@ abstract class Magic_Weapon(n: String, a: Int, w: Int, o:Option[Character], m_a:
   private var magic_attack_points: Int = m_a
 
   /** Retrieves the magic points of the weapon. */
-  def get_magic_attack_points: Int = magic_attack_points
+  override def get_magic_attack_points: Int = magic_attack_points
 
   /** Updates the magic attack points of the magic weapon.
    *

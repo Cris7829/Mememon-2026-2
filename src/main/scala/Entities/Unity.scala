@@ -23,10 +23,12 @@ trait Unity extends Source with Target:
   def doAction(action: Action, target: Target): Boolean
 
   def set_health(x:Int): scala.Unit
-
+  
+  def get_health: Int
+  
   def Do(a: Attack, t: Target): Boolean
 
-  def Do(a: Move, t: Target): Boolean
+  def Do(a: Move, t:Target): Boolean 
 
   def Do(a: Equip_Weapon, t: Target): Boolean
 
@@ -44,7 +46,7 @@ trait Unity extends Source with Target:
   def receive(a: Attack, attacker: Character): Boolean
   def receive(a: Attack, attacker: Enemy): Boolean
 
-  def receive(a: Move, t:Target): Boolean
+  def receive(a: Move, u:Unity): Boolean
 
   def receive(a: Equip_Weapon, c: Character): Boolean
 

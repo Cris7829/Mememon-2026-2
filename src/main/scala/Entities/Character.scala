@@ -34,35 +34,32 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
 
 
   override def Do(a: Attack, t: Target): Boolean =
-    weapon.isDefined && t.receive(a,this) && t.get_health>0
+    weapon.isDefined && t.receive(a,this) 
 
 
   override def Do(a: Equip_Weapon, t: Target): Boolean = t.receive(a, this)
 
   override def Do(a: Use_Potion, t: Target): Boolean = t.receive(a, this)
+
+
+
+
+
+
+  override def receive(a: Attack, attacker: Character): Boolean = false
+
+
   
-  
-
-
-
-
-  override def receive(a: Attack, attacker: Character): Boolean =
-    val attack: Int = attacker.get_weapon.get.get_attack_points - get_defense
-    if attack>=0 then
-      set_health(get_health-attack)
-    true
-
-
-
-
   override def receive(a: Attack, attacker: Enemy): Boolean =
-    val attack: Int = attacker.get_attack-get_defense
-    if attack >= 0 then
-      set_health(get_health - attack)
-    true
+    if get_health <= 0 then false
+    else
+      val attack: Int = attacker.get_attack - get_defense
+      if attack >= 0 then
+        set_health(get_health - attack)
+      true
 
 
-  override def receive(a: Move, t:Target): Boolean = false
+  override def receive(a: Move, u:Unity): Boolean = false
 
   override def receive(a: Equip_Weapon, c: Character): Boolean = false
 
@@ -73,25 +70,20 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
 
 
 
-  override def receive(a: Thunder, m: Black_Mage): Boolean =
+  override def receive(a: Thunder, m: Black_Mage): Boolean = false
 
-    m.set_mana(m.get_mana-20)
-    if m.get_weapon.get.get_attack_points>get_health then
-     set_health(get_health - m.get_weapon.get.get_attack_points)
-    else set_health(0)
-    true
+ 
 
 
   override def receive(a: Meteor, m: Black_Mage): Boolean = false
 
 
   override def receive(a: Heal, m: White_Mage): Boolean =
+    if get_health <= 0 then return false
     m.set_mana(m.get_mana - 15)
-    set_health((get_health.toDouble*1.2).toInt+m.get_weapon.get.get_attack_points/4)
+    set_health(get_health + get_health * 20 / 100 + m.get_weapon.get.get_attack_points / 4)
     true
+    
 
-  override def receive(a: Purification, m: White_Mage): Boolean =
+  override def receive(a: Purification, m: White_Mage): Boolean = false
 
-    m.set_mana(m.get_mana - 25)
-    set_health((get_health.toDouble * 0.85).toInt + m.get_weapon.get.get_attack_points / 2)
-    true

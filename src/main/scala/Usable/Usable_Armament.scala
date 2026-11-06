@@ -6,6 +6,6 @@ import Entities.*
 /** A  trait representing any armament that can be equipped and utilized by a Unit. */
 trait Usable_Armament extends Utilizable:
   def weight: Int
-  def get_attack_points: Int 
-
+  def get_attack_points: Int
+  def get_magic_attack_points: Int
 

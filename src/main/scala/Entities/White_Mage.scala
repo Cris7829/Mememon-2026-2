@@ -32,13 +32,15 @@ class White_Mage (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament], m:I
 
 
   override def Do(a: Heal, t: Target): Boolean =
-    if get_mana >= 15 && get_weapon.isDefined && t.get_health>=0 then
+    if get_mana >= 15 && get_weapon.exists(_.get_attack_points > 0) then
       t.receive(a,this)
     else
       false
 
   override def Do(a: Purification, t: Target): Boolean =
-    if get_mana >= 25 && get_weapon.isDefined then
+    if get_mana >= 25 && get_weapon.exists(_.get_attack_points > 0) then
       t.receive(a,this)
     else
       false
+
+  actions_possible ++= List(Heal(), Purification())    

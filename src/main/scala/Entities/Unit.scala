@@ -51,14 +51,14 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
 
 
 
-  val actions_possible: ListBuffer[Action] = ListBuffer()
+  val actions_possible: ListBuffer[Action] = ListBuffer(Attack(), Move())
 
-  def find_action(id: String): Option[Action] = None
+  def find_action(id: String): Option[Action] = actions_possible.find(_.name == id)
 
 
 
   def doAction(action: Action, target: Target): Boolean =
-    if get_health<=0 || !actions_possible.contains(action)then
+    if get_health<=0 || find_action(action.name).isEmpty then
        false
     else
       action.Causes(this,target)
@@ -70,7 +70,7 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
 
 
 
-  def Do(a: Move, t: Target): Boolean = false
+  def Do(a: Move, t: Target): Boolean = t.receive(a, this)
 
 
 
@@ -95,7 +95,7 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
 
   def receive(a: Attack, attacker: Enemy): Boolean = false
 
-  def receive(a: Move, t:Target): Boolean = false
+  def receive(a: Move, u: Unity):Boolean = false
 
   def receive(a: Equip_Weapon, c: Character): Boolean = false
 

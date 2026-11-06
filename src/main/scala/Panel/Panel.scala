@@ -76,37 +76,34 @@ class Panel(a:Int , b:Int) extends Target:
   def remove_adjacent(x: Panel): scala.Unit =
       if adjacent.contains(x) then
         adjacent -= x
-        
-  def receive(a:Meteor,m:Black_Mage): Boolean =
-    m.set_mana(m.get_mana - 20)
-    for x<-get_units do 
-      if x.get_health-m.get_weapon.get.get_attack_points>=0 then
-       x.set_health(x.get_health-m.get_weapon.get.get_attack_points)
-      else 
-       x.set_health(0)
-    true
 
-  def get_health: Int = 0
+  def receive(a:Meteor,m:Black_Mage): Boolean =
+    if get_units.isEmpty then false
+    else
+      m.set_mana(m.get_mana - 50)
+      for x <- get_units if x.get_health > 0 do
+        x.set_health(x.get_health - m.get_weapon.get.get_attack_points)
+      true
+
 
   def receive(a: Attack, attacker: Character): Boolean = false
 
   def receive(a: Attack, attacker: Enemy): Boolean =false
 
 
-  def receive(a: Move, t:Target): Boolean = false
-  
+
   def receive(a: Move, u:Unity): Boolean =
     for x<-get_adjacent do
       if x.get_units.contains(u) then
        x.remove_units(u)
        add_units(u)
        return true
-    false  
-    
-    
-    
-    
-    
+    false
+
+
+
+
+
 
   def receive(a: Equip_Weapon, c: Character): Boolean =false
 
@@ -114,16 +111,16 @@ class Panel(a:Int , b:Int) extends Target:
 
 
   def receive(a: Thunder, m: Black_Mage): Boolean = false
-  
+
 
   def receive(a: Heal, m: White_Mage): Boolean = false
 
-  def receive(a: Purification, m: White_Mage): Boolean =false 
-    
-      
-      
-    
-    
+  def receive(a: Purification, m: White_Mage): Boolean =false
 
-   
-   
+
+
+
+
+
+
+

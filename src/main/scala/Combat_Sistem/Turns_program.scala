@@ -92,6 +92,8 @@ class Turns_program:
        t_units -= x
        during_program_map.remove(x)
        action_bars.remove(x)
+       sorted_Seq = sorted_Seq.filterNot(_._1 == x)
+       if turn.contains(x) then turn = None
 
 
   /** It calculates the max amount of the action bar for the given Character.
@@ -134,7 +136,7 @@ class Turns_program:
          during_program_map(x)= during_program_map(x) + k
 
        if check_action_bar then
-       create_seq_turns()
+         create_seq_turns()
 
   /** It gives True if at least one Unity has reached his max action bar amount, otherwise returns false.
    *
@@ -174,6 +176,17 @@ class Turns_program:
      if sorted_Seq.nonEmpty then
        turn = Some(sorted_Seq.head._1)
        sorted_Seq = sorted_Seq.tail
+
+   def start_next_turn(k: Double): Option[Unity] =
+    if turn.isEmpty && k > 0 && t_units.nonEmpty then
+      while sorted_Seq.isEmpty do
+        add_action_bar(k)
+      a_turn()
+    turn
+
+
+   def end_turn(): scala.Unit =
+     turn = None
 
 
 
