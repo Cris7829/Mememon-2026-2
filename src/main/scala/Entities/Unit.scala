@@ -33,14 +33,14 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
 
   /** Retrieves the health points of the Unit.*/
   def get_health: Int = health
-  
-  
-  
-  def set_health(x:Int): scala.Unit= 
-    if x<0 then 
+
+
+
+  def set_health(x:Int): scala.Unit=
+    if x<0 then
      health=0
-    else health = x 
-  
+    else health = x
+
 
 
   /** Retrieves the defense points of the Unit.*/
@@ -63,11 +63,17 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
     else
       action.Causes(this,target)
 
-    
-    
-  def Do(a: Attack, t: Target): Boolean= false
+
+
+  def Do(a: Attack, t: Target): Boolean = false
+
+
+
 
   def Do(a: Move, t: Target): Boolean = false
+
+
+
 
   def Do(a: Equip_Weapon, t: Target): Boolean = false
 
@@ -80,22 +86,22 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
   def Do(a: Heal, t: Target): Boolean = false
 
   def Do(a: Purification, t: Target): Boolean = false
-    
-    
-    
-    
+
+
+
+
 
   def receive(a: Attack, attacker: Character): Boolean = false
 
   def receive(a: Attack, attacker: Enemy): Boolean = false
 
-  def receive(a: Move, u: Unity): Boolean = false
+  def receive(a: Move, t:Target): Boolean = false
 
   def receive(a: Equip_Weapon, c: Character): Boolean = false
 
   def receive(a: Use_Potion, c: Character): Boolean = false
 
-  
+
   def receive(a: Thunder, m: Black_Mage): Boolean = false
 
   def receive(a: Meteor, m: Black_Mage): Boolean = false
@@ -104,11 +110,11 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
 
   def receive(a: Purification, m: White_Mage): Boolean = false
 
-  
-  
-  
-  
-  
+
+
+
+
+
 
 
 

@@ -40,6 +40,8 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
   override def Do(a: Equip_Weapon, t: Target): Boolean = t.receive(a, this)
 
   override def Do(a: Use_Potion, t: Target): Boolean = t.receive(a, this)
+  
+  
 
 
 
@@ -60,11 +62,15 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
     true
 
 
-  override def receive(a: Move, u: Unity): Boolean = false
+  override def receive(a: Move, t:Target): Boolean = false
 
   override def receive(a: Equip_Weapon, c: Character): Boolean = false
 
   override def receive(a: Use_Potion, c: Character): Boolean = false
+
+
+
+
 
 
   override def receive(a: Thunder, m: Black_Mage): Boolean =

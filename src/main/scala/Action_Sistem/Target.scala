@@ -12,7 +12,7 @@ trait Target:
 
         def receive(a: Attack, attacker: Enemy): Boolean
 
-        def receive(a: Move, u: Unity): Boolean
+        def receive(a: Move, t:Target): Boolean
 
         def receive(a: Equip_Weapon, c: Character): Boolean
 

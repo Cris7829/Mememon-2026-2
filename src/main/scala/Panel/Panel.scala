@@ -5,7 +5,7 @@ import Entities.{Black_Mage, Character, Enemy, Unity, White_Mage}
 import Actions.*
 
 import Action_Sistem.Target
-
+import Entities.*
 import scala.collection.mutable.ListBuffer
 
 /** A class representing each coordinate of the map.
@@ -26,7 +26,7 @@ class Panel(a:Int , b:Int) extends Target:
   private val units: ListBuffer[Unity] = ListBuffer()
 
   /** Variable that has a list of Panels, representing the ones that are adjacent to the Panel */
-  private val adjacent: ListBuffer[Panel] = ListBuffer()
+   val adjacent: ListBuffer[Panel] = ListBuffer()
 
 
   /** Retrieves the list of Units in the Panel.
@@ -92,7 +92,21 @@ class Panel(a:Int , b:Int) extends Target:
 
   def receive(a: Attack, attacker: Enemy): Boolean =false
 
-  def receive(a: Move, u: Unity): Boolean = false
+
+  def receive(a: Move, t:Target): Boolean = false
+  
+  def receive(a: Move, u:Unity): Boolean =
+    for x<-get_adjacent do
+      if x.get_units.contains(u) then
+       x.remove_units(u)
+       add_units(u)
+       return true
+    false  
+    
+    
+    
+    
+    
 
   def receive(a: Equip_Weapon, c: Character): Boolean =false
 
