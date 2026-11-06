@@ -95,13 +95,14 @@ class Panel(a:Int , b:Int) extends Target:
 
 
 
-  def receive(a: Move, u:Unity): Boolean =
-    for x<-get_adjacent do
-      if x.get_units.contains(u) then
-       x.remove_units(u)
-       add_units(u)
-       return true
-    false
+  def receive(a: Move, u: Unity): Boolean =
+    get_adjacent.find(_.get_units.contains(u)) match
+      case Some(p) =>
+        p.remove_units(u)
+        add_units(u)
+        true
+      case None =>
+        throw InvalidMovementException(s"${u.name} cannot move to panel ($x, $y) because it is not adjacent to its current panel")
 
 
 
