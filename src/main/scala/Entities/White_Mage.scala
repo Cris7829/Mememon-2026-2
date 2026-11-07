@@ -30,7 +30,7 @@ class White_Mage (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament], m:I
   def this(n: String, h: Int, d: Int, w: Int, m:Int) =
     this(n, h, d, w, Option.empty[Usable_Armament],m)
 
-  override def Do(a: Thunder, t: Target): Boolean =
+  override def Do(a: Heal, t: Target): Boolean =
     if !get_weapon.exists(_.is_magic) then
       throw InvalidWeaponException(s"$name needs a magic weapon to cast ${a.name}")
     else if get_mana < 15 then

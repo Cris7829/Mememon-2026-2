@@ -1,6 +1,6 @@
 package cl.uchile.dcc
 package Actions_test
-
+import Panel.*
 import munit.FunSuite
 import Actions.*
 import Entities.*
@@ -180,3 +180,78 @@ class Actions_test extends FunSuite:
     equip.add_usable_list(sword)
     assertEquals(equip.get_usable_list.length, 1)
     assert(use_poti.get_usable_list.isEmpty)
+
+  test("Every spell has its own mana cost"):
+    assertEquals(thunder.cost, 20)
+    assertEquals(meteor.cost, 50)
+    assertEquals(heal.cost, 15)
+    assertEquals(purif.cost, 25)
+
+  test("Attack.Causes makes the source attack the target"):
+    val enemy = Enemy("Goblin", 100, 5, 10, 20)
+    val knight = Knight("Arthur", 100, 5, 10)
+    assert(att.Causes(enemy, knight))
+    assertEquals(knight.get_health, 85)
+
+  test("Move.Causes moves the unit to an adjacent panel"):
+    val knight = Knight("Arthur", 100, 5, 10)
+    val p1 = Panel(1, 1)
+    val p2 = Panel(1, 2)
+    p1.add_units(knight)
+    p2.add_adjacent(p1)
+    assert(mov.Causes(knight, p2))
+    assert(p2.get_units.contains(knight))
+    assert(!p1.get_units.contains(knight))
+
+  test("Use_Potion.Causes makes the character consume the potion"):
+    val knight = Knight("Arthur", 100, 5, 10)
+    val potion = Healing("Cura")
+    knight.get_inventory += potion
+    knight.set_health(50)
+    assert(use_poti.Causes(knight, potion))
+    assertEquals(knight.get_health, 70)
+    assert(!knight.get_inventory.contains(potion))
+
+  test("Equip_Weapon.Causes makes the character equip the weapon"):
+    val knight = Knight("Arthur", 100, 5, 10)
+    knight.get_inventory += sword
+    assert(equip.Causes(knight, sword))
+    assertEquals(knight.get_weapon, Some(sword))
+
+  test("Thunder.Causes damages the enemy with the magic damage"):
+    val wand = Wand("Varita", 10, 3, None, 30)
+    val bm = Black_Mage("Merlin", 100, 5, 10, Some(wand), 100)
+    val enemy = Enemy("Goblin", 100, 5, 10, 20)
+    assert(thunder.Causes(bm, enemy))
+    assertEquals(enemy.get_health, 70)
+    assertEquals(bm.get_mana, 80)
+
+  test("Meteor.Causes damages every unit in the panel"):
+    val wand = Wand("Varita", 10, 3, None, 30)
+    val bm = Black_Mage("Merlin", 100, 5, 10, Some(wand), 100)
+    val e1 = Enemy("Goblin", 100, 5, 10, 20)
+    val e2 = Enemy("Orc", 100, 5, 10, 20)
+    val panel = Panel(1, 1)
+    panel.add_units(e1)
+    panel.add_units(e2)
+    assert(meteor.Causes(bm, panel))
+    assertEquals(e1.get_health, 70)
+    assertEquals(e2.get_health, 70)
+    assertEquals(bm.get_mana, 50)
+
+  test("Heal.Causes heals the character"):
+    val wand = Wand("Varita", 10, 3, None, 30)
+    val wm = White_Mage("Gandalf", 100, 5, 10, Some(wand), 100)
+    val knight = Knight("Arthur", 100, 5, 10)
+    knight.set_health(50)
+    assert(heal.Causes(wm, knight))
+    assertEquals(knight.get_health, 77)
+    assertEquals(wm.get_mana, 85)
+
+  test("Purification.Causes reduces the enemy health"):
+    val wand = Wand("Varita", 10, 3, None, 30)
+    val wm = White_Mage("Gandalf", 100, 5, 10, Some(wand), 100)
+    val enemy = Enemy("Goblin", 100, 5, 10, 20)
+    assert(purif.Causes(wm, enemy))
+    assertEquals(enemy.get_health, 70)
+    assertEquals(wm.get_mana, 75)

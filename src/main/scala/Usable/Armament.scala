@@ -96,7 +96,7 @@ abstract class Armament(n:String, a:Int, w:Int, o:Option[Character]) extends Usa
 
   def receive(a: Purification, m: White_Mage): Boolean=
 
-  throw InvalidTargetException(s"$name cannot receive Purification, only enemies can")
+    throw InvalidTargetException(s"$name cannot receive Purification, only enemies can")
 
   
   

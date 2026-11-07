@@ -54,7 +54,9 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
     if x.isDefined then  weapon = x
 
   override def Do(a: Attack, t: Target): Boolean =
-    weapon.isDefined && t.receive(a, this)
+    if weapon.isDefined then t.receive(a, this)
+    else
+      throw InvalidWeaponException(s"$name does not have a weapon equipped")
 
 
   override def Do(a: Use_Potion, t: Target): Boolean =

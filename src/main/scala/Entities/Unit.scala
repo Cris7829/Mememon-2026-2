@@ -115,7 +115,7 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
   def receive(a: Heal, m: White_Mage): Boolean =
     throw InvalidTargetException(s"$name cannot receive Heal, only characters can")
 
-  def receive(a: Purification, m: White_Mage): Boolean = false
+  def receive(a: Purification, m: White_Mage): Boolean = 
 
     throw InvalidTargetException(s"$name cannot receive Purification, only enemies can")
 
