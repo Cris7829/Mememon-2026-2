@@ -79,6 +79,7 @@ class Panel(a:Int , b:Int) extends Target:
       if adjacent.contains(x) then
         adjacent -= x
 
+
   def receive(a:Meteor,m:Black_Mage): Boolean =
     if !get_units.exists(_.get_health > 0) then
       throw InvalidTargetException(s"Panel ($x, $y) has no alive units to receive Meteor")

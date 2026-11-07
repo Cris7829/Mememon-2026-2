@@ -179,6 +179,14 @@ class Turns_program:
        turn = Some(sorted_Seq.head._1)
        sorted_Seq = sorted_Seq.tail
 
+  /** While there in not a Unity that has reached his max action bar, it adds units to every action bar of the turn
+   * program.
+   * 
+   * When someone has reached his max action bar, gets puts the next's turn Unity into the variable using a_turn method. 
+   * 
+   * @param k The amount added each while cycle to each action bar.
+   * @return The Unity that has the turn.
+   * */
    def start_next_turn(k: Double): Option[Unity] =
     if turn.isEmpty && k > 0 && t_units.nonEmpty then
       while sorted_Seq.isEmpty do
@@ -186,7 +194,7 @@ class Turns_program:
       a_turn()
     turn
 
-
+  /** For the moment only changes the turn variable*/
    def end_turn(): scala.Unit =
      turn = None
 

@@ -33,13 +33,26 @@ class GameController :
   
   private val panels:ListBuffer[Panel]= ListBuffer()
 
+  /** Getter for the last error variable.*/
   def get_last_error: Option[String] = last_error
-  
+
+  /** Getter for the panels variables.*/
   def get_panels: List[Panel] = panels.toList
 
+  /** It adds a panel to the panels_list, if it is already there, the method does nothing
+   *
+   * @param p The Panel
+   *
+   * */
   def add_panel(p: Panel): scala.Unit =
     if !panels.contains(p) then panels += p
 
+  /** It fines the panel that has the given coordinates.
+   *
+   * @param x The x coordinate of the Panel
+   * @param y The y coordinate of the Panel
+   *
+   * */
   def get_panel_at(x: Int, y: Int): Option[Panel] =
     panels.find(p => p.x == x && p.y == y)
 
@@ -109,13 +122,30 @@ class GameController :
         owners(y) = x
         x.add_units(y)
         turns_program.add_unit_to_program(y)
-  
+
+  /** It adds an Enemy to a player to the turn program and the enemies_list , if it's already in the Game Controller, does nothing.
+   *
+   * @param x The enemy
+   */
   def add_enemies(x: Enemy): scala.Unit =
       if !enemies_list.contains(x) then
         enemies_list += x
         turns_program.add_unit_to_program(x)
 
-
+  /** Following the game logic, it make a unity do an action to a Target.
+   *
+   *
+   * It throws the NotYourTurnException it's not the given's Unity's turn.
+   *
+   * If the action wasn't done succsesfully, prints the cause.
+   *
+   *
+   * @param u The Unity
+   * @param action The Action
+   * @param target The Target
+   *
+   * @return false if the unity could not do the action succesfully, otherwise true.
+   */
   def do_action(u: Unity, action: Action, target: Target): Boolean = 
    
     val momentary_k: Double =1.0
@@ -134,10 +164,15 @@ class GameController :
         last_error = Some(e.getMessage)
         println(s"Action failed: ${e.getMessage}")
         false
-  
 
+  /** Getter for the actions than a Unity can do.
+   *
+   * @param u The Unity
+   * @return The list of Actions
+   */
   def get_actions(u: Unity): List[Action] = u.actions_possible.toList
 
+  /** It removes every Unity that has 0 point of health from the turn and game program.*/
   def remove_defeated_units(): scala.Unit =
       for x <- turns_program.get_t_units_list.toList if x.get_health <= 0 do
         turns_program.remove_unit_of_program(x)
