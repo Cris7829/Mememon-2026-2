@@ -3,6 +3,7 @@ package Usable
 
 import Actions.{Attack, Equip_Weapon, Heal, Meteor, Move, Purification, Thunder, Use_Potion}
 import Entities.*
+import Exceptions.*
 
 /** An abstract base class representing a general potion in the game.
  *
@@ -31,9 +32,12 @@ abstract class Potion (n:String) extends Usable_Potion:
 
   def receive(a: Meteor, m: Black_Mage): Boolean =false
 
-  def receive(a: Heal, m: White_Mage): Boolean =false
+  def receive(a: Heal, m: White_Mage): Boolean =
+    throw InvalidTargetException(s"$name cannot receive Heal, only characters can")
+    
 
-  def receive(a: Purification, m: White_Mage): Boolean =false
+  def receive(a: Purification, m: White_Mage): Boolean =
+    throw InvalidTargetException(s"$name cannot receive Purification, only enemies can")
 
 
   def receive(a: Equip_Weapon, c: Knight): Boolean = false

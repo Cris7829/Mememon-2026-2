@@ -7,6 +7,8 @@ import Actions.*
 import Action_Sistem.Target
 import Entities.*
 import scala.collection.mutable.ListBuffer
+import Exceptions.*
+
 
 /** A class representing each coordinate of the map.
  *
@@ -117,9 +119,13 @@ class Panel(a:Int , b:Int) extends Target:
   def receive(a: Thunder, m: Black_Mage): Boolean = false
 
 
-  def receive(a: Heal, m: White_Mage): Boolean = false
+  def receive(a: Heal, m: White_Mage): Boolean =
+    throw InvalidTargetException(s"($x, $y) cannot receive Heal, only characters can")
 
-  def receive(a: Purification, m: White_Mage): Boolean =false
+
+  def receive(a: Purification, m: White_Mage): Boolean =
+
+    throw InvalidTargetException(s"($x, $y) cannot receive Purification, only enemies can")
 
 
   def receive(a: Equip_Weapon, c: Knight): Boolean = false

@@ -1,6 +1,6 @@
 package cl.uchile.dcc
 package Usable
-
+import Exceptions.*
 import Entities.*
 
 import Actions.{Attack, Equip_Weapon, Heal, Meteor, Move, Purification, Thunder, Use_Potion}
@@ -91,10 +91,12 @@ abstract class Armament(n:String, a:Int, w:Int, o:Option[Character]) extends Usa
 
   def receive(a: Meteor, m: Black_Mage): Boolean=false
 
-  def receive(a: Heal, m: White_Mage): Boolean=false
+  def receive(a: Heal, m: White_Mage): Boolean=
+    throw InvalidTargetException(s"$name cannot receive Heal, only characters can")
 
-  def receive(a: Purification, m: White_Mage): Boolean=false
+  def receive(a: Purification, m: White_Mage): Boolean=
 
+  throw InvalidTargetException(s"$name cannot receive Purification, only enemies can")
 
   
   
