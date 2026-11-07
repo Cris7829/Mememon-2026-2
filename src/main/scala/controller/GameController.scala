@@ -8,7 +8,7 @@ import scala.collection.mutable.ListBuffer
 import Panel.*
 import Actions.Action
 import Action_Sistem.Target
-
+import Exceptions.*
 
 /** The GameController is a class that it keeps track of the state of the game.
  *
@@ -28,13 +28,13 @@ class GameController :
 
   /** A  variable that will, given a Character, its player.*/
   private var owners:mutable.Map[Character, Players] = mutable.Map()
-
   
-  
+  private var last_error: Option[String]= None
   
   private val panels:ListBuffer[Panel]= ListBuffer()
 
-
+  def get_last_error: Option[String] = last_error
+  
   def get_panels: List[Panel] = panels.toList
 
   def add_panel(p: Panel): scala.Unit =
@@ -117,7 +117,15 @@ class GameController :
 
 
   def do_action(u: Unity, action: Action, target: Target): Boolean =
-    u.doAction(action,target)
+    try
+      val ok = u.doAction(action, target)
+      last_error = None
+      ok
+    catch
+      case e: GameException =>
+        last_error = Some(e.getMessage)
+        println(s"Action failed: ${e.getMessage}")
+        false
   
   def get_actions(u: Unity): List[Action] = u.actions_possible.toList
   
