@@ -18,7 +18,7 @@ import Actions.{Attack, Equip_Weapon, Heal, Meteor, Move, Purification, Thunder,
  * @constructor Creates a new general armament with the specified basic attributes.
  */
 abstract class Armament(n:String, a:Int, w:Int, o:Option[Character]) extends Usable_Armament:
-
+  def is_magic: Boolean = false
   /** The immutable name of the armament. */
   val name: String = n
 

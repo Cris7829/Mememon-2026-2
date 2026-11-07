@@ -7,6 +7,9 @@ import Actions.{Attack, Equip_Weapon, Heal, Meteor, Move, Purification, Thunder,
 
 /** A  trait representing any armament that can be equipped and utilized by a Unit. */
 trait Usable_Armament extends Utilizable:
+
+  def is_magic: Boolean
+  
   def weight: Int
   def get_attack_points: Int
   def get_magic_attack_points: Int

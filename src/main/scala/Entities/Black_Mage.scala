@@ -1,6 +1,6 @@
 package cl.uchile.dcc
 package Entities
-
+import Exceptions.*
 import Usable.Usable_Armament
 import Actions.*
 import Action_Sistem.*
@@ -32,16 +32,22 @@ class Black_Mage (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament], m:I
     this(n, h, d, w, Option.empty[Usable_Armament],m)
 
   override def Do(a: Thunder, t:Target): Boolean =
-    if get_mana>= 20 && get_weapon.exists(_.get_magic_attack_points > 0) then
-      t.receive(a,this)
+    if !get_weapon.exists(_.is_magic) then
+      throw InvalidWeaponException(s"$name needs a magic weapon to cast ${a.name}")
+    else if get_mana < 20 then
+      throw InsufficientManaException(s"$name needs 20 mana to cast ${a.name}, but has $get_mana")
     else
-     false
+      t.receive(a,this)
 
   override def Do(a: Meteor,t:Target): Boolean =
-    if get_mana >= 50 && get_weapon.exists(_.get_magic_attack_points > 0) then
-      t.receive(a,this)
+    if !get_weapon.exists(_.is_magic) then
+      throw InvalidWeaponException(s"$name needs a magic weapon to cast ${a.name}")
+    else if get_mana < 50 then
+      throw InsufficientManaException(s"$name needs 50 mana to cast ${a.name}, but has $get_mana")
     else
-      false
+      t.receive(a,this)
+      
+      
   actions_possible ++= List(Thunder(), Meteor())
 
   override def Do(a: Equip_Weapon, t: Target): Boolean =

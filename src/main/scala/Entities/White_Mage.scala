@@ -1,6 +1,6 @@
 package cl.uchile.dcc
 package Entities
-
+import Exceptions.*
 import Usable.Usable_Armament
 
 import Actions.*
@@ -30,18 +30,21 @@ class White_Mage (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament], m:I
   def this(n: String, h: Int, d: Int, w: Int, m:Int) =
     this(n, h, d, w, Option.empty[Usable_Armament],m)
 
-
-  override def Do(a: Heal, t: Target): Boolean =
-    if get_mana >= 15 && get_weapon.exists(_.get_magic_attack_points > 0) then
-      t.receive(a,this)
+  override def Do(a: Thunder, t: Target): Boolean =
+    if !get_weapon.exists(_.is_magic) then
+      throw InvalidWeaponException(s"$name needs a magic weapon to cast ${a.name}")
+    else if get_mana < 15 then
+      throw InsufficientManaException(s"$name needs 15 mana to cast ${a.name}, but has $get_mana")
     else
-      false
+      t.receive(a,this)
 
   override def Do(a: Purification, t: Target): Boolean =
-    if get_mana >= 25 && get_weapon.exists(_.get_magic_attack_points > 0) then
-      t.receive(a,this)
+    if !get_weapon.exists(_.is_magic) then
+      throw InvalidWeaponException(s"$name needs a magic weapon to cast ${a.name}")
+    else if get_mana < 25 then
+      throw InsufficientManaException(s"$name needs 25 mana to cast ${a.name}, but has $get_mana")
     else
-      false
+      t.receive(a,this)
 
   actions_possible ++= List(Heal(), Purification())
 
