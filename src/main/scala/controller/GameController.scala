@@ -116,9 +116,17 @@ class GameController :
         turns_program.add_unit_to_program(x)
 
 
-  def do_action(u: Unity, action: Action, target: Target): Boolean =
+  def do_action(u: Unity, action: Action, target: Target): Boolean = 
+   
+    val momentary_k: Double =1.0
     try
+      if !turns_program.get_turn.contains(u) then
+        throw NotYourTurnException(s"It is not the turn of ${u.name}")
       val ok = u.doAction(action, target)
+      if ok then
+        remove_defeated_units()
+        turns_program.end_turn()
+        turns_program.start_next_turn(momentary_k)
       last_error = None
       ok
     catch
@@ -127,5 +135,9 @@ class GameController :
         println(s"Action failed: ${e.getMessage}")
         false
   
+
   def get_actions(u: Unity): List[Action] = u.actions_possible.toList
-  
+
+  def remove_defeated_units(): scala.Unit =
+      for x <- turns_program.get_t_units_list.toList if x.get_health <= 0 do
+        turns_program.remove_unit_of_program(x)
