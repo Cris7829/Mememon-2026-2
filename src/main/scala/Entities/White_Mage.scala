@@ -50,4 +50,5 @@ class White_Mage (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament], m:I
 
   override def Do(a: Equip_Weapon, t: Target): Boolean =
     if get_inventory.contains(t) then t.receive(a, this)
-    else false
+    else 
+      throw InvalidTargetException(s"$name does not have that weapon in its inventory")

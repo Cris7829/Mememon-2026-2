@@ -1,6 +1,6 @@
 package cl.uchile.dcc
 package Entities
-
+import Exceptions.*
 import Usable.*
 import Action_Sistem.*
 import Actions.*
@@ -29,4 +29,5 @@ class Knight (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) extends
 
   override def Do(a: Equip_Weapon, t: Target): Boolean =
     if get_inventory.contains(t) then t.receive(a, this)
-    else false  
+    else
+      throw InvalidTargetException(s"$name does not have that weapon in its inventory")  

@@ -3,7 +3,7 @@ package Entities
 import Action_Sistem.*
 import Actions.*
 import Usable.Usable_Armament
-
+import Exceptions.*
 /** A class representing an Archer, a player's playable character.
  *
  * @param n The name of the Archer.
@@ -27,4 +27,5 @@ class Archer (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) extends
 
   override def Do(a: Equip_Weapon, t: Target): Boolean =
     if get_inventory.contains(t) then t.receive(a, this)
-    else false
+    else
+      throw InvalidTargetException(s"$name does not have that weapon in its inventory")

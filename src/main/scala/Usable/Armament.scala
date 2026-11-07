@@ -117,7 +117,7 @@ abstract class Armament(n:String, a:Int, w:Int, o:Option[Character]) extends Usa
 
   
   private def equip_on(c: Character, allowed: Boolean): Boolean =
-    if !allowed then false
+    if !allowed then throw InvalidWeaponException(s"${c.name} cannot equip $name")
     else
       c.get_weapon.foreach(w => c.get_inventory += w)
       c.get_inventory -= this

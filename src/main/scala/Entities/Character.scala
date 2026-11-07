@@ -48,7 +48,7 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
    *
    * It only works if its given an option that is defined with a Usable Armament in it.
    *
-   * @param x The Usable Armament into a Option format
+   * @param x The Usable Armament into an Option format
     * . */
   def set_weapon(x:Option[Usable_Armament]):scala.Unit=
     if x.isDefined then  weapon = x
