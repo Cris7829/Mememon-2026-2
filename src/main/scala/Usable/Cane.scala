@@ -18,7 +18,18 @@ import Entities.*
  */
 class Cane (n:String, a:Int, w:Int, o:Option[Character], m_a:Int ) extends Magic_Weapon(n, a, w, o ,m_a):
 
-
+   /** Tells, through single dispatch, that a Cane can be equipped by a Black_Mage.
+    *
+    * @param c The Black_Mage that tries to equip the Cane.
+    * @return true, because a Black_Mage can equip a Cane.
+    */
    override def can_be_equipped_by(c: Black_Mage): Boolean = true
+
+
+   /** Tells, through single dispatch, that a Cane can be equipped by a White_Mage.
+    *
+    * @param c The White_Mage that tries to equip the Cane.
+    * @return true, because a White_Mage can equip a Cane.
+    */
    override def can_be_equipped_by(c: White_Mage): Boolean = true
 

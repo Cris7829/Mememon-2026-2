@@ -15,24 +15,24 @@ import Entities.*
  */
 class Wand (n:String, a:Int, w:Int, o:Option[Character], m_a:Int ) extends Magic_Weapon(n, a, w, o ,m_a):
 
-  /** Represents a way to see that the Wand can be equipped by an Archer.
+  /** Tells, through single dispatch, that a Wand can be equipped by an Archer.
    *
-   * @param c An Archer
-   * @return true
+   * @param c The Archer that tries to equip the Wand.
+   * @return true, because an Archer can equip a Wand.
    */
   override def can_be_equipped_by(c: Archer): Boolean = true
 
-  /** Represents a way to see that the Wand can be equipped by a Black_Mage
+  /** Tells, through single dispatch, that a Wand can be equipped by a Black_Mage.
    *
-   * @param c A Black_Mage
-   * @return true
+   * @param c The Black_Mage that tries to equip the Wand.
+   * @return true, because a Black_Mage can equip a Wand.
    */
   override def can_be_equipped_by(c: Black_Mage): Boolean = true
 
 
-  /** Represents a way to see that the Wand can be equipped by a White_Mage
+  /** Tells, through single dispatch, that a Wand can be equipped by a White_Mage.
    *
-   * @param c A White_Mage
-   * @return true
+   * @param c The White_Mage that tries to equip the Wand.
+   * @return true, because a White_Mage can equip a Wand.
    */
   override def can_be_equipped_by(c: White_Mage): Boolean = true

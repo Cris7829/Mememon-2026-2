@@ -32,7 +32,7 @@ class Sword(n:String, a:Int, w:Int, o:Option[Character]) extends Armament(n ,a ,
 
    /** Tells, through single dispatch, that a Sword can be equipped by a Thieve.
     *
-    * @param c The Knight that tries to equip the Sword.
+    * @param c The Thieve that tries to equip the Sword.
     * @return true, because a Thieve can equip a Sword.
     */
    override def can_be_equipped_by(c: Thieve): Boolean = true
