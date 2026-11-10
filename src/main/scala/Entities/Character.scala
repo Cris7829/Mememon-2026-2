@@ -39,7 +39,7 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
   /** Setter for the defense of the Character, if d, it's below or equal to cero, the method does nothing,
    * otherwise it changes the defense points of a Character.
    *
-   * @param d
+   * @param d the defense.
    * .*/
   def set_defense(d:Int):scala.Unit =
     if d>0 then defense=d
@@ -84,7 +84,7 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
    *
    * @param a Attack action.
    * @param attacker Character that tries do the action.
-   * @return false, because a Character can't be used as a Potion.
+   * @return false, because a Character can't be attacked by a Character.
    * */
   override def receive(a: Attack, attacker: Character): Boolean = false
 
@@ -164,7 +164,7 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
    *
    * The Character recovers 20% of its max health plus a quarter of the magic damage of the
    * White Mage, that is, the magic attack points of its weapon multiplied by its magic multiplier.
-   * 
+   *
    * The spell costs 15 mana and the magic multiplier goes back to 1.0 after casting it.
    *
    * @param a The Heal action.
