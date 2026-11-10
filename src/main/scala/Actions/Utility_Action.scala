@@ -16,4 +16,11 @@ abstract class Utility_Action extends Action:
   /** A non-mutable variable with the name of the Utility_action. */
   val name: String
 
+  /** Starts the double dispatch for any action that uses a utility: calls the 
+   * Do method of the Source, so only a Source that can use the potion, does the action.
+   *
+   * @param s The source that does the action.
+   * @param t The target of the action.
+   * @return true if the action was done successfully.
+   */
   def Causes(s: Source, t: Target): Boolean

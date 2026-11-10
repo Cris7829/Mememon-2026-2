@@ -12,16 +12,12 @@ trait Action:
      val name: String
 
 
-     /** First step of the double dispatch: defines the interaction between the source and the target.
-      *
-      * Each concrete action calls the Do method of the source that matches its own type,
-      * so the source knows which action has to do without checking types.
-      *
-      * The method itself, does not verify that follows the game's rules. But then the Source and target do.
+     /** Starts the double dispatch for any action: calls the 
+      * Do method of the Source, so only a Source that can use the potion, does the action.
       *
       * @param s The source that does the action.
-      * @param t The target that receives the action.
-      * @return true if the action was successful.
+      * @param t The target of the action.
+      * @return true if the action was done successfully.
       */
      def Causes(s: Source, t: Target): Boolean
   

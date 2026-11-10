@@ -39,5 +39,11 @@ class Use_Potion extends Utility_Action :
       usable_list -= x
 
 
-
+  /** Starts the double dispatch for any use potion action: calls the Do method of the Source, so only a Source 
+   * that can use the potion, does the action.
+   *
+   * @param s The source that consume the potion.
+   * @param t The target of the action.
+   * @return true if the action was done successfully.
+   */
   def Causes(s: Source, t: Target): Boolean = s.Do(this, t)

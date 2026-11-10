@@ -31,4 +31,11 @@ class Equip_Weapon extends Utility_Action :
     if usable_list.contains(x) then
       usable_list -= x
 
+  /** Starts the double dispatch for Equip_Weapon: calls the Do method of the source for Equip_Weapon,
+   * so only a source that can equip the weapon.
+   *
+   * @param s The source that casts Equip_Weapon.
+   * @param t The target that receives Equip_Weapon.
+   * @return true if the weapon was equipped successfully.
+   */
   def Causes(s: Source, t: Target): Boolean = s.Do(this, t)    
