@@ -40,8 +40,8 @@ class Black_Mage (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament], m:I
    * @param a The Thunder action.
    * @param t The target that receives Thunder.
    * @return true if the target damaged by Thunder.
-   * @throws InvalidWeaponExceptionif the White Mage does not have a magic weapon equipped.
-   * @throws InsufficientManaException if the White Mage has less than 20 mana.
+   * @throws InvalidWeaponExceptionif the Black_Mage does not have a magic weapon equipped.
+   * @throws InsufficientManaException if the Black_Mage has less than 20 mana.
    */
   override def Do(a: Thunder, t:Target): Boolean =
     if !get_weapon.exists(_.is_magic) then
@@ -62,8 +62,8 @@ class Black_Mage (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament], m:I
    * @param a The Meteor action.
    * @param t The target that receives Meteor.
    * @return true if the Units in the Panel where damaged by Meteor.
-   * @throws InvalidWeaponExceptionif  the White Mage does not have a magic weapon equipped.
-   * @throws InsufficientManaException if the White Mage has less than 50 mana.
+   * @throws InvalidWeaponExceptionif  the Black_Mage does not have a magic weapon equipped.
+   * @throws InsufficientManaException if the Black_Mage has less than 50 mana.
    */
   override def Do(a: Meteor,t:Target): Boolean =
     if !get_weapon.exists(_.is_magic) then
@@ -77,7 +77,7 @@ class Black_Mage (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament], m:I
   actions_possible ++= List(Thunder(), Meteor())
 
   /** First step of the double dispatch to equip a weapon: the Black_Mage calls receive
-   * on the weapon with itself, so the weapon knows it is a White Mage and checks the weapons table.
+   * on the weapon with itself, so the weapon knows it is a Black_Mage and checks the weapons table.
    *
    * @param a The Equip_Weapon action.
    * @param t The weapon to equip.
