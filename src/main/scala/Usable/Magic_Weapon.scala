@@ -34,5 +34,9 @@ abstract class Magic_Weapon(n: String, a: Int, w: Int, o:Option[Character], m_a:
   def set_magic_attack_points(x: Int): scala.Unit =
     if x >= 0 then
       magic_attack_points = x
-
-  override def is_magic: Boolean = true
+      
+  /** Overrides the is_magic, because a magic weapon is magic.
+   * 
+   * @return true
+   * */
+  override def is_magic: true = true

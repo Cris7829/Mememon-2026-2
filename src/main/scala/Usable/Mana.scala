@@ -12,6 +12,13 @@ import Entities.*
 
 
 class Mana (n:String) extends Potion(n):
+
+  /** Applies the effect of the Mana potion to a magic character: restores 30% of its
+   * max mana, without exceeding the max mana.
+   *
+   * @param m The magic character that consumes the potion.
+   * @return true, because the potion is always applied to a magic character.
+   */
   override def apply_to(m: Magic_Character): Boolean =
     m.set_mana(math.min(m.get_mana + m.max_mana * 3/ 10, m.max_mana))
     true

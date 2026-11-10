@@ -11,8 +11,21 @@ import Entities.*
  */
 
 class Strength_Player (n:String) extends Potion(n):
+
+
+  /** Applies the effect of the Strength_Player potion to a magic character: multiplies the defense points
+   * of the Character in 1.15.
+   *
+   * @param c The Character that consumes the potion.
+   * @return true, because the potion is always applied to a Character.
+   */
   override def apply_to(c: Character): Boolean =
     c.set_defense((c.get_defense * 1.15).toInt)
     true
-    
+
+  /** Applies the effect of the Strength_Player potion to a magic character as a Character.
+   *
+   * @param m The magic character that consumes the potion.
+   * @return true, because the potion is always applied to a magic character.
+   */
   override def apply_to(m: Magic_Character): Boolean = apply_to(m: Character)
