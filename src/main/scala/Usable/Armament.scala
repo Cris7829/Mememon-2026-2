@@ -57,7 +57,7 @@ abstract class Armament(n:String, a:Int, w:Int, o:Option[Character]) extends Usa
    *
    * @param x The new attack.
    */
-  def set_attack_points(x: Int): scala.Unit =
+  def set_attack_points(x:Int):scala.Unit =
     if x >= 0 then
       attack_points = x
 
@@ -74,7 +74,7 @@ abstract class Armament(n:String, a:Int, w:Int, o:Option[Character]) extends Usa
    *
    * Each weapon that extends Armament, overrides this method if that weapon can be equipped by a Knight.
    *
-   * @param c A Knight
+   * @param c A Knight.
    * @return false, because a Knight can't equip an Armament.
    * */
   def can_be_equipped_by(c: Knight): Boolean = false
@@ -83,7 +83,7 @@ abstract class Armament(n:String, a:Int, w:Int, o:Option[Character]) extends Usa
    *
    * Each weapon that extends Armament, overrides this method if that weapon can be equipped by an Archer.
    *
-   * @param c An Archer
+   * @param c An Archer.
    * @return false, because an Archer can't equip an Armament.
    * */
   def can_be_equipped_by(c: Archer): Boolean = false
@@ -92,7 +92,7 @@ abstract class Armament(n:String, a:Int, w:Int, o:Option[Character]) extends Usa
    *
    * Each weapon that extends Armament, overrides this method if that weapon can be equipped by a Thieve.
    *
-   * @param c A Thieve
+   * @param c A Thieve.
    * @return false, because a Thieve can't equip an Armament.
    * */
   def can_be_equipped_by(c: Thieve): Boolean = false
@@ -101,7 +101,7 @@ abstract class Armament(n:String, a:Int, w:Int, o:Option[Character]) extends Usa
    *
    * Each weapon that extends Armament, overrides this method if that weapon can be equipped by a Black_Mage.
    *
-   * @param c A Black_Mage
+   * @param c A Black_Mage.
    * @return false, because a Black_Mage can't equip an Armament.
    * */
   def can_be_equipped_by(c: Black_Mage): Boolean = false
@@ -110,7 +110,7 @@ abstract class Armament(n:String, a:Int, w:Int, o:Option[Character]) extends Usa
    *
    * Each weapon that extends Armament, overrides this method if that weapon can be equipped by a White_Mage.
    *
-   * @param c A White_Mage
+   * @param c A White_Mage.
    * @return false, because a White_Mage can't equip an Armament.
    * */
   def can_be_equipped_by(c: White_Mage): Boolean = false

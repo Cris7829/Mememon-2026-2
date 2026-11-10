@@ -108,38 +108,95 @@ class Panel(a:Int , b:Int) extends Target:
         throw InvalidMovementException(s"${u.name} cannot move to panel ($x, $y) because it is not adjacent to its current panel")
 
 
-
-
-
-
+  /** By default, a Panel can't be equipped by a Character.
+   *
+   * @param a The Equip_Weapon action.
+   * @param c The Character that tries to equip the Panel.
+   * @return false, because a Panel can't be equipped.
+   */
   def receive(a: Equip_Weapon, c: Character): Boolean =false
 
-  def receive(a: Use_Potion, c: Character): Boolean =false
+  /** By default, a Panel can't be used as a potion by a Character.
+   *
+   * @param a The Use_Potion action.
+   * @param c The Character that tries to equip the Panel.
+   * @return false, because a Panel can't be used as a potion.
+   */
+  def receive(a: Use_Potion, c: Character): Boolean = false
 
-
+  /** By default, a Panel can't be the target of a Thunder spell made by a Black_Mage.
+   *
+   * @param a The Thunder action.
+   * @param m The Black_Mage that cast .
+   * @return false, because a Panel can't be the target.
+   */
   def receive(a: Thunder, m: Black_Mage): Boolean = false
 
-
+  /** By default, a Panel can't be the target of a Heal spell made by a White_Mage.
+   *
+   * @param a The Heal action.
+   * @param m The White_Mage that cast.
+   * @throws InvalidTargetException with the coordinates of the panel.
+   */
   def receive(a: Heal, m: White_Mage): Boolean =
     throw InvalidTargetException(s"($x, $y) cannot receive Heal, only characters can")
 
-
+  /** By default, a Panel can't be the target of a Purification spell made by a White_Mage.
+   *
+   * @param a The Purification action.
+   * @param m The White_Mage that cast.
+   * @throws InvalidTargetException with the coordinates of the panel.
+   */
   def receive(a: Purification, m: White_Mage): Boolean =
 
     throw InvalidTargetException(s"($x, $y) cannot receive Purification, only enemies can")
 
-
+  /** By default, a Panel can't be equipped by a Knight.
+   *
+   * @param a The Equip_Weapon action.
+   * @param c The Knight trying to equip the Panel.
+   * @return false, because Panel can't be equipped.
+   */
   def receive(a: Equip_Weapon, c: Knight): Boolean = false
 
+  /** By default, a Panel can't be equipped by an Archer.
+   *
+   * @param a The Equip_Weapon action.
+   * @param c The Archer trying to equip the Panel.
+   * @return false, because Panel can't be equipped.
+   */
   def receive(a: Equip_Weapon, c: Archer): Boolean = false
 
+  /** By default, a Panel can't be equipped by a Thieve.
+   *
+   * @param a The Equip_Weapon action.
+   * @param c The Thieve trying to equip the Panel.
+   * @return false, because Panel can't be equipped.
+   */
   def receive(a: Equip_Weapon, c: Thieve): Boolean = false
 
+  /** By default, a Panel can't be equipped by a Black_Mage.
+   *
+   * @param a The Equip_Weapon action.
+   * @param c The Black_Mage trying to equip the Panel.
+   * @return false, because Panel can't be equipped.
+   */
   def receive(a: Equip_Weapon, c: Black_Mage): Boolean = false
 
+  /** By default, a Panel can't be equipped by a White_Mage.
+   *
+   * @param a The Equip_Weapon action.
+   * @param c The White_Mage trying to equip the Panel.
+   * @return false, because Panel can't be equipped.
+   */
   def receive(a: Equip_Weapon, c: White_Mage): Boolean = false
 
-
+  /** By default, a Panel can't be used as a potion by a Magic_Character.
+   *
+   * @param a The Use_Potion action.
+   * @param m The Magic_Character trying to use the Panel.
+   * @return false, because Panel can't be used a potion.
+   */
   def receive(a: Use_Potion, m: Magic_Character): Boolean = false
 
 
