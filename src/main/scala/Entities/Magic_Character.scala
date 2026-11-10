@@ -19,10 +19,10 @@ import Usable.Usable_Armament
  */
 class Magic_Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament], m:Int) extends Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]):
   private var mana: Int = m
-  
+  /** Value for the mana amount of the magic character's mana points that was created with.*/   
   val max_mana: Int = m
 
-
+  /** Variable of the magic multiplier that affect the attack of the magic character, by default 1.0.*/
   private var magic_multiplier: Double = 1.0
 
   /** Retrieves the current mana points of the Magic Character.
@@ -41,16 +41,31 @@ class Magic_Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament],
   def set_mana(x:Int): scala.Unit =
     if x>=0 then
       mana=x
-  
 
-  
+
+  /** Getter for the magic multiplier.*/
   def get_magic_multiplier: Double = magic_multiplier
 
- 
+  /** Setter of the magic multiplier.
+   * 
+   * If the amount given is below 1.0, the method does nothing.
+   * 
+   * @param x the amount set.
+   * */
   def set_magic_multiplier(x: Double): scala.Unit =
     if x >= 1.0 then magic_multiplier = x
 
-  
+  /** First step of the double dispatch for Use_Potion on a magic character.
+   *
+   * It overrides the Character version so the potion receives this character as a
+   * Magic_Character. That way, magic potions such as Mana and Magic_Strength can
+   * apply their effect.
+   *
+   * @param a The Use_Potion action.
+   * @param t The potion to consume.
+   * @return true if the potion was consumed, false if it is not in the inventory
+   *         or it has no effect on this character.
+   */
   override def Do(a: Use_Potion, t: Target): Boolean =
     if get_inventory.contains(t) then t.receive(a, this)
     else false    

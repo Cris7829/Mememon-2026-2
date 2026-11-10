@@ -30,6 +30,18 @@ class White_Mage (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament], m:I
   def this(n: String, h: Int, d: Int, w: Int, m:Int) =
     this(n, h, d, w, Option.empty[Usable_Armament],m)
 
+  /** First step of the double dispatch to cast Heal.
+   *
+   * The White Mage can only cast it with a magic weapon equipped and at least 15 mana.
+   *
+   * The target must be a Character.
+   *
+   * @param a The Heal action.
+   * @param t The target that receives Heal.
+   * @return true if the target was healed.
+   * @throws InvalidWeaponException if the White Mage does not have a magic weapon equipped.
+   * @throws InsufficientManaException if the White Mage has less than 15 mana.
+   */
   override def Do(a: Heal, t: Target): Boolean =
     if !get_weapon.exists(_.is_magic) then
       throw InvalidWeaponException(s"$name needs a magic weapon to cast ${a.name}")
@@ -38,6 +50,17 @@ class White_Mage (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament], m:I
     else
       t.receive(a,this)
 
+  /** First step of the double dispatch to cast Purification.
+   *
+   * The White Mage can only cast it with a magic weapon equipped and at least 25 mana.
+   *
+   * The Target must be an Enemy.
+   * @param a The Purification action.
+   * @param t The target that receives Purification.
+   * @return true if the target received Purification.
+   * @throws InvalidWeaponException if the White Mage does not have a magic weapon equipped.
+   * @throws InsufficientManaException if the White Mage has less than 25 mana.
+   */
   override def Do(a: Purification, t: Target): Boolean =
     if !get_weapon.exists(_.is_magic) then
       throw InvalidWeaponException(s"$name needs a magic weapon to cast ${a.name}")
@@ -48,6 +71,14 @@ class White_Mage (n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament], m:I
 
   actions_possible ++= List(Heal(), Purification())
 
+  /** First step of the double dispatch to equip a weapon: the White Mage calls receive
+   * on the weapon with itself, so the weapon knows it is a White Mage and checks the weapons table.
+   *
+   * @param a The Equip_Weapon action.
+   * @param t The weapon to equip.
+   * @return true if the weapon was equipped.
+   * @throws InvalidTargetException if the weapon is not in the inventory of the White Mage.
+   */
   override def Do(a: Equip_Weapon, t: Target): Boolean =
     if get_inventory.contains(t) then t.receive(a, this)
     else 
