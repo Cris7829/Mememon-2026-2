@@ -79,7 +79,17 @@ class Panel(a:Int , b:Int) extends Target:
       if adjacent.contains(x) then
         adjacent -= x
 
-
+  /** Receives Meteor cast by a Black Mage: an area attack that damages every alive unit in the panel.
+   *
+   * The magic damage is the magic attack points of the Black Mage's weapon multiplied by its
+   * magic multiplier. Every alive unit in the panel, including allies, loses that amount of health.
+   * The spell costs 50 mana and the magic multiplier goes back to 1.0 after casting it.
+   *
+   * @param a The Meteor action.
+   * @param m The Black Mage that casts Meteor.
+   * @return true if the spell was cast.
+   * @throws InvalidTargetException if there are no alive units in the panel.
+   */
   def receive(a:Meteor,m:Black_Mage): Boolean =
     if !get_units.exists(_.get_health > 0) then
       throw InvalidTargetException(s"Panel ($x, $y) has no alive units to receive Meteor")
@@ -91,13 +101,33 @@ class Panel(a:Int , b:Int) extends Target:
       m.set_magic_multiplier(1.0)
       true
 
-
+  /** By default, a Panel can't be attacked by a Character.
+   *
+   * @param a The Attack action.
+   * @param attacker The Character that tries to attack the Panel.
+   * @return false, because a Panel can't be attacked.
+   */
   def receive(a: Attack, attacker: Character): Boolean = false
 
+  /** By default, a Panel can't be attacked by a Enemy.
+   *
+   * @param a The Attack action.
+   * @param attacker The Enemy that tries to attack the Panel.
+   * @return false, because a Panel can't be attacked.
+   */
   def receive(a: Attack, attacker: Enemy): Boolean =false
 
 
-
+  /** Receives a unit that wants to move to this panel.
+   *
+   * The unit must be in one of the adjacent panels. If it is, the unit is removed
+   * from its current panel and added to this one.
+   *
+   * @param a The Move action.
+   * @param u The unit that wants to move.
+   * @return true if the unit was moved.
+   * @throws InvalidMovementException if the unit is not in a panel adjacent to this one.
+   */
   def receive(a: Move, u: Unity): Boolean =
     get_adjacent.find(_.get_units.contains(u)) match
       case Some(p) =>
