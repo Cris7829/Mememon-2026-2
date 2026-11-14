@@ -1,6 +1,5 @@
 package cl.uchile.dcc
 package Action_Sistem
-import Entities.*
 import Actions.*
 
 import scala.collection.mutable.ListBuffer
@@ -32,7 +31,7 @@ trait Source:
   def Do(a: Thunder, t: Target): Boolean 
 
   def Do(a: Meteor, t: Target): Boolean
-
+  
   def Do(a: Heal, t: Target): Boolean 
 
   def Do(a: Purification, t: Target): Boolean 
