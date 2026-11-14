@@ -17,7 +17,7 @@ class Mana (n:String) extends Potion(n):
    * max mana, without exceeding the max mana.
    *
    * @param m The magic character that consumes the potion.
-   * @return true, because the potion is always applied to a magic character.
+   * @return true because the Mana potion could always be applied to a Magic_Character.
    */
   override def apply_to(m: Magic_Character): Boolean =
     m.set_mana(math.min(m.get_mana + m.max_mana * 3/ 10, m.max_mana))

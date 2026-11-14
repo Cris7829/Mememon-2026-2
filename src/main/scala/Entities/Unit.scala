@@ -74,12 +74,22 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
   val actions_possible: ListBuffer[Action] = ListBuffer(Attack(), Move())
 
 
-
-
+  /** Searches one of the possible actions of the Unit by its name.
+   *
+   * @param id The name of the action.
+   * @return Some(action) if the Unit has it, None otherwise.
+   */
   def find_action(id: String): Option[Action] = actions_possible.find(_.name == id)
 
 
-
+  /** Executes an action of this Unit on a target, starting the double dispatch.
+   *
+   * @param action The action to execute.
+   * @param target The target that receives the action.
+   * @return true if the action was done successfully.
+   * @throws DefeatedUnitException if the Unit doesn't have health points.
+   * @throws InvalidTargetException if the Unit can't do the action.
+   */
   def doAction(action: Action, target: Target): Boolean =
     if get_health <= 0 then
       throw DefeatedUnitException(s"$name is defeated and cannot do any action")
@@ -89,37 +99,95 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
       action.Causes(this, target)
 
 
-
+  /** By default, a Unit can't attack a target.
+   *
+   * Subclasses of Unit override the method if they can attack a target.
+   *
+   * @param a The Attack action.
+   * @param t The target of the attack.
+   * @return true if the target received the attack.
+   */
   def Do(a: Attack, t: Target): Boolean = false
 
 
-
-
+  /** First step of the double dispatch for Move: the source moves into the target. It sends the information
+   * to target's class, so it can continue the action.
+   *
+   * @param a The Move action.
+   * @param t The target.
+   * @return true if the target moved into the attack successfully.
+   */
   def Do(a: Move, t: Target): Boolean = t.receive(a, this)
 
 
-
-
+  /** By default, a Unit can't equip a target.
+   *
+   * Subclasses of Unit override the method if they can use a target as a potion.
+   *
+   * @param a The Equip_Weapon action.
+   * @param t The target.
+   * @return true if the target was equipped successfully.
+   */
   def Do(a: Equip_Weapon, t: Target): Boolean = false
 
+  /** By default, a Unit can't use a target as a potion.
+   *
+   * Subclasses of Unit override the method if they can use a target as a potion.
+   *
+   * @param a The Use_Potion action.
+   * @param t The target.
+   * @return true if the target was used as a potion successfully.
+   */
   def Do(a: Use_Potion, t: Target): Boolean = false
 
+  /** By default, a Unit can't cast a Thunder spell to a target.
+   *
+   * Subclasses of Unit override the method if they can cast Thunder to a target.
+   *
+   * @param a The Thunder action.
+   * @param t The target.
+   * @return true if the Thunder was cast successfully into the target.
+   */
   def Do(a: Thunder, t: Target): Boolean = false
 
+  /** By default, a Unit can't cast a Meteor spell to a target.
+   *
+   * Subclasses of Unit override the method if they can cast Meteor to a target.
+   *
+   * @param a The Meteor action.
+   * @param t The target.
+   * @return true if the Meteor was cast successfully into the target.
+   */
   def Do(a: Meteor, t: Target): Boolean = false
 
+  /** By default, a Unit can't cast a Heal spell to a target.
+   *
+   * Subclasses of Unit override the method if they can cast Heal to a target.
+   *
+   * @param a The Heal action.
+   * @param t The target.
+   * @return true if the Heal was cast successfully into the target.
+   */
   def Do(a: Heal, t: Target): Boolean = false
 
+  /** By default, a Unit can't cast a Purification spell to a target.
+   *
+   * Subclasses of Unit override the method if they can cast Purification to a target.
+   *
+   * @param a The Purification action.
+   * @param t The target.
+   * @return true if the Purification was cast successfully into the target.
+   */
   def Do(a: Purification, t: Target): Boolean = false
 
 
-  
-  
-  
+
+
+
   /** By default, a Unit cannot be attacked by a Character.
-   * 
+   *
    * Only Enemy overrides this method because, can receive and complete the action.
-   * 
+   *
    * @param a The Attack action.
    * @param attacker The Character that is trying to attack the Unit.
    * @return false, because a Unit can't complete the action successfully.
@@ -127,9 +195,9 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
   def receive(a: Attack, attacker: Character): Boolean = false
 
   /** By default, a Unit cannot be attacked by an Enemy.
-   * 
+   *
    * Only Character overrides this method, because his and it's classes can receive and complete the action.
-   * 
+   *
    * @param a The Attack action.
    * @param attacker The Enemy that is trying to attack the Unit.
    * @return false, because a Unit can't complete the action successfully.
@@ -139,7 +207,7 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
   /** By default, a Unity cannot move to a Unit.
    *
    * No classes from Unit overrides the method, because they can't complete the action neither.
-   * 
+   *
    * @param a The Move action.
    * @param u The Unity that is trying to move to Unit.
    * @return false, because a Unit can't complete the action successfully.
@@ -151,7 +219,7 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
   /** By default, a Unit cannot be equipped by a Character.
    *
    * No classes from Unit overrides the method, because they can't complete the action neither.
-   * 
+   *
    * @param a The Equip_Weapon action.
    * @param c The Character that is trying to equip the Unit.
    * @return false, because a Unit can't complete the action successfully.
@@ -162,7 +230,7 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
   /** By default, a Unit cannot be used as a potion by a Character.
    *
    * No classes from Unit overrides the method, because they can't complete the action neither.
-   * 
+   *
    * @param a The Use_Potion action.
    * @param c The Character that is trying to use the Character as a potion.
    * @return false, because a Unit can't complete the action successfully.
@@ -173,7 +241,7 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
   /** By default, a Unit cannot be used as a potion by a Magic_Character.
    *
    * No classes from Unit overrides the method, because they can't complete the action neither.
-   * 
+   *
    * @param a The Use_Potion action.
    * @param m The Magic_Character that is trying to use the Character as a potion.
    * @return false, because a Unit can't complete the action successfully.
