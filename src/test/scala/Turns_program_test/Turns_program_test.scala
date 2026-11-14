@@ -330,3 +330,74 @@ class Turns_program_test extends FunSuite:
     assertEquals(program.get_sorted_Seq.map(_._1), Seq[Unity](fastEnemy, whiteMage, goblin))
     assertEquals(program.get_sorted_Seq.map(_._2), Seq(25.0, 19.0, 5.0))
     assertEquals(program.get_during_program_map(armedKnight), 35.0)
+
+
+  test("start_next_turn gives the turn to the first unit that completes its action bar"):
+    program.add_unit_to_program(hero)
+    program.add_unit_to_program(goblin)
+    assertEquals(program.start_next_turn(10), Some(hero))
+    assertEquals(program.get_turn, Some(hero))
+    assert(program.get_sorted_Seq.isEmpty)
+
+  test("start_next_turn does nothing on an empty program"):
+    assertEquals(program.start_next_turn(10), None)
+
+  test("start_next_turn does nothing with k equal or below 0"):
+    program.add_unit_to_program(hero)
+    assertEquals(program.start_next_turn(0), None)
+    assertEquals(program.start_next_turn(-5), None)
+    assertEquals(program.get_during_program_map(hero), 0.0)
+
+  test("start_next_turn keeps the current turn if it has not ended"):
+    program.add_unit_to_program(hero)
+    program.add_unit_to_program(goblin)
+    program.start_next_turn(10)
+    assertEquals(program.start_next_turn(10), Some(hero))
+    assertEquals(program.get_during_program_map(goblin), 20.0)
+
+  test("end_turn removes the current turn"):
+    program.add_unit_to_program(hero)
+    program.start_next_turn(10)
+    program.end_turn()
+    assertEquals(program.get_turn, None)
+
+  test("After end_turn, the next unit gets the turn"):
+    program.add_unit_to_program(hero)
+    program.add_unit_to_program(goblin)
+    program.start_next_turn(10)
+    program.end_turn()
+    assertEquals(program.start_next_turn(10), Some(goblin))
+
+  test("If several units completed their bar, they get the turn in order without adding more"):
+    program.add_unit_to_program(hero)
+    program.add_unit_to_program(fastEnemy)
+    assertEquals(program.start_next_turn(20), Some(fastEnemy))
+    program.end_turn()
+    assertEquals(program.start_next_turn(20), Some(hero))
+    assertEquals(program.get_during_program_map(fastEnemy), 0.0)
+
+  test("Removing the unit that has the turn removes the turn"):
+    program.add_unit_to_program(hero)
+    program.start_next_turn(20)
+    program.remove_unit_of_program(hero)
+    assertEquals(program.get_turn, None)
+
+  test("Removing a unit that is waiting in sorted_Seq removes it from the sequence"):
+    program.add_unit_to_program(hero)
+    program.add_unit_to_program(fastEnemy)
+    program.add_action_bar(20)
+    program.remove_unit_of_program(hero)
+    assertEquals(program.get_sorted_Seq.map(_._1), Seq[Unity](fastEnemy))
+
+
+
+  test("update_action_bar recalculates the max action bar after equipping a weapon"):
+    program.add_unit_to_program(knight)
+    assertEquals(program.get_action_bars(knight), 40.0)
+    knight.set_weapon(Some(Sword("S", 50, 10, None)))
+    program.update_action_bar(knight)
+    assertEquals(program.get_action_bars(knight), 45.0)
+
+  test("update_action_bar does nothing if the character is not in the program"):
+    program.update_action_bar(knight)
+    assert(!program.get_action_bars.contains(knight))

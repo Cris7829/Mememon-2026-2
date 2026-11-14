@@ -201,6 +201,19 @@ class Game_Program_test extends FunSuite:
     assert(!controller.get_turns_program().get_t_units_list.contains(enemy))
     assert(controller.get_turns_program().get_t_units_list.contains(knight))
 
+  test("A successful action ends the turn and gives it to the next unit"):
+    start_basic_game()
+    assert(controller.do_action(knight, Attack(), enemy))
+    assertEquals(enemy.get_health, 55)
+    assertEquals(controller.get_who_turn, Some(enemy))
+    assertEquals(controller.get_last_error, None)
+
+  test("Turns keep alternating after several actions"):
+    start_basic_game()
+    assert(controller.do_action(knight, Attack(), enemy))
+    assert(controller.do_action(enemy, Attack(), knight))
+    assertEquals(knight.get_health, 90)
+    assert(controller.get_who_turn.isDefined)
 
 
 

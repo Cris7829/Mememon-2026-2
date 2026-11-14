@@ -43,7 +43,7 @@ class Panel_test extends FunSuite:
     p1.add_adjacent(p2)
     assertEquals(p1.get_adjacent.length, 1)
     p1.remove_adjacent(p2)
-    assert(p1.get_units.isEmpty)
+    assert(p1.get_adjacent.isEmpty)
 
 
   test("Removing a unit or panel that is not in the list does nothing"):
@@ -124,4 +124,22 @@ class Panel_test extends FunSuite:
     p1.add_units(enemy)
     intercept[InvalidTargetException](m.doAction(Meteor(), p1))
 
+  test("A panel cannot receive Heal nor Purification"):
+    val wm = White_Mage("WM", 100, 5, 10, Some(Wand("W", 10, 2, None, 30)), 100)
+    intercept[InvalidTargetException](wm.doAction(Heal(), p1))
+    intercept[InvalidTargetException](wm.doAction(Purification(), p1))
+
+  test("A panel does not receive any other action"):
+    val k = Knight("K", 100, 5, 10)
+    val m = bmage
+    assert(!p1.receive(Attack(), k))
+    assert(!p1.receive(Attack(), enemy))
+    assert(!p1.receive(Thunder(), m))
+    assert(!p1.receive(Use_Potion(), k: Character))
+    assert(!p1.receive(Use_Potion(), m))
+    assert(!p1.receive(Equip_Weapon(), k: Character))
+    assert(!p1.receive(Equip_Weapon(), k))
+    assert(!p1.receive(Equip_Weapon(), Archer("A", 100, 5, 10)))
+    assert(!p1.receive(Equip_Weapon(), Thieve("T", 100, 5, 10)))
+    assert(!p1.receive(Equip_Weapon(), m))
     assert(!p1.receive(Equip_Weapon(), White_Mage("WM", 100, 5, 10, 100)))

@@ -154,5 +154,15 @@ class Armament_test extends FunSuite:
     intercept[InvalidTargetException](sword.receive(Heal(), wmage))
     intercept[InvalidTargetException](sword.receive(Purification(), wmage))
 
+  test("An armament does not receive any other action"):
+    assert(!sword.receive(Attack(), steve))
+    assert(!sword.receive(Attack(), Enemy("E", 100, 5, 10, 20)))
+    assert(!sword.receive(Move(), steve))
+    assert(!sword.receive(Use_Potion(), steve))
+    assert(!sword.receive(Use_Potion(), bmage))
+    assert(!sword.receive(Thunder(), bmage))
+    assert(!sword.receive(Meteor(), bmage))
+    assert(!sword.receive(Equip_Weapon(), steve))
+
 
 

@@ -269,6 +269,50 @@ class Unity_test extends FunSuite:
 
 
 
+  test("A character uses a potion from its inventory"):
+    val potion = Healing("H")
+    knight.get_inventory += potion
+    knight.set_health(50)
+    assert(knight.doAction(Use_Potion(), potion))
+    assertEquals(knight.get_health, 74)
+
+  test("A magic character uses a potion from its inventory"):
+    val potion = Mana("M")
+    black_mage.get_inventory += potion
+    black_mage.set_mana(50)
+    assert(black_mage.doAction(Use_Potion(), potion))
+    assertEquals(black_mage.get_mana, 80)
+
+  test("A character cannot use a potion that is not in its inventory"):
+    assert(!knight.doAction(Use_Potion(), Healing("H")))
+    assert(!black_mage.doAction(Use_Potion(), Mana("M")))
+
+
+  test("An enemy cannot do character actions"):
+    val sword = Sword("S", 50, 10, None)
+    assert(!enemy.Do(Equip_Weapon(), sword))
+    assert(!enemy.Do(Use_Potion(), Healing("H")))
+    assert(!enemy.Do(Thunder(), knight))
+    assert(!enemy.Do(Meteor(), knight))
+    assert(!enemy.Do(Heal(), knight))
+    assert(!enemy.Do(Purification(), enemy))
+
+  test("A unit does not receive actions meant for other targets"):
+    assert(!enemy.receive(Move(), knight))
+    assert(!knight.receive(Move(), enemy))
+    assert(!enemy.receive(Use_Potion(), knight: Character))
+    assert(!enemy.receive(Use_Potion(), black_mage))
+    assert(!knight.receive(Use_Potion(), knight: Character))
+    assert(!enemy.receive(Equip_Weapon(), knight: Character))
+    assert(!knight.receive(Equip_Weapon(), knight: Character))
+    assert(!enemy.receive(Equip_Weapon(), knight))
+    assert(!enemy.receive(Equip_Weapon(), archer))
+    assert(!enemy.receive(Equip_Weapon(), thieve))
+    assert(!enemy.receive(Equip_Weapon(), black_mage))
+    assert(!enemy.receive(Equip_Weapon(), white_mage))
+
+
+
 
 
 

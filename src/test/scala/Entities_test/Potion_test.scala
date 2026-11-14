@@ -113,3 +113,18 @@ class Potion_test extends FunSuite:
   test("A potion cannot receive Heal nor Purification"):
     intercept[InvalidTargetException](healing_potion.receive(Heal(), White_Mage("WM", 100, 5, 10, 100)))
     intercept[InvalidTargetException](healing_potion.receive(Purification(), White_Mage("WM", 100, 5, 10, 100)))
+
+  test("A potion does not receive any other action"):
+    val k = knight
+    val m = bmage
+    assert(!healing_potion.receive(Attack(), k))
+    assert(!healing_potion.receive(Attack(), Enemy("E", 100, 5, 10, 20)))
+    assert(!healing_potion.receive(Move(), k))
+    assert(!healing_potion.receive(Equip_Weapon(), k: Character))
+    assert(!healing_potion.receive(Equip_Weapon(), k))
+    assert(!healing_potion.receive(Equip_Weapon(), Archer("A", 100, 5, 10)))
+    assert(!healing_potion.receive(Equip_Weapon(), Thieve("T", 100, 5, 10)))
+    assert(!healing_potion.receive(Equip_Weapon(), m))
+    assert(!healing_potion.receive(Equip_Weapon(), White_Mage("WM", 100, 5, 10, 100)))
+    assert(!healing_potion.receive(Thunder(), m))
+    assert(!healing_potion.receive(Meteor(), m))

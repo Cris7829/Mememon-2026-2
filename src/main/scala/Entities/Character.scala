@@ -26,9 +26,15 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
   protected var weapon : Option[Usable_Armament] = we
   /** A variable that represents the inventory of utilizable.*/
   protected val inventory: ListBuffer[Utilizable] = ListBuffer()
-  /** Retrieves the armament that its equipped.*/
+  /** Retrieves the armament that its equipped.
+   * 
+   * @return the weapon equipped.
+   * */
   def get_weapon: Option[Usable_Armament] = weapon
-  /** Retrieves the inventory.*/
+  /** Retrieves the inventory.
+   * 
+   * @return the list with the inventory. 
+   * */
   def get_inventory: ListBuffer[Utilizable] = inventory
   
   actions_possible ++= List(Equip_Weapon(), Use_Potion())

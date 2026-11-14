@@ -43,7 +43,10 @@ class Magic_Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament],
       mana=x
 
 
-  /** Getter for the magic multiplier.*/
+  /** Getter for the magic multiplier.
+   * 
+   * @return the magic multiplier.
+   * */
   def get_magic_multiplier: Double = magic_multiplier
 
   /** Setter of the magic multiplier.
