@@ -132,19 +132,19 @@ class GameController :
         enemies_list += x
         turns_program.add_unit_to_program(x)
 
-  /** Following the game logic, it make a unity do an action to a Target.
+  /** Following the game logic, it makes a unity do an action to a Target.
    *
    *
    * It throws the NotYourTurnException it's not the given's Unity's turn.
    *
-   * If the action wasn't done succsesfully, prints the cause.
+   * If the action wasn't done successfully, prints the cause.
    *
    *
    * @param u The Unity
    * @param action The Action
    * @param target The Target
    *
-   * @return false if the unity could not do the action succesfully, otherwise true.
+   * @return false if the unity could not do the action successfully, otherwise true.
    */
   def do_action(u: Unity, action: Action, target: Target): Boolean = 
    

@@ -30,7 +30,7 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
   def get_weapon: Option[Usable_Armament] = weapon
   /** Retrieves the inventory.*/
   def get_inventory: ListBuffer[Utilizable] = inventory
-
+  
   actions_possible ++= List(Equip_Weapon(), Use_Potion())
 
   /** Value that represents the max health of a Character, associated with the initial health points.*/
