@@ -56,6 +56,13 @@ class Players(n :String) extends Player:
   def add_units(x:Character):scala.Unit =
     if !List_Units.contains(x) && x.get_health>0 then
       List_Units += x 
+      
+      
+      
+  def remove_unit(x:Character):scala.Unit=
+      if get_List_Units.contains(x) then
+        get_List_Units -= x
+    
     
 
 
