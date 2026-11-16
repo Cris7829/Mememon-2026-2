@@ -59,8 +59,9 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
    *
    */
   def set_health(x:Int): scala.Unit =
-    if x<0 then
+    if x<0 then 
      health=0
+     getter_observer().get.actualize_death(this) 
     else health = x
 
 
@@ -358,6 +359,9 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
    * @return false, because a Unit can't complete the action successfully.
    */
   def receive(a: Equip_Weapon, c: White_Mage): Boolean = false
+  
+  
+
 
 
 
