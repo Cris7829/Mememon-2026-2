@@ -33,6 +33,7 @@ class GameController extends Observer:
   
   private val panels:ListBuffer[Panel]= ListBuffer()
 
+  
   /** Getter for the last error variable.*/
   def get_last_error: Option[String] = last_error
 
@@ -179,36 +180,45 @@ class GameController extends Observer:
         turns_program.remove_unit_of_program(x)
 
 
-  def remove_enemy(x:Enemy):scala.Unit=
+  private def remove_enemy(x:Enemy):scala.Unit=
     if enemies_list.contains(x) then
       enemies_list-=x
 
 
-  def remove_players_Character(x: Character): scala.Unit =
+  private def remove_players_Character(x: Character): scala.Unit =
     if owners.contains(x) then 
       owners(x).remove_unit(x)
       owners.remove(x)
+  
+  private def remove_Unit_panel(x:Unit):scala.Unit =
+    for c<-get_panels do
+      if c.get_units.contains(x) then
+        c.remove_units(x)
+      
 
 
 
   def actualize_death(x: Character): scala.Unit =
     turns_program.remove_unit_of_program(x)
+    remove_Unit_panel(x)
     remove_players_Character(x)
     verify_end()
 
 
   def actualize_death(x: Enemy): scala.Unit =
     turns_program.remove_unit_of_program(x)
+    remove_Unit_panel(x)
     remove_enemy(x)
     verify_end()
-    
+
+  
     
   private var who_won:Option[Boolean] = None
   
   def get_who_won:Option[Boolean] = who_won
 
 
-  def verify_end(): scala.Unit =
+  private def verify_end(): scala.Unit =
     if who_won.isEmpty then
       if enemies_list.isEmpty then
         who_won = Some(true)
