@@ -248,11 +248,15 @@ class GameController extends Observer:
         c.remove_units(x)
 
 
-  /** It removes a Unit from a panel's list.
+  /** Following the observer design pattern. This method receives an Enemy that his health is 0.
    *
-   * If somebody has already won method does nothing.
+   * The method, removes the Character form the player's unit list, the panel that it on
+   * and from the turn's program unit list.
    *
-   * @param x The Unit.
+   * After all that, using verify_end() method, if the players have won it set the who_won variable to
+   * Some(true), if the enemies have won it set the variable to Some(false). If nobody has won this part, does nothing.
+   *
+   * @param x The Character.
    */
   def actualize_death(x: Character): scala.Unit =
     turns_program.remove_unit_of_program(x)

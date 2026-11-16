@@ -22,18 +22,24 @@ import DesignPatterns.Observer
  * @constructor Creates a new general Unit with the specified basic attributes.
  */
 abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
-
+  /** Variable that has the observer of the Unit.*/
   protected var observer: Option[Observer] = None
 
-
+  /**Getter for the observer variable.
+   * 
+   * @return the variable.
+   * */
   def getter_observer(): Option[Observer] = observer
-  
-  
+
+  /** It set observer variable into the given Option[Observer].
+   * 
+   * If the variable is already defined, the method does nothing.
+   *
+   * */
   def set_observer(x:Option[Observer]):scala.Unit=
     if x.isDefined then
       observer=x
       
-  
   
   /** A non-mutable variable for the name of the Unit. */
   val name: String = n
@@ -57,14 +63,14 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
 
   /** Setter of the health points of the Unit.
    *
-   * 
-   * Following the observer design patter, when the Unit is dead, notifies the death into 
+   *
+   * Following the observer design patter, when the Unit is dead, notifies the death into
    * the observer variable. In this class the notification does nothing.
-   * 
+   *
    * The Character and Enemy class, don't override this class but, they override the notify_death()
    * method, because they notify when they are death to the observer.
-   * 
-   * 
+   *
+   *
    * @param x The new amount, if it's below 0 set health to 0.
    *          
    */
@@ -76,7 +82,7 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
 
 
   /** Method created so the observer design patter could work. For this class does nothing.
-   *  
+   *
    * Character and Enemy override this, so they notify the observer when they are dead.
    *
    * */

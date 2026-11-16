@@ -36,9 +36,14 @@ trait Unity extends Source with Target:
    */
   def doAction(action: Action, target: Target): Boolean
 
-  /** Setter of the health points of the Unity.
-   * 
-   * @param x The new amount, if it's below 0, the method does nothing.
+  /** Setter of the health points of the Unit.
+   *
+   *
+   * Following the observer design patter, when the Unity is dead, notifies the death into
+   * the observer variable.
+   *
+   *
+   * @param x The new amount, if it's below 0 set health to 0.
    *
    */
   def set_health(x:Int): scala.Unit
@@ -231,13 +236,17 @@ trait Unity extends Source with Target:
    */ 
   def receive(a: Use_Potion, m: Magic_Character): Boolean
 
-
-  protected var observer: Option[Observer] 
-
-
+  /** Getter for the observer variable.
+   *
+   * @return the variable.
+   * */
   def getter_observer(): Option[Observer]
 
-
+  /** It set observer variable into the given Option[Observer].
+   *
+   * If the variable is already defined, the method does nothing.
+   *
+   * */
   def set_observer(x: Option[Observer]): scala.Unit 
   
 
