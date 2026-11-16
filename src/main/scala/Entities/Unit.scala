@@ -55,14 +55,17 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
 
   /** Setter of the health points of the Unit.
    *
-   * @param x The new amount, if it's below 0, the method does nothing.
-   *
+   * @param x The new amount, if it's below 0 set health to 0.
+   *          
    */
-  def set_health(x:Int): scala.Unit =
-    if x<0 then 
-     health=0
-     getter_observer().get.actualize_death(this) 
-    else health = x
+  def set_health(x: Int): scala.Unit =
+    val was_alive = health > 0
+    health = if x < 0 then 0 else x
+    if was_alive && health == 0 then notify_death()
+
+  
+  
+  protected def notify_death(): scala.Unit
 
 
 
