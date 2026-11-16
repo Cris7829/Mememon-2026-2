@@ -6,6 +6,7 @@ import Entities.{Archer, *}
 import Actions.*
 import Exceptions.*
 import Usable.*
+import DesignPatterns.*
 
 class Unity_test extends FunSuite:
 
@@ -15,8 +16,10 @@ class Unity_test extends FunSuite:
   var archer: Archer = Archer("Robin", 90, 12, 14)
   var black_mage: Black_Mage = Black_Mage("Cris", 60, 5, 7, 100)
   var white_mage: White_Mage = White_Mage("Sky", 70, 7, 9, 110)
+  var obs = Counting_Observer()
 
   override def beforeEach(context: BeforeEach): scala.Unit =
+    obs = Counting_Observer()
     enemy = Enemy("Goblin", 50, 5, 8, 15)
     thieve = Thieve("Dark Ares", 80, 10, 12)
     knight = Knight("Arturo", 120, 25, 20)
@@ -310,6 +313,40 @@ class Unity_test extends FunSuite:
     assert(!enemy.receive(Equip_Weapon(), thieve))
     assert(!enemy.receive(Equip_Weapon(), black_mage))
     assert(!enemy.receive(Equip_Weapon(), white_mage))
+
+
+  test("A new unit has no observer"):
+    assertEquals(enemy.getter_observer(), None)
+
+  test("set_observer sets the observer and ignores None"):
+    enemy.set_observer(Some(obs))
+    enemy.set_observer(None)
+    assertEquals(enemy.getter_observer(), Some(obs))
+
+  test("A defeated enemy notifies its observer once"):
+    enemy.set_observer(Some(obs))
+    enemy.set_health(0)
+    enemy.set_health(0)
+    assertEquals(obs.enemies_dead, 1)
+    assertEquals(obs.characters_dead, 0)
+
+  test("A defeated character notifies its observer as a character"):
+    knight.set_observer(Some(obs))
+    knight.set_health(-10)
+    assertEquals(obs.characters_dead, 1)
+    assertEquals(obs.enemies_dead, 0)
+
+  test("A unit that loses health but is still alive does not notify"):
+    enemy.set_observer(Some(obs))
+    enemy.set_health(10)
+    assertEquals(obs.enemies_dead, 0)
+
+  test("A unit killed by an action notifies its observer"):
+    enemy.set_observer(Some(obs))
+    knight.set_weapon(Some(Sword("S", 100, 10, None)))
+    knight.doAction(Attack(), enemy)
+    assertEquals(obs.enemies_dead, 1)
+
 
 
 

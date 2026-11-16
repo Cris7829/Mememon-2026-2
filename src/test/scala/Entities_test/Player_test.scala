@@ -174,4 +174,16 @@ class Player_test extends FunSuite:
     other.was_Defeated()
     assert(other.get_is_Defeated)
 
+  test("remove_unit removes a character from the list"):
+    player.add_units(knight)
+    player.add_units(archer)
+    player.remove_unit(knight)
+    assert(!player.get_List_Units.contains(knight))
+    assert(player.get_List_Units.contains(archer))
+
+  test("remove_unit does nothing if the character is not in the list"):
+    player.add_units(knight)
+    player.remove_unit(archer)
+    assertEquals(player.get_List_Units.size, 1)
+
 
