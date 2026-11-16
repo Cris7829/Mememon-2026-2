@@ -3,7 +3,7 @@ package Entities
 import scala.collection.mutable.ListBuffer
 import Actions.*
 import Action_Sistem.*
-
+import controller.*
 import Exceptions.*
 
 /** An abstract base class representing a general Unit.
@@ -20,6 +20,19 @@ import Exceptions.*
  * @constructor Creates a new general Unit with the specified basic attributes.
  */
 abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
+
+  protected var observer: Option[Observer] = None
+
+
+  def getter_observer(): Option[Observer] = observer
+  
+  
+  def set_observer(x:Option[Observer]):scala.Unit=
+    if x.isDefined then
+      observer=x
+      
+  
+  
   /** A non-mutable variable for the name of the Unit. */
   val name: String = n
 

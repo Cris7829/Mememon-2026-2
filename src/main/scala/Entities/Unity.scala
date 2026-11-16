@@ -8,6 +8,7 @@ import scala.collection.mutable.ListBuffer
 import Actions.*
 
 import Panel.Panel
+import controller.*
 
 /** A  trait representing any Unity that is in the game such as characters and enemies */
 trait Unity extends Source with Target:
@@ -229,6 +230,15 @@ trait Unity extends Source with Target:
    * @return true if the target was consumed and applied its effect.
    */ 
   def receive(a: Use_Potion, m: Magic_Character): Boolean
+
+
+  protected var observer: Option[Observer] 
+
+
+  def getter_observer(): Option[Observer]
+
+
+  def set_observer(x: Option[Observer]): scala.Unit 
   
 
     

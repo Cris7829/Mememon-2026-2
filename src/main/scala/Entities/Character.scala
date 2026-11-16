@@ -3,11 +3,11 @@ package Entities
 import Exceptions.*
 import Usable.{Usable_Armament, Utilizable}
 
-
 import scala.collection.mutable.ListBuffer
-
 import Action_Sistem.*
 import Actions.*
+
+
 
 /** A class representing a general Unit that can be used by a player.
  * .
@@ -77,8 +77,7 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
    *
    * @param a The Use_Potion action.
    * @param t The potion to consume.
-   * @return true if the potion was consumed, false if it is not in the inventory
-   *         or it has no effect on this Character.
+   * @return true if the potion was consumed, false if it is not in the inventory, or it has no effect on this Character.
    */
   override def Do(a: Use_Potion, t: Target): Boolean =
       if get_inventory.contains(t) then t.receive(a, this)
@@ -168,7 +167,7 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
 
   /** Receives Heal cast by a White Mage.
    *
-   * The Character recovers 20% of its max health plus a quarter of the magic damage of the
+   * The Character recovers 20% of its max health plus a quarter of the magic damage to the
    * White Mage, that is, the magic attack points of its weapon multiplied by its magic multiplier.
    *
    * The spell costs 15 mana and the magic multiplier goes back to 1.0 after casting it.

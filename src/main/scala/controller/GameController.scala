@@ -15,7 +15,7 @@ import Exceptions.*
  * It works directly with Players, Units , Actions and Turn_program. Uses this last one
  * to calculate and to use actions.
  */
-class GameController :
+class GameController extends Observer:
 
   /** A  variable that will keep the player as a list, that are in the game.*/
   private var players_list:ListBuffer[Players]= ListBuffer()
