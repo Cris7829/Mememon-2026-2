@@ -179,16 +179,32 @@ class GameController extends Observer:
 
 
   def remove_enemy(x:Enemy):scala.Unit=
-    if get_enemies_list().contains(x) then
-      get_enemies_list()-=x
+    if enemies_list.contains(x) then
+      enemies_list-=x
 
 
-  def remove_players_Character(x: Character):scala.Unit=
-    get_owners(x)
+  def remove_players_Character(x: Character): scala.Unit =
+    if owners.contains(x) then 
+      owners(x).remove_unit(x)
+      owners.remove(x)
+    
 
 
-  def actualize_death(x: Unity): scala.Unit=
+  def actualize_death(x: Enemy): scala.Unit=  
     turns_program.remove_unit_of_program(x)
+    remove_enemy(x)
+
+
+  def actualize_death(x: Character): scala.Unit = 
+    turns_program.remove_unit_of_program(x) 
+    remove_players_Character(x)
+    
+    
+ 
+  
+    
+    
+
 
 
 
