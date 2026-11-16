@@ -98,4 +98,8 @@ class Enemy(n:String, h:Int, d:Int, w:Int, a:Int) extends Unit(n:String, h:Int, 
      else set_health(0)
      m.set_magic_multiplier(1.0)
      true
+
+  override protected def notify_death(): scala.Unit =
+    if getter_observer().isDefined then
+      getter_observer().get.actualize_death(this)
      
