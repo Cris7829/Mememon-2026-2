@@ -29,20 +29,28 @@ class GameController extends Observer:
   /** A  variable that will, given a Character, its player.*/
   private var owners:mutable.Map[Character, Players] = mutable.Map()
   
+  /** A variable that saves the last error that was thrown during an action method.*/
   private var last_error: Option[String]= None
   
+  /** A variable that has the panels of the Game.*/
   private val panels:ListBuffer[Panel]= ListBuffer()
 
 
-  /** Getter for the last error variable.*/
+  /** Getter for the last error variable.
+   *
+   * @return the last error variable.
+   * */
   def get_last_error: Option[String] = last_error
 
-  /** Getter for the panels variables.*/
+  /** Getter for the panels variables.
+   *
+   * @return list of panels.
+   * */
   def get_panels: List[Panel] = panels.toList
 
   /** It adds a panel to the panels_list, if it is already there, the method does nothing
    *
-   * @param p The Panel
+   * @param p The Panel.
    *
    * */
   def add_panel(p: Panel): scala.Unit =
@@ -64,13 +72,28 @@ class GameController extends Observer:
   
   
   
-  /** Getter for the players list that are in the GameController.*/
+  /** Getter for the players list that are in the GameController.
+   *
+   * @return the players list.
+   * */
   def get_players_list(): ListBuffer[Players] = players_list
-  /** Getter for the enemies list that are in the GameController.*/
+
+  /** Getter for the enemies list that are in the GameController.
+   *
+   * @return the enemies list.
+   * */
   def get_enemies_list(): ListBuffer[Enemy] = enemies_list
-  /** Getter for the turn programs that are in the GameController.*/
+
+  /** Getter for the turn programs that are in the GameController.
+   *
+   * @return the turn program class.
+   * */
   def get_turns_program(): Turns_program = turns_program
-  /** Getter for the owners map.*/
+
+  /** Getter for the owners map.
+   *
+   * @return owners list.
+   * */
   def get_owners: Map[Character, Players] = owners.toMap
 
 
@@ -140,9 +163,9 @@ class GameController extends Observer:
 
   /** Following the game logic, it makes a unity do an action to a Target.
    *
+   * If somebody has already won, it returns false and doesn't do the action.
    *
    * It throws the NotYourTurnException it's not the given's Unity's turn.
-   *
    * If the action wasn't done successfully, prints the cause.
    *
    *
@@ -150,7 +173,8 @@ class GameController extends Observer:
    * @param action The Action
    * @param target The Target
    *
-   * @return false if the unity could not do the action successfully, otherwise true.
+   * @return false if the unity could not do the action successfully or somebody has won, otherwise true.
+   *
    */
   def do_action(u: Unity, action: Action, target: Target): Boolean =
     verify_end()
@@ -179,26 +203,37 @@ class GameController extends Observer:
    */
   def get_actions(u: Unity): List[Action] = u.actions_possible.toList
 
-  /** It removes every Unity that has 0 point of health from the turn and game program.*/
-  def remove_defeated_units(): scala.Unit =
-    if who_won.isEmpty then
-      for x <- turns_program.get_t_units_list.toList if x.get_health <= 0 do
-        turns_program.remove_unit_of_program(x)
 
-
-  private def remove_enemy(x:Enemy):scala.Unit=
+  /** It removes an Enemy from the enemies list.
+   *
+   * If somebody has already won method does nothing.
+   *
+   * @param x The Enemy
+   */
+  private def remove_enemy(x:Enemy): scala.Unit =
 
     if who_won.isEmpty then
       if enemies_list.contains(x) then
        enemies_list-=x
 
-
+  /** It removes a Character from a player's list.
+   *
+   * If somebody has already won method does nothing.
+   *
+   * @param x The Character.
+   */
   private def remove_players_Character(x: Character): scala.Unit =
     if who_won.isEmpty then
       if owners.contains(x) then
        owners(x).remove_unit(x)
        owners.remove(x)
 
+  /** It removes a Unit from a panel's list.
+   *
+   * If somebody has already won method does nothing.
+   *
+   * @param x The Unit.
+   */
   private def remove_Unit_panel(x:Unit):scala.Unit =
     if who_won.isEmpty then
       for c<-get_panels do
@@ -206,15 +241,29 @@ class GameController extends Observer:
         c.remove_units(x)
 
 
-
-
+  /** It removes a Unit from a panel's list.
+   *
+   * If somebody has already won method does nothing.
+   *
+   * @param x The Unit.
+   */
   def actualize_death(x: Character): scala.Unit =
     turns_program.remove_unit_of_program(x)
     remove_Unit_panel(x)
     remove_players_Character(x)
     verify_end()
 
-
+  /** Following the observer design pattern. This method receives an Enemy that his health is 0.
+   *
+   * The method, removes the Enemy form the enemies list, the panel that it on
+   * and from the turn's program unit list.
+   *
+   *
+   * After all that, using verify_end() method, if the players have won it set the who_won variable to
+   * Some(true), if the enemies have won it set the variable to Some(false). If nobody has won this part, does nothing.
+   *
+   * @param x The Enemy.
+   */
   def actualize_death(x: Enemy): scala.Unit =
     turns_program.remove_unit_of_program(x)
     remove_Unit_panel(x)
@@ -222,12 +271,28 @@ class GameController extends Observer:
     verify_end()
 
 
-    
+  /**An Option variable, Some(true) means the players have won, Some(false) means the enemies have won, None if
+   * the game still on.
+   * */
   private var who_won:Option[Boolean] = None
-  
+
+  /** Getter for the who_won variable.
+   *
+   * Some(true) means the players have won, Some(false) means the enemies have won, None if
+   * the game still on.
+   *
+   * @return the variable.
+   * */
   def get_who_won:Option[Boolean] = who_won
 
-
+  /** It cheks if the enemies or the player's unit lists for every player are empty. 
+   *
+   * If the enemies list is empty, set who_won to Some(true) meaning that the players have won.
+   * If every player's unit list are empty, set who_won to Some(false) meaning that the enemies have won.
+   * 
+   * If not once of the last happens, the method does nothing else.
+   *
+   * */
   private def verify_end(): scala.Unit =
     if who_won.isEmpty then
       if enemies_list.isEmpty then
