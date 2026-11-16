@@ -33,7 +33,7 @@ class GameController extends Observer:
   
   private val panels:ListBuffer[Panel]= ListBuffer()
 
-  
+
   /** Getter for the last error variable.*/
   def get_last_error: Option[String] = last_error
 
@@ -46,7 +46,9 @@ class GameController extends Observer:
    *
    * */
   def add_panel(p: Panel): scala.Unit =
-    if !panels.contains(p) then panels += p
+    if who_won.isEmpty then
+     if !panels.contains(p) then panels += p
+
 
   /** It fines the panel that has the given coordinates.
    *
@@ -109,6 +111,7 @@ class GameController extends Observer:
    * @param x the player
    */
   def add_players(x: Players): scala.Unit =
+    if who_won.isEmpty then
       if !players_list.contains(x) then
         players_list += x
         for c <- x.get_List_Units do
@@ -119,6 +122,7 @@ class GameController extends Observer:
    * @param x the player , y the character
    */
   def add_units_to_player(x: Players, y: Character): scala.Unit =
+    if who_won.isEmpty then
       if players_list.contains(x) && !owners.contains(y) then
         owners(y) = x
         x.add_units(y)
@@ -129,6 +133,7 @@ class GameController extends Observer:
    * @param x The enemy
    */
   def add_enemies(x: Enemy): scala.Unit =
+    if who_won.isEmpty then
       if !enemies_list.contains(x) then
         enemies_list += x
         turns_program.add_unit_to_program(x)
@@ -176,25 +181,30 @@ class GameController extends Observer:
 
   /** It removes every Unity that has 0 point of health from the turn and game program.*/
   def remove_defeated_units(): scala.Unit =
+    if who_won.isEmpty then
       for x <- turns_program.get_t_units_list.toList if x.get_health <= 0 do
         turns_program.remove_unit_of_program(x)
 
 
   private def remove_enemy(x:Enemy):scala.Unit=
-    if enemies_list.contains(x) then
-      enemies_list-=x
+
+    if who_won.isEmpty then
+      if enemies_list.contains(x) then
+       enemies_list-=x
 
 
   private def remove_players_Character(x: Character): scala.Unit =
-    if owners.contains(x) then 
-      owners(x).remove_unit(x)
-      owners.remove(x)
-  
+    if who_won.isEmpty then
+      if owners.contains(x) then
+       owners(x).remove_unit(x)
+       owners.remove(x)
+
   private def remove_Unit_panel(x:Unit):scala.Unit =
-    for c<-get_panels do
-      if c.get_units.contains(x) then
+    if who_won.isEmpty then
+      for c<-get_panels do
+       if c.get_units.contains(x) then
         c.remove_units(x)
-      
+
 
 
 
@@ -211,7 +221,7 @@ class GameController extends Observer:
     remove_enemy(x)
     verify_end()
 
-  
+
     
   private var who_won:Option[Boolean] = None
   
