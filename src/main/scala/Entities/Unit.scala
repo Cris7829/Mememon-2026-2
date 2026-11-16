@@ -55,16 +55,29 @@ abstract class Unit (n:String, h:Int, d:Int, w:Int) extends Unity:
 
   /** Setter of the health points of the Unit.
    *
+   * 
+   * Following the observer design patter, when the Unit is dead, notifies the death into 
+   * the observer variable. In this class the notification does nothing.
+   * 
+   * The Character and Enemy class, don't override this class but, they override the notify_death()
+   * method, because they notify when they are death to the observer.
+   * 
+   * 
    * @param x The new amount, if it's below 0 set health to 0.
    *          
    */
   def set_health(x: Int): scala.Unit =
-    val was_alive = health > 0
+    val was_alive= health>0
     health = if x < 0 then 0 else x
     if was_alive && health == 0 then notify_death()
 
-  
-  
+
+
+  /** Method created so the observer design patter could work. For this class does nothing.
+   *  
+   * Character and Enemy override this, so they notify the observer when they are dead.
+   *
+   * */
   protected def notify_death(): scala.Unit
 
 

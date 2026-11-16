@@ -185,6 +185,10 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
       m.set_magic_multiplier(1.0)
       true
 
+  /** Method created so the observer design patter could work. If the observer is defined, 
+   * it sends his information into him.
+   *
+   * */
   override protected def notify_death(): scala.Unit =
     if getter_observer().isDefined then
       getter_observer().get.actualize_death(this)
