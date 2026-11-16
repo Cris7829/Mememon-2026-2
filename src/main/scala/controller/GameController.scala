@@ -176,3 +176,20 @@ class GameController extends Observer:
   def remove_defeated_units(): scala.Unit =
       for x <- turns_program.get_t_units_list.toList if x.get_health <= 0 do
         turns_program.remove_unit_of_program(x)
+
+
+  def remove_enemy(x:Enemy):scala.Unit=
+    if get_enemies_list().contains(x) then
+      get_enemies_list()-=x
+
+
+  def remove_players_Character(x: Character):scala.Unit=
+    get_owners(x)
+
+
+  def actualize_death(x: Unity): scala.Unit=
+    turns_program.remove_unit_of_program(x)
+
+
+
+
