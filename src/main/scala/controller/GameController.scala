@@ -146,24 +146,25 @@ class GameController extends Observer:
    *
    * @return false if the unity could not do the action successfully, otherwise true.
    */
-  def do_action(u: Unity, action: Action, target: Target): Boolean = 
-   
-    val momentary_k: Double =1.0
-    try
-      if !turns_program.get_turn.contains(u) then
-        throw NotYourTurnException(s"It is not the turn of ${u.name}")
-      val ok = u.doAction(action, target)
-      if ok then
-        remove_defeated_units()
-        turns_program.end_turn()
-        turns_program.start_next_turn(momentary_k)
-      last_error = None
-      ok
-    catch
-      case e: GameException =>
-        last_error = Some(e.getMessage)
-        println(s"Action failed: ${e.getMessage}")
-        false
+  def do_action(u: Unity, action: Action, target: Target): Boolean =
+    verify_end()
+    if who_won.isDefined then false
+    else
+      val momentary_k: Double = 1.0
+      try
+        if !turns_program.get_turn.contains(u) then
+          throw NotYourTurnException(s"It is not the turn of ${u.name}")
+        val ok = u.doAction(action, target)
+        if ok then
+          turns_program.end_turn()
+          turns_program.start_next_turn(momentary_k)
+        last_error = None
+        ok
+      catch
+        case e: GameException =>
+          last_error = Some(e.getMessage)
+          println(s"Action failed: ${e.getMessage}")
+          false
 
   /** Getter for the actions than a Unity can do.
    *
@@ -187,20 +188,37 @@ class GameController extends Observer:
     if owners.contains(x) then 
       owners(x).remove_unit(x)
       owners.remove(x)
-    
 
 
-  def actualize_death(x: Enemy): scala.Unit=  
+
+  def actualize_death(x: Character): scala.Unit =
+    turns_program.remove_unit_of_program(x)
+    remove_players_Character(x)
+    verify_end()
+
+
+  def actualize_death(x: Enemy): scala.Unit =
     turns_program.remove_unit_of_program(x)
     remove_enemy(x)
-
-
-  def actualize_death(x: Character): scala.Unit = 
-    turns_program.remove_unit_of_program(x) 
-    remove_players_Character(x)
+    verify_end()
     
     
- 
+  private var who_won:Option[Boolean] = None
+  
+  def get_who_won:Option[Boolean] = who_won
+
+
+  def verify_end(): scala.Unit =
+    if who_won.isEmpty then
+      if enemies_list.isEmpty then
+        who_won = Some(true)
+      else if players_list.forall(_.get_List_Units.isEmpty) then
+        who_won = Some(false)
+  
+         
+         
+       
+
   
     
     
