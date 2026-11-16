@@ -3,8 +3,10 @@ package Entities
 import scala.collection.mutable.ListBuffer
 import Actions.*
 import Action_Sistem.*
-import controller.*
+
 import Exceptions.*
+
+import DesignPatterns.Observer
 
 /** An abstract base class representing a general Unit.
  *

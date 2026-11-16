@@ -1,5 +1,6 @@
 package cl.uchile.dcc
-package controller
+package DesignPatterns
+
 import Entities.*
 
 

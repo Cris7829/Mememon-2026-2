@@ -1,14 +1,14 @@
 package cl.uchile.dcc
 package Entities
 
-import Usable.*
+
 import Action_Sistem.{Source, Target}
 
 import scala.collection.mutable.ListBuffer
 import Actions.*
 
-import Panel.Panel
-import controller.*
+
+import DesignPatterns.Observer
 
 /** A  trait representing any Unity that is in the game such as characters and enemies */
 trait Unity extends Source with Target:

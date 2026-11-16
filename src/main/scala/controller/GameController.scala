@@ -10,6 +10,8 @@ import Actions.Action
 import Action_Sistem.Target
 import Exceptions.*
 
+import DesignPatterns.Observer
+
 /** The GameController is a class that it keeps track of the state of the game.
  *
  * It works directly with Players, Units , Actions and Turn_program. Uses this last one
@@ -28,10 +30,10 @@ class GameController extends Observer:
 
   /** A  variable that will, given a Character, its player.*/
   private var owners:mutable.Map[Character, Players] = mutable.Map()
-  
+
   /** A variable that saves the last error that was thrown during an action method.*/
   private var last_error: Option[String]= None
-  
+
   /** A variable that has the panels of the Game.*/
   private val panels:ListBuffer[Panel]= ListBuffer()
 
@@ -108,6 +110,9 @@ class GameController extends Observer:
     enemies_list = ListBuffer()
     turns_program = Turns_program()
     owners = mutable.Map()
+    panels.clear()
+    who_won = None
+    last_error = None
 
 
   /** Get Some(Unity), if there is a Unity that needs to play his turn, otherwise returns None.
@@ -150,6 +155,7 @@ class GameController extends Observer:
         owners(y) = x
         x.add_units(y)
         turns_program.add_unit_to_program(y)
+        y.set_observer(Some(this))
 
   /** It adds an Enemy to a player to the turn program and the enemies_list , if it's already in the Game Controller, does nothing.
    *
@@ -160,6 +166,7 @@ class GameController extends Observer:
       if !enemies_list.contains(x) then
         enemies_list += x
         turns_program.add_unit_to_program(x)
+        x.set_observer(Some(this))
 
   /** Following the game logic, it makes a unity do an action to a Target.
    *
@@ -285,11 +292,11 @@ class GameController extends Observer:
    * */
   def get_who_won:Option[Boolean] = who_won
 
-  /** It cheks if the enemies or the player's unit lists for every player are empty. 
+  /** It cheks if the enemies or the player's unit lists for every player are empty.
    *
    * If the enemies list is empty, set who_won to Some(true) meaning that the players have won.
    * If every player's unit list are empty, set who_won to Some(false) meaning that the enemies have won.
-   * 
+   *
    * If not once of the last happens, the method does nothing else.
    *
    * */
