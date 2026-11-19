@@ -379,6 +379,17 @@ class GameController extends Observer:
       turns_program.start_next_turn(k)
     ok
 
+  /** Executes a method of the current phase and catches any GameException it throws.
+   *
+   * If the method succeeds, last_error is cleared and its result is returned.
+   * If it throws a GameException, the exception is caught, its message is saved in
+   * last_error and printed, and the default value is returned instead.
+   *
+   * @param default The value to return if the method fails.
+   * @param body The method to execute. 
+   * @tparam T The type of the value returned by the method.
+   * @return The result of the method, or the default value if it threw a GameException.
+   */
   private def safely[T](default: T)(body: => T): T =
     try
       val result = body
