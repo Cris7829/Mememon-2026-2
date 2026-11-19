@@ -155,3 +155,52 @@ class GameController extends Observer:
         who_won = Some(true)
       else if players_list.forall(_.get_List_Units.isEmpty) then
         who_won = Some(false)
+
+
+
+  private val k: Double = 1.0
+
+
+
+
+
+  private[controller] def set_state(s: Game_Program_States): scala.Unit = state = s
+
+  private[controller] def add_players_to_game(x: Players): scala.Unit =
+    if !players_list.contains(x) then
+      players_list += x
+      for c <- x.get_List_Units do
+        add_unit_to_player_in_game(x, c)
+
+
+  private[controller] def add_unit_to_player_in_game(x: Players, y: Character): scala.Unit =
+    if players_list.contains(x) && !owners.contains(y) then
+      owners(y) = x
+      x.add_units(y)
+      turns_program.add_unit_to_program(y)
+      y.set_observer(Some(this))
+
+
+  private[controller] def add_enemy_to_game(x: Enemy): scala.Unit =
+    if !enemies_list.contains(x) then
+      enemies_list += x
+      turns_program.add_unit_to_program(x)
+      x.set_observer(Some(this))
+
+  private[controller] def add_panel_to_game(p: Panel): scala.Unit =
+    if !panels.contains(p) then panels += p
+
+
+  private[controller] def begin_game(): scala.Unit =
+    set_state(new During_Phase)
+    turns_program.start_next_turn(k)
+    verify_end()
+
+  private[controller] def execute_action(u: Unity, action: Action, target: Target): Boolean =
+    if !turns_program.get_turn.contains(u) then
+      throw NotYourTurnException(s"It is not the turn of ${u.name}")
+    val ok = u.doAction(action, target)
+    if ok then
+      turns_program.end_turn()
+      turns_program.start_next_turn(k)
+    ok
