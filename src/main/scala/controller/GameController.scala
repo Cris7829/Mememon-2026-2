@@ -39,9 +39,9 @@ class GameController extends Observer:
 
   def get_panels: List[Panel] = panels.toList
 
-  def Start_Game() : scala.Unit = state.Start_Game(this)
+  def Start_Game() : scala.Unit = safely(())(state.Start_Game(this))
 
-  def add_panel(p: Panel): scala.Unit = state.add_panel(p,this)
+  def add_panel(p: Panel): scala.Unit = safely(())(state.add_panel(p, this))
 
 
   def get_panel_at(x: Int, y: Int): Option[Panel] =
@@ -89,25 +89,18 @@ class GameController extends Observer:
     else None
 
 
-  def add_players(x: Players): scala.Unit = state.add_players(x,this)
+  def add_players(x: Players): scala.Unit = safely(())(state.add_players(x, this))
 
 
-  def add_units_to_player(x: Players, y: Character): scala.Unit = state.add_units_to_player(x,y,this)
+  def add_units_to_player(x: Players, y: Character): scala.Unit =
+    safely(())(state.add_units_to_player(x, y, this))
 
 
-  def add_enemies(x:Enemy):scala.Unit = state.add_enemies(x,this)
+  def add_enemies(x:Enemy):scala.Unit = safely(())(state.add_enemies(x, this))
 
 
   def do_action(u: Unity, action: Action, target: Target): Boolean =
-    try
-      val ok = state.do_action(u, action, target, this)
-      last_error = None
-      ok
-    catch
-      case e: GameException =>
-        last_error = Some(e.getMessage)
-        println(s"Action failed: ${e.getMessage}")
-        false
+    safely(false)(state.do_action(u, action, target, this))
 
 
   def get_actions(u: Unity): List[Action] = u.actions_possible.toList
@@ -213,3 +206,14 @@ class GameController extends Observer:
       turns_program.end_turn()
       turns_program.start_next_turn(k)
     ok
+
+  private def safely[T](default: T)(body: => T): T =
+    try
+      val result = body
+      last_error = None
+      result
+    catch
+      case e: GameException =>
+        last_error = Some(e.getMessage)
+        println(s"Action failed: ${e.getMessage}")
+        default
