@@ -98,9 +98,16 @@ class GameController extends Observer:
   def add_enemies(x:Enemy):scala.Unit = state.add_enemies(x,this)
 
 
-
-  def do_action(u: Unity, action: Action, target: Target): Boolean = state.do_action(u,action,target,this)
-
+  def do_action(u: Unity, action: Action, target: Target): Boolean =
+    try
+      val ok = state.do_action(u, action, target, this)
+      last_error = None
+      ok
+    catch
+      case e: GameException =>
+        last_error = Some(e.getMessage)
+        println(s"Action failed: ${e.getMessage}")
+        false
 
 
   def get_actions(u: Unity): List[Action] = u.actions_possible.toList
@@ -153,8 +160,10 @@ class GameController extends Observer:
     if who_won.isEmpty then
       if enemies_list.isEmpty then
         who_won = Some(true)
+        set_state(new Final_Phase)
       else if players_list.forall(_.get_List_Units.isEmpty) then
         who_won = Some(false)
+        set_state(new Final_Phase)
 
 
 
