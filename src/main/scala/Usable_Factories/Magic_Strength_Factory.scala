@@ -1,0 +1,4 @@
+package cl.uchile.dcc
+package Usable_Factories
+
+class Magic_Strength_Factory extends Abstract_Potion_Factory

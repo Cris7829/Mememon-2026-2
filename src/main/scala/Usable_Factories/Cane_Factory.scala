@@ -1,0 +1,4 @@
+package cl.uchile.dcc
+package Usable_Factories
+
+class Cane_Factory extends Abstract_Magic_Armament_Factory

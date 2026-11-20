@@ -1,0 +1,4 @@
+package cl.uchile.dcc
+package Usable_Factories
+
+abstract class Abstract_Magic_Armament_Factory extends Abstract_Armament_Factory

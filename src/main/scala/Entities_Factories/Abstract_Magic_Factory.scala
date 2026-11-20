@@ -1,0 +1,4 @@
+package cl.uchile.dcc
+package Entities_Factories
+
+abstract class Abstract_Magic_Factory extends Abstract_Character_Factory
