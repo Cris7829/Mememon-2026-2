@@ -36,12 +36,14 @@ class Game_Program_test extends FunSuite:
     p1 = Panel(1, 1)
     p2 = Panel(1, 2)
 
-
-  def start_basic_game(): scala.Unit =
+  def setup_basic_game(): scala.Unit =
     player.add_units(knight)
     controller.add_players(player)
     controller.add_enemies(enemy)
-    controller.get_turns_program().start_next_turn(1.0)
+
+  def start_basic_game(): scala.Unit =
+    setup_basic_game()
+    controller.Start_Game()
 
 
 
@@ -127,8 +129,9 @@ class Game_Program_test extends FunSuite:
 
 
   test("reset_controller_to_base empties players, enemies, owners and turn program"):
-    start_basic_game()
+    setup_basic_game()
     controller.add_panel(p1)
+    controller.Start_Game()
     controller.reset_controller_to_base()
     assert(controller.get_players_list().isEmpty)
     assert(controller.get_enemies_list().isEmpty)
@@ -226,10 +229,11 @@ class Game_Program_test extends FunSuite:
 
   test("A defeated enemy is removed from the enemies list, the turn program and the panels"):
     val other = Enemy("Orc", 100, 5, 20, 15)
-    start_basic_game()
+    setup_basic_game()
     controller.add_enemies(other)
     p1.add_units(enemy)
     controller.add_panel(p1)
+    controller.Start_Game()
     enemy.set_health(0)
     assert(!controller.get_enemies_list().contains(enemy))
     assert(!controller.get_turns_program().get_t_units_list.contains(enemy))
@@ -237,8 +241,9 @@ class Game_Program_test extends FunSuite:
     assertEquals(controller.get_who_won, None)
 
   test("A defeated character is removed from its player, the owners and the turn program"):
-    start_basic_game()
+    setup_basic_game()
     controller.add_units_to_player(player, archer)
+    controller.Start_Game()
     knight.set_health(0)
     assert(!player.get_List_Units.contains(knight))
     assert(!controller.get_owners.contains(knight))
@@ -247,8 +252,9 @@ class Game_Program_test extends FunSuite:
 
   test("The players win when every enemy is defeated"):
     val other = Enemy("Orc", 100, 5, 20, 15)
-    start_basic_game()
+    setup_basic_game()
     controller.add_enemies(other)
+    controller.Start_Game()
     enemy.set_health(0)
     assertEquals(controller.get_who_won, None)
     other.set_health(0)
@@ -257,9 +263,10 @@ class Game_Program_test extends FunSuite:
   test("The enemies win when every character of every player is defeated"):
     val other_player = Players("Gary")
     val thief = Thieve("Rogue", 80, 5, 12)
-    start_basic_game()
+    setup_basic_game()
     controller.add_players(other_player)
     controller.add_units_to_player(other_player, thief)
+    controller.Start_Game()
     knight.set_health(0)
     assertEquals(controller.get_who_won, None)
     thief.set_health(0)
@@ -283,6 +290,7 @@ class Game_Program_test extends FunSuite:
     assert(!controller.get_players_list().contains(new_player))
     assert(!controller.get_owners.contains(archer))
     assert(!controller.get_panels.contains(p1))
+    assert(controller.get_last_error.get.contains("phase"))
 
   test("After a reset, a new game can be played"):
     start_basic_game()
@@ -291,6 +299,59 @@ class Game_Program_test extends FunSuite:
     val new_enemy = Enemy("Orc", 100, 5, 20, 15)
     controller.add_enemies(new_enemy)
     assert(controller.get_enemies_list().contains(new_enemy))
+    player.add_units(Knight("Lancelot", 100, 5, 10, Some(Sword("S", 50, 10, None))))
+    controller.add_players(player)
+    controller.Start_Game()
+    assert(controller.get_who_turn.isDefined)
+    assertEquals(controller.get_who_won, None)
 
 
+  test("A new controller starts in the start phase: actions cannot be done"):
+    setup_basic_game()
+    assert(!controller.do_action(knight, Attack(), enemy))
+    assert(controller.get_last_error.get.contains("phase"))
+    assertEquals(controller.get_who_turn, None)
+
+  test("Start_Game gives the first turn"):
+    setup_basic_game()
+    controller.Start_Game()
+    assertEquals(controller.get_who_turn, Some(knight))
+    assertEquals(controller.get_last_error, None)
+
+  test("Nothing can be added after the game starts"):
+    start_basic_game()
+    val new_enemy = Enemy("Orc", 100, 5, 20, 15)
+    controller.add_enemies(new_enemy)
+    assert(!controller.get_enemies_list().contains(new_enemy))
+    assert(controller.get_last_error.get.contains("phase"))
+    controller.add_units_to_player(player, archer)
+    assert(!controller.get_owners.contains(archer))
+    controller.add_players(Players("Gary"))
+    assertEquals(controller.get_players_list().size, 1)
+    controller.add_panel(p1)
+    assert(controller.get_panels.isEmpty)
+
+  test("Start_Game cannot be called twice"):
+    start_basic_game()
+    controller.Start_Game()
+    assert(controller.get_last_error.get.contains("phase"))
+    assertEquals(controller.get_who_turn, Some(knight))
+
+  test("Start_Game cannot be called after the game ended"):
+    start_basic_game()
+    enemy.set_health(0)
+    controller.Start_Game()
+    assert(controller.get_last_error.get.contains("phase"))
+
+  test("After the game ends, an action fails with a phase error"):
+    start_basic_game()
+    enemy.set_health(0)
+    assert(!controller.do_action(knight, Attack(), enemy))
+    assert(controller.get_last_error.get.contains("phase"))
+
+  test("Starting a game without enemies ends it immediately"):
+    player.add_units(knight)
+    controller.add_players(player)
+    controller.Start_Game()
+    assertEquals(controller.get_who_won, Some(true))
 
