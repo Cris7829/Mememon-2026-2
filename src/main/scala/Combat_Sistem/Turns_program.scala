@@ -57,7 +57,11 @@ class Turns_program:
    /** Getter for the map with the max amount of action bar for each Unity.*/
    def get_action_bars:  mutable.Map[Unity, Double] = action_bars
 
-
+  /** Recalculates the max action bar of a character, for example after it equips a new weapon.
+   * If the character is not in the turn program, the method does nothing.
+   *
+   * @param x The character whose max action bar is recalculated.
+   */
    def update_action_bar(x: Character): scala.Unit =
     if action_bars.contains(x) then action_bars(x) = max_action_bar(x)
 
@@ -90,7 +94,7 @@ class Turns_program:
 
   /** It removes a Unity from the turn program, removing it from the list and both maps.
    *
-   * @param x The Unity that will be added
+   * @param x The Unity that will be removed.
    * */
    def remove_unit_of_program(x: Unity): scala.Unit =
      if t_units.contains(x) then

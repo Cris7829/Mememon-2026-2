@@ -8,9 +8,12 @@ import Action_Sistem.{Source, Target}
 import scala.collection.mutable.ListBuffer
 
 
-
+/** A class representing the action of equipping a weapon.
+ *
+ * @constructor Creates a new Equip_Weapon action with its name.
+ */
 class Equip_Weapon extends Utility_Action :
-  /** A non-mutable variable with the name "Use a potion". */
+  /** A non-mutable variable with the name "Equip weapon". */
   val name: String = "Equip weapon"
 
   /** A variable with a list that represents the armaments that can be equipped.*/
@@ -26,13 +29,13 @@ class Equip_Weapon extends Utility_Action :
   def add_usable_list(x: Usable_Armament): scala.Unit =
     usable_list += x
 
-  /** It removes the first encounter of the potion in the list, if there are no armament that can be equipped, the method does nothing*/
+  /** It removes the first encounter of armament in the list, if there are no armament that can be equipped, the method does nothing*/
   def use_usable_list(x: Usable_Armament): scala.Unit =
     if usable_list.contains(x) then
       usable_list -= x
 
   /** Starts the double dispatch for Equip_Weapon: calls the Do method of the source for Equip_Weapon,
-   * so only a source that can equip the weapon.
+   * so only a source that can equip the weapon, completes the action.
    *
    * @param s The source that casts Equip_Weapon.
    * @param t The target that receives Equip_Weapon.

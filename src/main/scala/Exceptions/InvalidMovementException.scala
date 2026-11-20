@@ -3,14 +3,10 @@ package Exceptions
 
 
 
-/** It follows the base GameException class and is used to be thrown any time that the action's source
- * doesn't have the necessary amount of maná to cast a spell.
- *
- *
- * Because the Mage character are the only one that can cast spells, this class has only usage there.
- *
+/** It follows the base GameException class and is thrown any time a unit tries to move
+ * to a panel that is not adjacent to its current panel.
  *
  * @param msg The message that will be shown once the exception has been thrown.
- * @constructor Creates the exception with a no real use other than the exceptions.
+ * @constructor Creates the exception with the given message.
  */
 class InvalidMovementException(msg: String) extends GameException(msg)

@@ -67,11 +67,11 @@ trait Unity extends Source with Target:
    *
    * @param a The Move action.
    * @param t The target.
-   * @return true if the target moved into the attack successfully.
+   * @return true if the target moved successfully.
    */
   def Do(a: Move, t:Target): Boolean
 
-  /** First step of the double dispatch for Attack: the Unity equips the target.
+  /** First step of the double dispatch for equip a weapon: the source equips the target.
    *
    * @param a The Equip_Weapon action.
    * @param t The target.
@@ -79,7 +79,7 @@ trait Unity extends Source with Target:
    */
   def Do(a: Equip_Weapon, t: Target): Boolean
 
-  /** First step of the double dispatch for Use_Potion: the Unity attacks the target.
+  /** First step of the double dispatch for Use_Potion: the source consumes the target.
    *
    * @param a The Use_Potion action.
    * @param t The target that will be used as a potion

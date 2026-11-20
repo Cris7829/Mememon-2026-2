@@ -57,8 +57,8 @@ class GameController extends Observer:
    * */
   def get_panels: List[Panel] = panels.toList
 
-  /** First step for the double dispatch of the State pattern design for starting the game: it sends the information
-   * of the GameController into the current state that is on.
+  /** Delegates to the current phase of the game: it sends the information
+   * of the GameController into the current state that is on, so it can start the Game.
    *
    *
    * With the method safely(), the exception NotMethodOfPhase can be caught whenever is thrown by this method,
@@ -67,7 +67,7 @@ class GameController extends Observer:
    * */
   def Start_Game() : scala.Unit = safely(())(state.Start_Game(this))
 
-  /** First step for the double dispatch of the State pattern design for adding panels: it sends the information
+  /** Delegates to the current phase of the game: it sends the information
    * of the GameController into the current state that is on and the panel trying to be added.
    *
    *
@@ -79,9 +79,9 @@ class GameController extends Observer:
 
   /** It fines the panel that has the given coordinates.
    *
-   * @param x The x coordinate of the Panel
-   * @param y The y coordinate of the Panel
-   *
+   * @param x The x coordinate of the Panel.
+   * @param y The y coordinate of the Panel.
+   * @return some[Panel] if exists, otherwise None.
    * */
   def get_panel_at(x: Int, y: Int): Option[Panel] =
     panels.find(p => p.x == x && p.y == y)
@@ -146,17 +146,19 @@ class GameController extends Observer:
       Some(turns_program.get_sorted_Seq.head._1)
     else None
 
-  /** First step for the double dispatch of the State pattern design for adding a player: it sends the information
+  /** Delegates to the current phase of the game: it sends the information
    * of the GameController into the current state that is on and the player that is trying to be added.
    *
    *
    * With the method safely(), the exception NotMethodOfPhase can be caught whenever is thrown by this method,
    * its message is saved in last_error and printed.
    *
+   * @param x The player
+   *
    * */
   def add_players(x: Players): scala.Unit = safely(())(state.add_players(x, this))
 
-  /** First step for the double dispatch of the State pattern design for adding units to a player:
+  /** Delegates to the current phase of the game:
    * it sends the information of the GameController into the current state that is on and the Character
    * trying to be added.
    *
@@ -164,21 +166,24 @@ class GameController extends Observer:
    * With the method safely(), the exception NotMethodOfPhase can be caught whenever is thrown by this method,
    * its message is saved in last_error and printed.
    *
+   * @param x The player.
+   * @param y The Character.
    * */
   def add_units_to_player(x: Players, y: Character): scala.Unit =
     safely(())(state.add_units_to_player(x, y, this))
 
-  /** First step for the double dispatch of the State pattern design for adding an Enemy: it sends the information
+  /** Delegates to the current phase of the game: it sends the information
    * of the GameController into the current state that is on and the Enemy trying to be added.
    *
    *
    * With the method safely(), the exception NotMethodOfPhase can be caught whenever is thrown by this method,
    * its message is saved in last_error and printed.
    *
+   * @param x The Enemy.
    * */
   def add_enemies(x:Enemy):scala.Unit = safely(())(state.add_enemies(x, this))
 
-  /** First step for the double dispatch of the State pattern design for doing an action: it sends the information
+  /** Delegates to the current phase of the game: it sends the information
    * of the GameController into the current state that is on and the source, the target and the action.
    *
    *
@@ -190,7 +195,7 @@ class GameController extends Observer:
    * @param u The Unity trying to do an action.
    * @param action The concrete action that tries to do.
    * @param target The target of the action.
-   * @return false if the action was done successfully, otherwise false.
+   * @return true if the action was done successfully, otherwise false.
    * */
   def do_action(u: Unity, action: Action, target: Target): Boolean =
     safely(false)(state.do_action(u, action, target, this))
@@ -240,7 +245,7 @@ class GameController extends Observer:
           c.remove_units(x)
 
 
-  /** Following the observer design pattern. This method receives an Enemy that his health is 0.
+  /** Following the observer design pattern. This method receives a Character that his health is 0.
    *
    * The method, removes the Character form the player's unit list, the panel that it on
    * and from the turn's program unit list.
@@ -324,7 +329,8 @@ class GameController extends Observer:
 
   /** It adds a character to a player that is in the game, and to the turn program.
    *
-   * @param x the player , y the character
+   * @param x the player .
+   * @param y the character.
    */
   private[controller] def add_unit_to_player_in_game(x: Players, y: Character): scala.Unit =
     if players_list.contains(x) && !owners.contains(y) then
@@ -333,7 +339,8 @@ class GameController extends Observer:
       turns_program.add_unit_to_program(y)
       y.set_observer(Some(this))
 
-  /** It adds an Enemy to a player to the turn program and the enemies_list , if it's already in the Game Controller, does nothing.
+  /** It adds an Enemy to the turn program and the enemies_list ,
+   * if it's already in the Game Controller, does nothing.
    *
    * @param x The enemy
    */
@@ -359,16 +366,14 @@ class GameController extends Observer:
 
   /** Following the game logic, it makes a unity do an action to a Target.
    *
-   * If somebody has already won, it returns false and doesn't do the action.
-   *
    * It throws the NotYourTurnException it's not the given's Unity's turn.
    * If the action wasn't done successfully, prints the cause.
    *
-   * @param u      The Unity
+   * @param u The Unity
    * @param action The Action
    * @param target The Target
    * @return false if the unity could not do the action successfully or somebody has won, otherwise true.
-   *
+   * @throws NotYourTurnException if it is not the Unity's turn.
    */
   private[controller] def execute_action(u: Unity, action: Action, target: Target): Boolean =
     if !turns_program.get_turn.contains(u) then
@@ -386,7 +391,7 @@ class GameController extends Observer:
    * last_error and printed, and the default value is returned instead.
    *
    * @param default The value to return if the method fails.
-   * @param body The method to execute. 
+   * @param body The method to execute.
    * @tparam T The type of the value returned by the method.
    * @return The result of the method, or the default value if it threw a GameException.
    */

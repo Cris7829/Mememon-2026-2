@@ -3,7 +3,7 @@ package Actions
 
 import Action_Sistem.{Source, Target}
 
-
+/** An abstract class representing any spell. Each spell has a name and a mana cost. */
 abstract class Spells extends Non_Utility_Action:
   /** Variable with the name.*/
   val name: String

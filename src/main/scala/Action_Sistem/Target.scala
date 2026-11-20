@@ -3,7 +3,7 @@ package Action_Sistem
 import Actions.*
 import Entities.*
 
-
+/** A trait representing anything that could be the objective of an action.*/
 trait Target:
 
 

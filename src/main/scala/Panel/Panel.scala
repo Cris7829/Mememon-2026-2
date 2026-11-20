@@ -15,7 +15,7 @@ import Exceptions.*
  * Each panel has its own x-axis and y-axis, a list with the Units that are in that panel, and a list
  * with the adjacent panels.
  *
- * @constructor Creates a new Panel with hte coordinates given and empty list of units and empty list of adjacent panels
+ * @constructor Creates a new Panel with the coordinates given and empty list of units and empty list of adjacent panels
  */
 class Panel(a:Int , b:Int) extends Target:
   /** Variable that represents the x-axis coordinate of the Panel */
@@ -45,7 +45,7 @@ class Panel(a:Int , b:Int) extends Target:
     if !units.contains(x) then
      units += x
 
-  /** It removes a Unit from the list of the Panel, if the Unit isn't in the list, method dos nothing.
+  /** It removes a Unit from the list of the Panel, if the Unit isn't in the list, method does nothing.
    *
    * @param x The Unity that will be removed.
    * */
@@ -64,14 +64,14 @@ class Panel(a:Int , b:Int) extends Target:
 
   /** It adds a Panel to the list of the Adjacent Panels, if its already in the list, the method does nothing.
    *
-   * @param x The Unity that will be added
+   * @param x The Panel that will be added
    * */
   def add_adjacent(x: Panel): scala.Unit =
     if !adjacent.contains(x) then
       adjacent += x
 
 
-  /** It removes a Panel from the list of Adjacent Panels, if the Panel isn't in the list, method dos nothing.
+  /** It removes a Panel from the list of Adjacent Panels, if the Panel isn't in the list, method does nothing.
    *
    * @param x The Panel that will be removed.
    * */
@@ -109,7 +109,7 @@ class Panel(a:Int , b:Int) extends Target:
    */
   def receive(a: Attack, attacker: Character): Boolean = false
 
-  /** By default, a Panel can't be attacked by a Enemy.
+  /** By default, a Panel can't be attacked by an Enemy.
    *
    * @param a The Attack action.
    * @param attacker The Enemy that tries to attack the Panel.
@@ -129,13 +129,12 @@ class Panel(a:Int , b:Int) extends Target:
    * @throws InvalidMovementException if the unit is not in a panel adjacent to this one.
    */
   def receive(a: Move, u: Unity): Boolean =
-    get_adjacent.find(_.get_units.contains(u)) match
-      case Some(p) =>
-        p.remove_units(u)
-        add_units(u)
-        true
-      case None =>
-        throw InvalidMovementException(s"${u.name} cannot move to panel ($x, $y) because it is not adjacent to its current panel")
+    val origin = get_adjacent.find(_.get_units.contains(u))
+    if origin.isEmpty then
+      throw InvalidMovementException(s"${u.name} cannot move to panel ($x, $y) because it is not adjacent to its current panel")
+    origin.get.remove_units(u)
+    add_units(u)
+    true
 
 
   /** By default, a Panel can't be equipped by a Character.
@@ -149,7 +148,7 @@ class Panel(a:Int , b:Int) extends Target:
   /** By default, a Panel can't be used as a potion by a Character.
    *
    * @param a The Use_Potion action.
-   * @param c The Character that tries to equip the Panel.
+   * @param c The Character.
    * @return false, because a Panel can't be used as a potion.
    */
   def receive(a: Use_Potion, c: Character): Boolean = false
@@ -157,7 +156,7 @@ class Panel(a:Int , b:Int) extends Target:
   /** By default, a Panel can't be the target of a Thunder spell made by a Black_Mage.
    *
    * @param a The Thunder action.
-   * @param m The Black_Mage that cast .
+   * @param m The Black_Mage that casts the spell .
    * @return false, because a Panel can't be the target.
    */
   def receive(a: Thunder, m: Black_Mage): Boolean = false
@@ -165,7 +164,7 @@ class Panel(a:Int , b:Int) extends Target:
   /** By default, a Panel can't be the target of a Heal spell made by a White_Mage.
    *
    * @param a The Heal action.
-   * @param m The White_Mage that cast.
+   * @param m The White_Mage that casts the spell.
    * @throws InvalidTargetException with the coordinates of the panel.
    */
   def receive(a: Heal, m: White_Mage): Boolean =
@@ -174,7 +173,7 @@ class Panel(a:Int , b:Int) extends Target:
   /** By default, a Panel can't be the target of a Purification spell made by a White_Mage.
    *
    * @param a The Purification action.
-   * @param m The White_Mage that cast.
+   * @param m The White_Mage that casts the spell.
    * @throws InvalidTargetException with the coordinates of the panel.
    */
   def receive(a: Purification, m: White_Mage): Boolean =
@@ -225,7 +224,7 @@ class Panel(a:Int , b:Int) extends Target:
    *
    * @param a The Use_Potion action.
    * @param m The Magic_Character trying to use the Panel.
-   * @return false, because Panel can't be used a potion.
+   * @return false, because Panel can't be used as a potion.
    */
   def receive(a: Use_Potion, m: Magic_Character): Boolean = false
 

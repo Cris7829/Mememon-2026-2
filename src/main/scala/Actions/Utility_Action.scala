@@ -17,7 +17,7 @@ abstract class Utility_Action extends Action:
   val name: String
 
   /** Starts the double dispatch for any action that uses a utility: calls the 
-   * Do method of the Source, so only a Source that can use the potion, does the action.
+   * Do method of the Source, so only a Source that can do the action, does it.
    *
    * @param s The source that does the action.
    * @param t The target of the action.

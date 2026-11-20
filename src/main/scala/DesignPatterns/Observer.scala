@@ -27,7 +27,7 @@ trait Observer:
    */
   def actualize_death(x: Enemy): scala.Unit
 
-  /** Following the observer design pattern. This method receives an Enemy that his health is 0.
+  /** Following the observer design pattern. This method receives a Character that his health is 0.
    *
    * The method, removes the Character form the player's unit list, the panel that it on
    * and from the turn's program unit list.

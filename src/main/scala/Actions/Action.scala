@@ -13,7 +13,7 @@ trait Action:
 
 
      /** Starts the double dispatch for any action: calls the 
-      * Do method of the Source, so only a Source that can use the potion, does the action.
+      * Do method of the Source, so only a Source that can do action, does it.
       *
       * @param s The source that does the action.
       * @param t The target of the action.

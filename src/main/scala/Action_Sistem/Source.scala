@@ -4,6 +4,7 @@ import Actions.*
 
 import scala.collection.mutable.ListBuffer
 
+/** A trait representing anything that could try to do an action. */
 trait Source:
   /** The name of the source. */
   val name:String
@@ -36,15 +37,15 @@ trait Source:
    */
   def Do(a: Attack, t: Target): Boolean
 
-  /** First step of the double dispatch for Move: the source moves into the target.
+  /** First step of the double dispatch for Move: the Unity moves into the target.
    *
    * @param a The Move action.
    * @param t The target.
-   * @return true if the target moved into the attack successfully.
+   * @return true if the target moved successfully.
    */
   def Do(a: Move, t: Target): Boolean
 
-  /** First step of the double dispatch for Attack: the source equips the target.
+  /** First step of the double dispatch for equip a weapon: the source equips the target.
    *
    * @param a The Equip_Weapon action.
    * @param t The target.
@@ -52,7 +53,7 @@ trait Source:
    */
   def Do(a: Equip_Weapon, t: Target): Boolean
 
-  /** First step of the double dispatch for Use_Potion: the source attacks the target.
+  /** First step of the double dispatch for Use_Potion: the source consumes the target.
    *
    * @param a The Use_Potion action.
    * @param t The target that will be used as a potion
