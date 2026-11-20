@@ -1,4 +1,0 @@
-package cl.uchile.dcc
-package Entities_Factories
-
-abstract class Abstract_Character_Factory extends Abstract_Unit_Factory

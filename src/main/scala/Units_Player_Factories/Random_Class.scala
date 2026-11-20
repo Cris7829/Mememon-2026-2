@@ -1,5 +1,5 @@
 package cl.uchile.dcc
-package Entities_Factories
+package Units_Player_Factories
 import scala.util.Random
 
 
