@@ -1,4 +1,0 @@
-package cl.uchile.dcc
-package Entities_Factories
-
-class Archer_Factory extends Abstract_Character_Factory
