@@ -4,6 +4,6 @@ import Usable.*
 
 import Entities.*
 
-trait Potion_Factory:
+trait Potion_Factory extends Usable_Factory:
   
  def Create(): Usable_Potion

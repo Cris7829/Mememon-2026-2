@@ -25,7 +25,7 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
   /** A variable that can be scala.Unit or and actual armament if the Character has one equipped*/
   protected var weapon : Option[Usable_Armament] = we
   /** A variable that represents the inventory of utilizable.*/
-  protected val inventory: ListBuffer[Utilizable] = ListBuffer()
+  protected var inventory: ListBuffer[Utilizable] = ListBuffer()
   /** Retrieves the armament that its equipped.
    * 
    * @return the weapon equipped.
@@ -41,7 +41,7 @@ class Character(n:String, h:Int, d:Int, w:Int, we:Option[Usable_Armament]) exten
 
   /** Value that represents the max health of a Character, associated with the initial health points.*/
   val max_health: Int = h
-
+  
   /** Setter for the defense of the Character, if d, it's below or equal to cero, the method does nothing,
    * otherwise it changes the defense points of a Character.
    *
