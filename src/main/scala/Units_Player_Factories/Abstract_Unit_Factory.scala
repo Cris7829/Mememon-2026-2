@@ -1,6 +1,10 @@
 package cl.uchile.dcc
 package Units_Player_Factories
 
+import Usable_Factories.*
+
+import scala.collection.mutable.ListBuffer
+
 
 abstract class Abstract_Unit_Factory extends Unit_Factory:
   
@@ -9,8 +13,13 @@ abstract class Abstract_Unit_Factory extends Unit_Factory:
   protected var health: Int
  
   protected var defense: Int
-
+  
   protected var weight: Int
+  
+  
+  protected var armament: Option[Armament_Factory] = None
+  
+  protected var inventory: ListBuffer[Usable_Factory] = ListBuffer()
   
   
   def set_name(x: String): scala.Unit =
